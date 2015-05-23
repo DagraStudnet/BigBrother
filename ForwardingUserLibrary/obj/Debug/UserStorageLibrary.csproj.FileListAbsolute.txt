@@ -1,0 +1,10 @@
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\ForwardingUserLibrary.dll
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\ForwardingUserLibrary.pdb
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\ClassLibrary.dll
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\NDatabase3.dll
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\ClassLibrary.pdb
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\NDatabase3.pdb
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\bin\Debug\NDatabase3.xml
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\obj\Debug\UserStorageLibrary.csprojResolveAssemblyReference.cache
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\obj\Debug\ForwardingUserLibrary.dll
+C:\Lukas\Diplomka\BigBrother\ForwardingUserLibrary\obj\Debug\ForwardingUserLibrary.pdb

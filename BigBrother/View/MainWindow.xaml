@@ -1,0 +1,15 @@
+﻿<Window x:Class="ClientBigBrother.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:ClientBigBrother.ViewModel"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <viewModel:ViewModelMain x:Key="ViewModelMain"/>
+    </Window.Resources>
+    <Grid>
+        <Button Content="Odeslat Uzivatel" HorizontalAlignment="Left" Margin="57,29,0,0" VerticalAlignment="Top" Width="75" Click="SendInformationAboutUser_Click"/>
+        <ListBox Name="S" HorizontalAlignment="Left" Height="202" Margin="57,84,0,0" VerticalAlignment="Top" Width="309"/>
+
+
+    </Grid>
+</Window>
