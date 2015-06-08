@@ -3,3 +3,8 @@ C:\Lukas\Diplomka\BigBrother\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
 C:\Lukas\Diplomka\BigBrother\UnitTestProject1\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
 C:\Lukas\Diplomka\BigBrother\UnitTestProject1\obj\Debug\UnitTestProject1.dll
 C:\Lukas\Diplomka\BigBrother\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+C:\Lukas\LukasRajm-Diplomka\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+C:\Lukas\LukasRajm-Diplomka\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+C:\Lukas\LukasRajm-Diplomka\UnitTestProject1\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
+C:\Lukas\LukasRajm-Diplomka\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+C:\Lukas\LukasRajm-Diplomka\UnitTestProject1\obj\Debug\UnitTestProject1.pdb

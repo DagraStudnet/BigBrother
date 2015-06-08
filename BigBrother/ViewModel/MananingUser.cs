@@ -25,11 +25,11 @@ namespace ClientBigBrother.ViewModel
             WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
             if (windowsIdentity == null) return;
             string[] text = windowsIdentity.Name.Split('\\'); // metoda mi da nazev pc a uzivatele
-            User = new UserContract()
-            {
-                PCName = text[0],
-                UserName = text[1],
-            };
+            //User = new UserContract()
+            //{
+            //    PCName = text[0],
+            //    UserName = text[1],
+            //};
         }
         
         public void SaveConnectionUsb()

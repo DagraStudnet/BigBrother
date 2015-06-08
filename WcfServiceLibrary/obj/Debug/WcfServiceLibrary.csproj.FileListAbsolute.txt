@@ -19,3 +19,16 @@ C:\Lukas\Diplomka\BigBrother\WcfServiceLibrary\bin\Debug\NDatabase3.dll
 C:\Lukas\Diplomka\BigBrother\WcfServiceLibrary\bin\Debug\ForwardingUserLibrary.pdb
 C:\Lukas\Diplomka\BigBrother\WcfServiceLibrary\bin\Debug\NDatabase3.pdb
 C:\Lukas\Diplomka\BigBrother\WcfServiceLibrary\bin\Debug\NDatabase3.xml
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\WcfServiceLibrary.dll.config
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\WcfServiceLibrary.dll
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\WcfServiceLibrary.pdb
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\ClassLibrary.dll
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\ForwardingUserLibrary.dll
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\NDatabase3.dll
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\ClassLibrary.pdb
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\ForwardingUserLibrary.pdb
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\NDatabase3.pdb
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\bin\Debug\NDatabase3.xml
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\obj\Debug\WcfServiceLibrary.csprojResolveAssemblyReference.cache
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\obj\Debug\WcfServiceLibrary.dll
+C:\Lukas\LukasRajm-Diplomka\WcfServiceLibrary\obj\Debug\WcfServiceLibrary.pdb

@@ -56,8 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\ActivityContract.cs" />
-    <Compile Include="Model\UserContract.cs" />
+    <Compile Include="Model\Monitoring\IManagmentMonitoring.cs" />
+    <Compile Include="Model\Monitoring\IUserMonitoring.cs" />
+    <Compile Include="Model\Monitoring\ManagmentMonitoring.cs" />
+    <Compile Include="Model\Monitoring\UserMonitoring.cs" />
+    <Compile Include="Model\PcUser\ActivityContract.cs" />
+    <Compile Include="Model\PcUser\UserContract.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

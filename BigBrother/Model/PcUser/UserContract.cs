@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using ClassLibrary;
 
-namespace ClientBigBrother.Model
+namespace ClientBigBrother.Model.PcUser
 {
     [KnownType(typeof (User))]
     [DataContract]

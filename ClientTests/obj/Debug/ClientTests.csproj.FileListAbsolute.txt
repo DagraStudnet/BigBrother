@@ -1,0 +1,9 @@
+C:\Lukas\LukasRajm-Diplomka\ClientTests\obj\Debug\ClientTests.csprojResolveAssemblyReference.cache
+C:\Lukas\LukasRajm-Diplomka\ClientTests\bin\Debug\ClientTests.dll
+C:\Lukas\LukasRajm-Diplomka\ClientTests\bin\Debug\ClientTests.pdb
+C:\Lukas\LukasRajm-Diplomka\ClientTests\bin\Debug\BigBrother.exe
+C:\Lukas\LukasRajm-Diplomka\ClientTests\bin\Debug\ClassLibrary.dll
+C:\Lukas\LukasRajm-Diplomka\ClientTests\bin\Debug\BigBrother.pdb
+C:\Lukas\LukasRajm-Diplomka\ClientTests\bin\Debug\ClassLibrary.pdb
+C:\Lukas\LukasRajm-Diplomka\ClientTests\obj\Debug\ClientTests.dll
+C:\Lukas\LukasRajm-Diplomka\ClientTests\obj\Debug\ClientTests.pdb

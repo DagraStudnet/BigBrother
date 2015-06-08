@@ -22,10 +22,7 @@ namespace ClientBigBrother.ViewModel
 
             //DataContext = mananingUser.UserContractPc.ListOfActivitesOnPc;
 
-            var dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1); //interval v sekundach
-            dispatcherTimer.Start();
+            
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
