@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ClientBigBrother.ViewModel
+namespace ClientBigBrother.Model.WindowsFunction
 {
     class WindowsApiFunction
     {

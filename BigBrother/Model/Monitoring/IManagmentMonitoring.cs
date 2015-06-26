@@ -9,6 +9,6 @@ namespace ClientBigBrother.Model.Monitoring
 {
     interface IManagmentMonitoring
     {
-        IUser User { get; set; }
+        IUser PcUser { get; }
     }
 }

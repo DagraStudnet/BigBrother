@@ -21,7 +21,7 @@ namespace UserStorageLibrary
             return instance ?? (instance = new UserNDatabase());
         }
 
-        public void AddUserToDBStorage(User user)
+        public void AddUserToDBStorage(IUser user)
         {
             using (IOdb odb = OdbFactory.Open(NameNDatabase))
             {

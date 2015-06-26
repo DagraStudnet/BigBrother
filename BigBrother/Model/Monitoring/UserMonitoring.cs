@@ -7,26 +7,34 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using ClassLibrary;
+using ClientBigBrother.Model.WindowsFunction;
 using ClientBigBrother.ViewModel;
 
 namespace ClientBigBrother.Model.Monitoring
 {
     public class UserMonitoring<T> : IUserMonitoring<T>
-        where T:IUser
+        where T : IUser
     {
         private readonly List<string> listUSB = new List<string>();
         private readonly StringBuilder nameActivities = new StringBuilder(255);
         private string previousName = string.Empty;
-        
+
+        /// <summary>
+        /// Metoda uklada informace o nazvu pc a nazvu uzivatele do instance user
+        /// </summary>
+        /// <param name="user">IUser</param>
         public void SaveInformationAboutUserPc(T user)
         {
             WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
-            string[] text = windowsIdentity.Name.Split('\\'); // metoda mi da nazev pc a uzivatele
+            string[] text = windowsIdentity.Name.Split('\\');
             user.PCName = text[0];
             user.UserName = text[1];
-           
-        }
 
+        }
+        /// <summary>
+        /// Metoda uklada informace o pripojenych usb a behem aplikace pripojovanych usb
+        /// </summary>
+        /// <param name="user"></param>
         public void SaveUsbConnection(T user)
         {
             if (DriveInfo.GetDrives().All(d => d.DriveType != DriveType.Removable))
@@ -49,8 +57,11 @@ namespace ClientBigBrother.Model.Monitoring
                 }
             }
         }
-
-        public void SaveOpenProgramUser(T user)
+        /// <summary>
+        /// Metoda uklada nazev aplikace se kterou uzivatel prave pracuje.
+        /// </summary>
+        /// <param name="user"></param>
+        public void SaveNowRuningApplicationUser(T user)
         {
             WindowsApiFunction.GetWindowText(WindowsApiFunction.GetForegroundWindow(), nameActivities,
                 nameActivities.Capacity);
@@ -62,7 +73,11 @@ namespace ClientBigBrother.Model.Monitoring
             }
         }
 
-        public void SaveStartUpProgramsOnDestop(T user)
+        /// <summary>
+        /// Metoda uklada nazvy aplikaci ketere jsou spusteny pri spusteni sledovaci aplikace.
+        /// </summary>
+        /// <param name="user"></param>
+        public void SaveStartUpApplicationsOnDestop(T user)
         {
             foreach (
                Process process in

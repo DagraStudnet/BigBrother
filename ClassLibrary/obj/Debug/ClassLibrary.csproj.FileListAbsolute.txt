@@ -7,3 +7,4 @@ C:\Lukas\LukasRajm-Diplomka\ClassLibrary\bin\Debug\ClassLibrary.dll
 C:\Lukas\LukasRajm-Diplomka\ClassLibrary\bin\Debug\ClassLibrary.pdb
 C:\Lukas\LukasRajm-Diplomka\ClassLibrary\obj\Debug\ClassLibrary.dll
 C:\Lukas\LukasRajm-Diplomka\ClassLibrary\obj\Debug\ClassLibrary.pdb
+C:\Lukas\LukasRajm-Diplomka\ClassLibrary\obj\Debug\ClassLibrary.csprojResolveAssemblyReference.cache

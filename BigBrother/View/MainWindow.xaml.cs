@@ -9,15 +9,11 @@ namespace ClientBigBrother.View
     public partial class MainWindow : Window
     {
         private readonly ViewModelMain vmMain;
+
         public MainWindow()
         {
             InitializeComponent();
             vmMain = new ViewModelMain();
-        }
-
-        private void SendInformationAboutUser_Click(object sender, RoutedEventArgs e)
-        {
-            vmMain.SendInformationAboutUser();
         }
     }
 }

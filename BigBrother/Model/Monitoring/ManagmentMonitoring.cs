@@ -9,23 +9,23 @@ namespace ClientBigBrother.Model.Monitoring
     {
         private readonly IUserMonitoring<IUser> userMonitoring;
 
+        public IUser PcUser { get; private set; }
+
         public ManagmentMonitoring(DispatcherTimer dispatcherTimer)
         {
-            User = new UserContract();
+            PcUser = new UserContract();
             userMonitoring = new UserMonitoring<IUser>();
 
-            userMonitoring.SaveStartUpProgramsOnDestop(User);
-            userMonitoring.SaveInformationAboutUserPc(User);
+            userMonitoring.SaveStartUpApplicationsOnDestop(PcUser);
+            userMonitoring.SaveInformationAboutUserPc(PcUser);
 
             dispatcherTimer.Tick += dispatcherTimer_Tick;
         }
 
-        public IUser User { get; set; }
-
         private void Monitoring()
         {
-            userMonitoring.SaveUsbConnection(User);
-            userMonitoring.SaveStartUpProgramsOnDestop(User);
+            userMonitoring.SaveUsbConnection(PcUser);
+            userMonitoring.SaveNowRuningApplicationUser(PcUser);
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)

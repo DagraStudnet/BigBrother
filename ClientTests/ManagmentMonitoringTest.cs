@@ -15,7 +15,7 @@ namespace ClientTests
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1); //interval v sekundach
             ManagmentMonitoring managment = new ManagmentMonitoring(dispatcherTimer);
             dispatcherTimer.Start();
-            Assert.AreNotSame(managment.User.ListOfActivitesOnPc.Count,0); 
+            Assert.AreNotSame(managment.PcUser.ListOfActivitesOnPc.Count,0); 
         }
     }
 }

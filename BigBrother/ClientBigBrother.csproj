@@ -60,7 +60,6 @@
     <Compile Include="Model\Monitoring\IUserMonitoring.cs" />
     <Compile Include="Model\Monitoring\ManagmentMonitoring.cs" />
     <Compile Include="Model\Monitoring\UserMonitoring.cs" />
-    <Compile Include="Model\PcUser\ActivityContract.cs" />
     <Compile Include="Model\PcUser\UserContract.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -70,15 +69,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\MananingUser.cs" />
+    <Compile Include="Model\WcfService\CommunicationWithService.cs" />
+    <Compile Include="Model\WindowsFunction\WindowsApiFunction.cs" />
     <Compile Include="Service References\WcfServiceLibrary\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\WcfService.cs" />
+    <Compile Include="Model\WcfService\WcfService.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
-    <Compile Include="ViewModel\WindowsApiFunction.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -108,9 +107,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\WcfServiceLibrary\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\WcfServiceLibrary\ClassLibrary1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -153,6 +149,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

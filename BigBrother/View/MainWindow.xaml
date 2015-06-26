@@ -7,9 +7,6 @@
         <viewModel:ViewModelMain x:Key="ViewModelMain"/>
     </Window.Resources>
     <Grid>
-        <Button Content="Odeslat Uzivatel" HorizontalAlignment="Left" Margin="57,29,0,0" VerticalAlignment="Top" Width="75" Click="SendInformationAboutUser_Click"/>
         <ListBox Name="S" HorizontalAlignment="Left" Height="202" Margin="57,84,0,0" VerticalAlignment="Top" Width="309"/>
-
-
     </Grid>
 </Window>

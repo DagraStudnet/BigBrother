@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 
-namespace ClientBigBrother.ViewModel
+namespace ClientBigBrother.Model.WcfService
 {
     public static class WcfService<T> where T : ICommunicationObject, new()
     {
