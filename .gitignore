@@ -154,9 +154,3 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
-
-# Favorite Documents VS extension
-*.favdoc
-/src/ONLS.Private/BackOffice.Web/Areas/NBS
-/src/ONLS.Private/ONLS.Private/Areas/NBS
-src/InformationService/InformationService/App_Data/Metrics/*
