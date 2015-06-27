@@ -23,6 +23,8 @@ src/ONLS.Private/coverage
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+*.cache
+*.g.i.cs
 *_i.c
 *_p.c
 *.ilk
