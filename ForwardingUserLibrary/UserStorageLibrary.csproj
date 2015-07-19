@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NDatabase3">
-      <HintPath>..\..\..\..\Users\User\Downloads\NDatabase.3.8-v4.0\NDatabase.3.8-v4.0\NDatabase3.dll</HintPath>
+    <Reference Include="NDatabase3, Version=3.8.0.47, Culture=neutral, PublicKeyToken=31d8e3cda240c056, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NDatabase.3.8.0\lib\net45\NDatabase3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
