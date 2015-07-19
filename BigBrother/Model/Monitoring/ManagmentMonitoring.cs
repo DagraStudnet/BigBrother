@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Threading;
 using ClassLibrary;
-using ClientBigBrother.Model.PcUser;
 
 namespace ClientBigBrother.Model.Monitoring
 {
@@ -9,11 +8,9 @@ namespace ClientBigBrother.Model.Monitoring
     {
         private readonly IUserMonitoring<IUser> userMonitoring;
 
-        public IUser PcUser { get; private set; }
-
         public ManagmentMonitoring(DispatcherTimer dispatcherTimer)
         {
-            PcUser = new UserContract();
+            PcUser = new User();
             userMonitoring = new UserMonitoring<IUser>();
 
             userMonitoring.SaveStartUpApplicationsOnDestop(PcUser);
@@ -21,6 +18,8 @@ namespace ClientBigBrother.Model.Monitoring
 
             dispatcherTimer.Tick += dispatcherTimer_Tick;
         }
+
+        public IUser PcUser { get; private set; }
 
         private void Monitoring()
         {

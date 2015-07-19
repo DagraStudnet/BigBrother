@@ -16,13 +16,10 @@ namespace ClientBigBrother.WcfServiceLibrary {
     public interface ILibrary {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibrary/AddUser", ReplyAction="http://tempuri.org/ILibrary/AddUserResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ClassLibrary.User))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ClassLibrary.Activity[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ClassLibrary.Activity))]
-        void AddUser(object user);
+        void AddUser(ClassLibrary.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibrary/AddUser", ReplyAction="http://tempuri.org/ILibrary/AddUserResponse")]
-        System.Threading.Tasks.Task AddUserAsync(object user);
+        System.Threading.Tasks.Task AddUserAsync(ClassLibrary.User user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -52,11 +49,11 @@ namespace ClientBigBrother.WcfServiceLibrary {
                 base(binding, remoteAddress) {
         }
         
-        public void AddUser(object user) {
+        public void AddUser(ClassLibrary.User user) {
             base.Channel.AddUser(user);
         }
         
-        public System.Threading.Tasks.Task AddUserAsync(object user) {
+        public System.Threading.Tasks.Task AddUserAsync(ClassLibrary.User user) {
             return base.Channel.AddUserAsync(user);
         }
     }

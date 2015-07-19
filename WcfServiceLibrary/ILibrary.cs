@@ -9,7 +9,6 @@ namespace WcfServiceLibrary
     public interface ILibrary
     {
         [OperationContract]
-        [ServiceKnownType(typeof(User))]
         void AddUser(User user);
     }
 }

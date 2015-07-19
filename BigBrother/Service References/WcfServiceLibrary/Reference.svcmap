@@ -23,9 +23,9 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="3e5e4a88-03ea-419c-86dc-3ea477c34f35" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="71a23f40-206a-4211-a481-ee3929826a60" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
-    <MetadataFile FileName="ClassLibrary1.xsd" MetadataType="Schema" ID="44966b18-fe1d-43a6-9bb2-bdbd26113388" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="4e711561-f728-4ee1-a009-8123d34d5b31" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="71a23f40-206a-4211-a481-ee3929826a60" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
+    <MetadataFile FileName="ClassLibrary.xsd" MetadataType="Schema" ID="84064c11-83bd-4d8f-adfa-efb1e396af6c" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

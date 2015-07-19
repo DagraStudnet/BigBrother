@@ -2,7 +2,6 @@
 using System.ServiceModel;
 using System.Windows;
 using ClassLibrary;
-using ClientBigBrother.Model.PcUser;
 using ClientBigBrother.WcfServiceLibrary;
 
 namespace ClientBigBrother.Model.WcfService
@@ -20,14 +19,16 @@ namespace ClientBigBrother.Model.WcfService
                     throw new CommunicationObjectFaultedException("Connection fault.");
                 if (proxy.State == CommunicationState.Closed)
                     proxy.Open();
-                proxy.AddGenericResolver(typeof(UserContract));
-                proxy.AddUser(user);
-                proxy.Close();
+                proxy.AddUser((User)user);
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
                 proxy.Abort();
+            }
+            finally
+            {
+                proxy.Close();
             }
         }
     }
