@@ -108,7 +108,7 @@
       <Project>{BAD6C951-C15E-4467-92A4-6CDE833AF53F}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ForwardingUserLibrary\UserStorageLibrary.csproj">
+    <ProjectReference Include="..\UserStorageLibrary\UserStorageLibrary.csproj">
       <Project>{DE9A67F0-B63B-4FE6-8528-7C5EAA77C731}</Project>
       <Name>UserStorageLibrary</Name>
     </ProjectReference>
