@@ -4,18 +4,19 @@ using System.Linq;
 using System.Windows.Threading;
 using ClassLibrary;
 using HostingBigBrother.Model;
-using UserStorageLibrary;
+using UserStorageNDatabase;
+
 
 namespace HostingBigBrother.ViewModel
 {
     public class ViewModelMain
     {
-        private readonly UserNDatabase userNDatabase;
+        private readonly UserStorage userNDatabase;
         private readonly UserCollection userCollection;
 
         public ViewModelMain()
         {
-            userNDatabase = UserNDatabase.ReturnDatabaseInstance();
+            userNDatabase = UserStorage.ReturnDatabaseInstance();
             var dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 1, 0); //interval v minutach

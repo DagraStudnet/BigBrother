@@ -1,7 +1,8 @@
 ﻿using System.ServiceModel;
 using System.Windows;
-using UserStorageLibrary;
+using UserStorageNDatabase;
 using WcfServiceLibrary;
+
 
 namespace HostingBigBrother
 {
@@ -10,18 +11,18 @@ namespace HostingBigBrother
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly UserNDatabase userSingleton;
+        private readonly UserStorage userSingleton;
         private ServiceHost host;
 
         public MainWindow()
         {
             InitializeComponent();
-            userSingleton = UserNDatabase.ReturnDatabaseInstance();
+            userSingleton = UserStorage.ReturnDatabaseInstance();
         }
 
         private void OpenConnectionWcf()
         {
-            host = new ServiceHost(typeof (Library));
+            host = new ServiceHost(typeof(Library));
             V.Items.Add(host.State.ToString());
             host.Open();
             V.Items.Add(host.State.ToString());

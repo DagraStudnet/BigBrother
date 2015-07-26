@@ -14,21 +14,20 @@ namespace ClientBigBrother.Model.WcfService
         {
             try
             {
-                WcfService<LibraryClient>.AutoRepair(ref proxy);
-                if (proxy.State == CommunicationState.Faulted)
-                    throw new CommunicationObjectFaultedException("Connection fault.");
-                if (proxy.State == CommunicationState.Closed)
-                    proxy.Open();
-                proxy.AddUser((User)user);
+                //WcfService<LibraryClient>.AutoRepair(ref proxy);
+                using (proxy = new LibraryClient())
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                        throw new CommunicationObjectFaultedException("Connection fault.");
+                    if (proxy.State == CommunicationState.Closed)
+                        proxy.Open();
+                    proxy.AddUser((User)user);
+                }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
                 proxy.Abort();
-            }
-            finally
-            {
-                proxy.Close();
             }
         }
     }

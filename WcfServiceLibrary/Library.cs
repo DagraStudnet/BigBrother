@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 using ClassLibrary;
-using UserStorageLibrary;
+using UserStorageNDatabase;
 
 
 namespace WcfServiceLibrary
@@ -12,8 +12,8 @@ namespace WcfServiceLibrary
 
         public void AddUser(User user)
         {
-            var userNDatabase = UserNDatabase.ReturnDatabaseInstance();
-            userNDatabase.AddUserToDBStorage(user);
+            var userNDatabase = UserStorage.ReturnDatabaseInstance();
+            userNDatabase.AddUserToDbStorage(user);
         }
     }
 }

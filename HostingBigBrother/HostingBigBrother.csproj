@@ -108,9 +108,9 @@
       <Project>{BAD6C951-C15E-4467-92A4-6CDE833AF53F}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UserStorageLibrary\UserStorageLibrary.csproj">
-      <Project>{DE9A67F0-B63B-4FE6-8528-7C5EAA77C731}</Project>
-      <Name>UserStorageLibrary</Name>
+    <ProjectReference Include="..\UserStorageNDatabase\UserStorageNDatabase.csproj">
+      <Project>{DA212EE5-AA7D-48E8-BF04-3F1ED6AC8116}</Project>
+      <Name>UserStorageNDatabase</Name>
     </ProjectReference>
     <ProjectReference Include="..\WcfServiceLibrary\WcfServiceLibrary.csproj">
       <Project>{c8fac881-bb59-48d3-9781-48520f648413}</Project>
