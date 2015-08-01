@@ -31,7 +31,7 @@ namespace HostingBigBrother
 
         private void VypsatButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var listUser in userSingleton.GetCollectionUsersFromDB())
+            foreach (var listUser in userSingleton.GetCollectionUsersFromDb())
             {
                 V.Items.Add(listUser.UserName);
                 foreach (var activites in listUser.ListOfActivitesOnPc)

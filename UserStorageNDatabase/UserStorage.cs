@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ClassLibrary;
 using NDatabase;
 using NDatabase.Api;
@@ -29,37 +30,45 @@ namespace UserStorageNDatabase
                 if (dbUser == null)
                 {
                     SetTimeStamps(user);
-                    SaveObjectToStore(odb, user);
+                    SaveUserToStore(odb, user);
                 }
                 else
                 {
                     SetTimeStamps(dbUser);
-                    foreach (Activity activity in user.ListOfActivitesOnPc)
-                    {
-                        dbUser.ListOfActivitesOnPc.Add(activity);
-                    }
-                    SaveObjectToStore(odb, dbUser);
+                    SetActivitiesToExistUser(user, dbUser);
+                    SaveUserToStore(odb, dbUser);
                 }
             }
         }
 
-        private static void SetTimeStamps(IUser user)
+        public static void SetActivitiesToExistUser(IUser user, IUser dbUser)
+        {
+            var activityList = new List<Activity>();
+            activityList.AddRange(dbUser.ListOfActivitesOnPc);
+            activityList.AddRange(user.ListOfActivitesOnPc);
+            dbUser.ListOfActivitesOnPc = activityList;
+        }
+
+        public static void SetTimeStamps(IUser user)
         {
             user.TimeStampsDispatch = DateTime.Now;
         }
 
-        private static OID SaveObjectToStore(IOdb odb, IUser dbUser)
+        public static void  SaveUserToStore(IOdb odb, IUser dbUser)
         {
-            return odb.Store(dbUser);
+             odb.Store(dbUser);
         }
 
-        private IUser FindUser(IOdb odb, IUser user)
+        public static IUser FindUser(IOdb odb, IUser user)
         {
-            OID oid = odb.GetObjectId(user);
-            return oid.ObjectId != -1 ? (IUser) odb.GetObjectFromId(oid) : null;
+            return
+                odb.QueryAndExecute<IUser>()
+                    .ToList()
+                    .Find(odbUser => odbUser.PCName.Equals(user.PCName) && odbUser.UserName.Equals(user.UserName));
+
         }
 
-        public IEnumerable<IUser> GetCollectionUsersFromDB()
+        public IEnumerable<IUser> GetCollectionUsersFromDb()
         {
             using (IOdb odb = OdbFactory.Open(NameNDatabase))
             {

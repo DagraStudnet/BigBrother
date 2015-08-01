@@ -38,7 +38,7 @@ namespace HostingBigBrother.ViewModel
 
         public IEnumerable<IUser> GetCollectionUsersFormDb()
         {
-           return  userNDatabase.GetCollectionUsersFromDB();
+           return  userNDatabase.GetCollectionUsersFromDb();
             
         }
     }

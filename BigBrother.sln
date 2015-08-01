@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceLibrary", "WcfSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{BAD6C951-C15E-4467-92A4-6CDE833AF53F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "UnitTestProject1\TestClient.csproj", "{D0F8D244-B319-4F9E-A31B-C74A7AB5977F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUserStorageNDatabase", "UnitTestProject1\TestUserStorageNDatabase.csproj", "{D0F8D244-B319-4F9E-A31B-C74A7AB5977F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTests", "ClientTests\ClientTests.csproj", "{95F466CE-C50B-4703-BE5D-067E62862603}"
 EndProject
