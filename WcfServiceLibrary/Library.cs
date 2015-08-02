@@ -1,7 +1,6 @@
 ﻿using System.ServiceModel;
-using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using UserStorageNDatabase;
-
 
 namespace WcfServiceLibrary
 {
@@ -9,10 +8,9 @@ namespace WcfServiceLibrary
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class Library : ILibrary
     {
-
         public void AddUser(User user)
         {
-            var userNDatabase = UserStorage.ReturnDatabaseInstance();
+            UserStorage userNDatabase = UserStorage.ReturnDatabaseInstance();
             userNDatabase.AddUserToDbStorage(user);
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using ClientBigBrother.Model.WindowsFunction;
 using ClientBigBrother.ViewModel;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
 using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using HostingBigBrother.Model;
 using UserStorageNDatabase;
 
@@ -27,11 +28,11 @@ namespace HostingBigBrother.ViewModel
         {
             var userCollectionFromDb = GetCollectionUsersFormDb();
             var userTransformCollection =
-                userCollectionFromDb.Select(TransformerUsersFromDbStorage.UserTransform).ToList();
-            SetTransformedCollection(userTransformCollection);
+                userCollectionFromDb.Select(TransformerUsersFromNdbStorage.UserTransform).ToList();
+            SaveTransformedCollection(userTransformCollection);
         }
 
-        private void SetTransformedCollection(IEnumerable<MonitoringUser> userTransformCollection)
+        private void SaveTransformedCollection(IEnumerable<MonitoringUser> userTransformCollection)
         {
             userCollection.AddRangeUser(userTransformCollection);
         }

@@ -1,6 +1,5 @@
 ﻿using System.ServiceModel;
-using ClassLibrary;
-
+using ClassLibrary.UserLibrary;
 
 namespace WcfServiceLibrary
 {

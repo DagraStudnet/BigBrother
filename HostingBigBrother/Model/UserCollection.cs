@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ClassLibrary;
+using ClassLibrary.UserLibrary;
 
 namespace HostingBigBrother.Model
 {
@@ -20,17 +20,22 @@ namespace HostingBigBrother.Model
 
         public void AddRangeUser(IEnumerable<IUser> users)
         {
-            var existUsers = users.Where(user => ExistUser(user.UserName, user.PCName));
-            var noExistUsers = users.Where(user => !ExistUser(user.UserName, user.PCName));
+            IEnumerable<IUser> existUsers = users.Where(user => ExistUser(user.UserName, user.PCName));
+            IEnumerable<IUser> noExistUsers = users.Where(user => !ExistUser(user.UserName, user.PCName));
 
             if (existUsers.Count() != 0)
             {
-                foreach (IUser user in existUsers)
+                foreach (var userExistFromNdb in existUsers)
                 {
-                    foreach (var activity1 in user.ListOfActivitesOnPc)
+                    var userFromCollection = FindUser(userExistFromNdb.UserName);
+
+                    var countUserRecordsInCollection = userFromCollection.ListOfActivitesOnPc.Count();
+                    var countUserRecordsFromNdb = userExistFromNdb.ListOfActivitesOnPc.Count();
+
+                    if (countUserRecordsInCollection >= countUserRecordsFromNdb) continue;
+                    for (var i = countUserRecordsInCollection - 1; i < countUserRecordsFromNdb; i++)
                     {
-                        var activity = (MonitoringActivity) activity1;
-                        AddUserActivity(user.UserName, activity);
+                        AddUserActivity(userFromCollection, userExistFromNdb.ListOfActivitesOnPc[i]);
                     }
                 }
             }
@@ -41,10 +46,9 @@ namespace HostingBigBrother.Model
             }
         }
 
-        public void AddUserActivity(string userName, IActivity activity)
+        public void AddUserActivity(IUser user, Activity activity)
         {
-            IUser userHelper = FindUser(userName);
-            userHelper.ListOfActivitesOnPc.Add((MonitoringActivity)activity);
+            user.ListOfActivitesOnPc.Add(activity);
         }
 
         private IUser FindUser(string userName)

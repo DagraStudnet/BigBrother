@@ -56,16 +56,14 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
       <Project>{BAD6C951-C15E-4467-92A4-6CDE833AF53F}</Project>
       <Name>ClassLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UserStorageLibrary\UserStorageLibrary.csproj">
-      <Project>{DE9A67F0-B63B-4FE6-8528-7C5EAA77C731}</Project>
-      <Name>UserStorageLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\UserStorageNDatabase\UserStorageNDatabase.csproj">
       <Project>{DA212EE5-AA7D-48E8-BF04-3F1ED6AC8116}</Project>

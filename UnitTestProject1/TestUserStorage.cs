@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using NUnit.Framework;
 using UserStorageNDatabase;
 
@@ -15,8 +14,8 @@ namespace UnitTestProject1
         {
             userStorage = UserStorage.ReturnDatabaseInstance();
         }
-        
-        private UserStorage userStorage;        
+
+        private UserStorage userStorage;
 
         [Test]
         public void Add_user_to_storage()
@@ -47,13 +46,15 @@ namespace UnitTestProject1
             Assert.AreEqual(4, usersFromStorage.Count());
             UserStorageHelper.FindUsers(usersFromStorage);
 
-            IUser userFromStorage = UserStorageHelper.GetUserFromStorage(usersFromStorage, UserStorageHelper.ExeptedUserName + 0, UserStorageHelper.ExeptedPcName + 0);
+            IUser userFromStorage = UserStorageHelper.GetUserFromStorage(usersFromStorage,
+                UserStorageHelper.ExeptedUserName + 0, UserStorageHelper.ExeptedPcName + 0);
             IUser updatedUser = UserStorageHelper.AddActivites(userFromStorage);
             userStorage.AddUserToDbStorage(updatedUser);
 
             Assert.AreEqual(4, usersFromStorage.Count());
             UserStorageHelper.FindUsers(usersFromStorage);
-            userFromStorage = UserStorageHelper.GetUserFromStorage(usersFromStorage, UserStorageHelper.ExeptedUserName + 0, UserStorageHelper.ExeptedPcName + 0);
+            userFromStorage = UserStorageHelper.GetUserFromStorage(usersFromStorage,
+                UserStorageHelper.ExeptedUserName + 0, UserStorageHelper.ExeptedPcName + 0);
             UserStorageHelper.AssertActivites(userFromStorage);
         }
     }

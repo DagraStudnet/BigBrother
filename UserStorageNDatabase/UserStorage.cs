@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using NDatabase;
 using NDatabase.Api;
 
@@ -54,9 +54,9 @@ namespace UserStorageNDatabase
             user.TimeStampsDispatch = DateTime.Now;
         }
 
-        public static void  SaveUserToStore(IOdb odb, IUser dbUser)
+        public static void SaveUserToStore(IOdb odb, IUser dbUser)
         {
-             odb.Store(dbUser);
+            odb.Store(dbUser);
         }
 
         public static IUser FindUser(IOdb odb, IUser user)
@@ -65,7 +65,6 @@ namespace UserStorageNDatabase
                 odb.QueryAndExecute<IUser>()
                     .ToList()
                     .Find(odbUser => odbUser.PCName.Equals(user.PCName) && odbUser.UserName.Equals(user.UserName));
-
         }
 
         public IEnumerable<IUser> GetCollectionUsersFromDb()

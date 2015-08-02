@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using ClientBigBrother.ViewModel;
 
 namespace ClientBigBrother.View
@@ -14,6 +15,8 @@ namespace ClientBigBrother.View
         {
             InitializeComponent();
             vmMain = new ViewModelMain();
+            if(vmMain.ConfigFileDoesntWork)
+                Close();
         }
     }
 }

@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\TransformerUsersFromDBStorage.cs" />
+    <Compile Include="ViewModel\TransformerUsersFromNdbStorage.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -116,9 +116,6 @@
       <Project>{c8fac881-bb59-48d3-9781-48520f648413}</Project>
       <Name>WcfServiceLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

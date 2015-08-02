@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using System.Windows;
 using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using ClientBigBrother.WcfServiceLibrary;
 
 namespace ClientBigBrother.Model.WcfService
@@ -9,13 +10,19 @@ namespace ClientBigBrother.Model.WcfService
     public class CommunicationWithService
     {
         private LibraryClient proxy;
+        private readonly WcfServiceClientConfiguration wcfServiceClientConfiguration;
+
+        public CommunicationWithService(WcfServiceClientConfiguration wcfServiceClientConfiguration)
+        {
+            this.wcfServiceClientConfiguration = wcfServiceClientConfiguration;
+            
+        }
 
         public void SendInformationToService(IUser user)
         {
             try
-            {
-                //WcfService<LibraryClient>.AutoRepair(ref proxy);
-                proxy = new LibraryClient();
+            {                
+                proxy = new LibraryClient(wcfServiceClientConfiguration.NetTcpBinding,wcfServiceClientConfiguration.Address);
                 if (proxy.State == CommunicationState.Faulted)
                     throw new CommunicationObjectFaultedException("Connection fault.");
                 if (proxy.State == CommunicationState.Closed)

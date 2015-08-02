@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClassLibrary;
+using ClassLibrary.UserLibrary;
 using NUnit.Framework;
 
 namespace UnitTestProject1
 {
     public static class UserStorageHelper
     {
-         public const string ExeptedPcName = "NB17";
-         public const string ExeptedUserName = "Lukas";
+        public const string ExeptedPcName = "NB17";
+        public const string ExeptedUserName = "Lukas";
 
         public static IUser AddActivites(IUser userFromStorage)
         {
@@ -54,9 +54,9 @@ namespace UnitTestProject1
                     .Find(u => u.UserName.Equals(exeptedUserName) && u.PCName.Equals(exeptedPcName));
         }
 
-        public static void AssertActivites(IUser userFromStorage, int startIndex=0)
+        public static void AssertActivites(IUser userFromStorage, int startIndex = 0)
         {
-            for (var index = startIndex; index < userFromStorage.ListOfActivitesOnPc.Count; index++)
+            for (int index = startIndex; index < userFromStorage.ListOfActivitesOnPc.Count; index++)
             {
                 Activity activity = userFromStorage.ListOfActivitesOnPc[index];
                 Assert.AreNotEqual(null, activity);

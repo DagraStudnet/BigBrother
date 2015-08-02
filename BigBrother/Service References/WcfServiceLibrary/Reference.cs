@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using ClassLibrary.UserLibrary;
+
 namespace ClientBigBrother.WcfServiceLibrary {
     
     
@@ -16,10 +18,10 @@ namespace ClientBigBrother.WcfServiceLibrary {
     public interface ILibrary {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibrary/AddUser", ReplyAction="http://tempuri.org/ILibrary/AddUserResponse")]
-        void AddUser(ClassLibrary.User user);
+        void AddUser(User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibrary/AddUser", ReplyAction="http://tempuri.org/ILibrary/AddUserResponse")]
-        System.Threading.Tasks.Task AddUserAsync(ClassLibrary.User user);
+        System.Threading.Tasks.Task AddUserAsync(User user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,11 +51,11 @@ namespace ClientBigBrother.WcfServiceLibrary {
                 base(binding, remoteAddress) {
         }
         
-        public void AddUser(ClassLibrary.User user) {
+        public void AddUser(User user) {
             base.Channel.AddUser(user);
         }
         
-        public System.Threading.Tasks.Task AddUserAsync(ClassLibrary.User user) {
+        public System.Threading.Tasks.Task AddUserAsync(User user) {
             return base.Channel.AddUserAsync(user);
         }
     }

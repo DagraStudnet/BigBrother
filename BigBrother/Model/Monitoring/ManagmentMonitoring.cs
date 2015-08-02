@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Threading;
 using ClassLibrary;
+using ClassLibrary.UserLibrary;
 
 namespace ClientBigBrother.Model.Monitoring
 {

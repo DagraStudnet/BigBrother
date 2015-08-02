@@ -1,4 +1,5 @@
 ﻿using ClassLibrary;
+using ClassLibrary.UserLibrary;
 
 namespace HostingBigBrother.Model
 {

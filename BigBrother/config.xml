@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ConnectionServer>
+  <Address>net.tcp://localhost:8080/Test</Address>
+  <TimeIntervalInSeconds>60</TimeIntervalInSeconds>
+</ConnectionServer>
