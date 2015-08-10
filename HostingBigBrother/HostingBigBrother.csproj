@@ -78,40 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Activity.cs">
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Date_time_event.cs">
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Event.cs">
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DBTransaction.cs" />
-    <Compile Include="Observer.cs">
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqliteDb.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SqliteDb.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqliteDb.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqliteDb.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SqliteDb.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="User_timestamp.cs">
-      <DependentUpon>SqliteDb.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\UserTransformation.cs" />
     <Compile Include="ViewModel\TransformerUsersFromNdbStorage.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
     <Page Include="MainWindow.xaml">
@@ -148,30 +115,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\DataSources\UzivatelLibery.Uzivatel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="SqliteDb.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SqliteDb.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="SqliteDb.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SqliteDb.edmx</DependentUpon>
-      <LastGenOutput>SqliteDb.Context.cs</LastGenOutput>
-    </None>
-    <None Include="SqliteDb.edmx.diagram">
-      <DependentUpon>SqliteDb.edmx</DependentUpon>
-    </None>
-    <None Include="SqliteDb.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SqliteDb.edmx</DependentUpon>
-      <LastGenOutput>SqliteDb.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -182,6 +134,10 @@
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
       <Project>{BAD6C951-C15E-4467-92A4-6CDE833AF53F}</Project>
       <Name>ClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqliteDatabase\SqliteDatabase.csproj">
+      <Project>{2F717557-A524-4B49-932B-0CC6A72D092F}</Project>
+      <Name>SqliteDatabase</Name>
     </ProjectReference>
     <ProjectReference Include="..\WcfServiceLibrary\WcfServiceLibrary.csproj">
       <Project>{c8fac881-bb59-48d3-9781-48520f648413}</Project>

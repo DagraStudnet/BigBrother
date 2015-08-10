@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
 using ClassLibrary.UserLibrary;
-using UserStorageNDatabase;
+using SqliteDatabase;
+
 
 namespace WcfServiceLibrary
 {
@@ -10,8 +11,8 @@ namespace WcfServiceLibrary
     {
         public void AddUser(User user)
         {
-            UserStorage userNDatabase = UserStorage.ReturnDatabaseInstance();
-            userNDatabase.AddUserToDbStorage(user);
+            DBTransaction dbTransaction = DBTransaction.ReturnDatabaseInstance();
+            dbTransaction.AddUser(user);
         }
     }
 }

@@ -4,7 +4,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ListOfActivitesOnPc" nillable="true" type="tns:ArrayOfActivity" />
       <xs:element minOccurs="0" name="PCName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TimeStampsDispatch" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TimeStampDispatch" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

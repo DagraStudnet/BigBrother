@@ -13,7 +13,7 @@ namespace HostingBigBrother.ViewModel
             {
                 UserName = user.UserName,
                 PCName = user.PCName,
-                TimeStampsDispatch = user.TimeStampsDispatch,
+                TimeStampDispatch = user.TimeStampDispatch,
                 ListOfActivitesOnPc = ActivityTransform(user)
             };
         }

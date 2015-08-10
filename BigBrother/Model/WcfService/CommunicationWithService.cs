@@ -27,6 +27,7 @@ namespace ClientBigBrother.Model.WcfService
                     throw new CommunicationObjectFaultedException("Connection fault.");
                 if (proxy.State == CommunicationState.Closed)
                     proxy.Open();
+                user.TimeStampDispatch = DateTime.Now;
                 proxy.AddUser((User) user);
                 user.ListOfActivitesOnPc.Clear();
             }

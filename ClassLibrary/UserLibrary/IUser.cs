@@ -7,7 +7,7 @@ namespace ClassLibrary.UserLibrary
     {
         string UserName { get; set; }
         string PCName { get; set; }
-        DateTime TimeStampsDispatch { get; set; }
+        DateTime TimeStampDispatch { get; set; }
         IList<Activity> ListOfActivitesOnPc { get; set; }
     }
 }

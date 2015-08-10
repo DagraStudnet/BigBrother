@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 using System.Windows;
-using UserStorageNDatabase;
+using SqliteDatabase;
 using WcfServiceLibrary;
 
 
@@ -11,13 +11,13 @@ namespace HostingBigBrother
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly UserStorage userSingleton;
+        private readonly DBTransaction dbTransactionSingleton;
         private ServiceHost host;
 
         public MainWindow()
         {
             InitializeComponent();
-            userSingleton = UserStorage.ReturnDatabaseInstance();
+            dbTransactionSingleton = DBTransaction.ReturnDatabaseInstance();
         }
 
         private void OpenConnectionWcf()
@@ -31,14 +31,7 @@ namespace HostingBigBrother
 
         private void VypsatButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var listUser in userSingleton.GetCollectionUsersFromDb())
-            {
-                V.Items.Add(listUser.UserName);
-                foreach (var activites in listUser.ListOfActivitesOnPc)
-                {
-                    V.Items.Add(activites.NameActivity);
-                }
-            }
+          
         }
 
         private void Pripojit_Click(object sender, RoutedEventArgs e)

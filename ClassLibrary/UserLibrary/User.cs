@@ -18,7 +18,7 @@ namespace ClassLibrary.UserLibrary
         public string PCName { get; set; }
 
         [DataMember]
-        public DateTime TimeStampsDispatch { get; set; }
+        public DateTime TimeStampDispatch { get; set; }
 
         [DataMember]
         public IList<Activity> ListOfActivitesOnPc { get; set; }
