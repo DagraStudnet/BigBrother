@@ -10,14 +10,12 @@
         <EntityTypeShape EntityType="BigBrotherDBModel.Db_event" Width="1.5" PointX="3.5" PointY="0.75" />
         <EntityTypeShape EntityType="BigBrotherDBModel.Db_observer" Width="1.5" PointX="8.375" PointY="1.375" />
         <EntityTypeShape EntityType="BigBrotherDBModel.Db_user" Width="1.5" PointX="1.25" PointY="3.75" />
-        <EntityTypeShape EntityType="BigBrotherDBModel.Db_user_timestamp" Width="1.5" PointX="8.5" PointY="3.5" />
         <EntityTypeShape EntityType="BigBrotherDBModel.Db_user_work" Width="1.5" PointX="1.125" PointY="0.5" />
         <AssociationConnector Association="BigBrotherDBModel.FK_Db_activity_0_0" />
         <AssociationConnector Association="BigBrotherDBModel.FK_Db_date_time_event_0_0" />
         <AssociationConnector Association="BigBrotherDBModel.FK_Db_date_time_event_1_0" />
         <AssociationConnector Association="BigBrotherDBModel.FK_Db_date_time_event_2_0" />
         <AssociationConnector Association="BigBrotherDBModel.FK_Db_user_work_0_0" />
-        <AssociationConnector Association="BigBrotherDBModel.FK_Db_user_timestamp_0_0" />
         <AssociationConnector Association="BigBrotherDBModel.FK_Db_user_work_1_0" />
       </Diagram>
     </edmx:Diagrams>

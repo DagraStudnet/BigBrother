@@ -79,9 +79,6 @@
     <Compile Include="DB_Models\Db_user.cs">
       <DependentUpon>SqliteDbBigBrother.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB_Models\Db_user_timestamp.cs">
-      <DependentUpon>SqliteDbBigBrother.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB_Models\Db_user_work.cs">
       <DependentUpon>SqliteDbBigBrother.tt</DependentUpon>
     </Compile>

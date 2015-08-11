@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="44e3b58892bc454683e8070bf67970ce" Name="Diagram1">
+        <EntityTypeShape EntityType="TestingCloneDBModelEntities.Db_activity" Width="1.5" PointX="7.625" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestingCloneDBModelEntities.Db_date_time_event" Width="1.5" PointX="0.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestingCloneDBModelEntities.Db_event" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestingCloneDBModelEntities.Db_observer" Width="1.5" PointX="6.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestingCloneDBModelEntities.Db_user" Width="1.5" PointX="5.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestingCloneDBModelEntities.Db_user_work" Width="1.5" PointX="3" PointY="0.625" IsExpanded="true" />
+        <AssociationConnector Association="TestingCloneDBModelEntities.FK_Db_activity_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="TestingCloneDBModelEntities.FK_Db_date_time_event_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="TestingCloneDBModelEntities.FK_Db_date_time_event_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="TestingCloneDBModelEntities.FK_Db_date_time_event_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="TestingCloneDBModelEntities.FK_Db_user_work_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="TestingCloneDBModelEntities.FK_Db_user_work_1_0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

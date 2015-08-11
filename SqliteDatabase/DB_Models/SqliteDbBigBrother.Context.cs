@@ -28,6 +28,5 @@ public partial class BigBrotherEntities : DbContext
     public virtual DbSet<Db_event> Db_event { get; set; }
     public virtual DbSet<Db_observer> Db_observer { get; set; }
     public virtual DbSet<Db_user> Db_user { get; set; }
-    public virtual DbSet<Db_user_timestamp> Db_user_timestamp { get; set; }
     public virtual DbSet<Db_user_work> Db_user_work { get; set; }
 }

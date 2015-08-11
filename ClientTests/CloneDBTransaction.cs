@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ClassLibrary.UserLibrary;
+using ClientTests.DB_Model;
 
-namespace SqliteDatabase
+namespace ClientTests
 {
-    public class DBTransaction
+    public class CloneDBTransaction
     {
         private const string DateTimeFormate = "dd-MM-yyyy HH:MM:ss";
-        private static DBTransaction dbTransaction;
+        private static CloneDBTransaction cloneDbTransaction;
 
-        private DBTransaction()
+        private CloneDBTransaction()
         { }
 
 
-        public static DBTransaction ReturnDatabaseInstance()
+        public static CloneDBTransaction ReturnDatabaseInstance()
         {
-            return dbTransaction ?? new DBTransaction();
+            return cloneDbTransaction ?? new CloneDBTransaction();
         }
 
         public void DeleteDB()
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
                 var users = context.Db_user.ToList();
                 var events = context.Db_event.ToList();
@@ -43,15 +44,15 @@ namespace SqliteDatabase
 
         public void UpdateUserWork(int idUser, int idEvent, string nameWork)
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
                 var user = context.Db_user.Single(u => u.id_user.Equals(idUser));
                 var @event = context.Db_event.Single(u => u.id_event.Equals(idEvent));
-                var userWork = new Db_user_work()
+                var userWork = new DB_Model.Db_user_work()
                 {
-                    Db_event = @event,
-                    Db_user = user,
-                    name_work = nameWork
+                   Db_event = @event,
+                   Db_user = user,
+                   name_work = nameWork
                 };
                 context.Db_user_work.Add(userWork);
                 context.SaveChanges();
@@ -60,7 +61,7 @@ namespace SqliteDatabase
 
         public void UpdateUserActvityAttention(int id, bool attention)
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
                 var activity = context.Db_activity.Single(a => a.id_activity.Equals(id));
                 activity.attention = attention;
@@ -70,7 +71,7 @@ namespace SqliteDatabase
 
         public void AddUser(IUser user)
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
                 var findUser =
                     context.Db_user.SingleOrDefault(u => u.user_name.Equals(user.UserName) && u.pc_name.Equals(user.PCName));
@@ -84,10 +85,10 @@ namespace SqliteDatabase
             }
         }
 
-        private void UpdateUser(Db_user findUseruser, IUser user)
+        private void UpdateUser(DB_Model.Db_user findUseruser, IUser user)
         {
             AddActivity(findUseruser, user);
-            findUseruser.timestamp = GetUserTimestamp(user);
+            findUseruser.user_timestamp = GetUserTimestamp(user);
         }
 
         private static string GetUserTimestamp(IUser user)
@@ -95,9 +96,9 @@ namespace SqliteDatabase
             return user.TimeStampDispatch.ToString(DateTimeFormate);
         }
 
-        private static void AddActivity(Db_user findUseruser, IUser user)
+        private static void AddActivity(DB_Model.Db_user findUseruser, IUser user)
         {
-            foreach (var activity in user.ListOfActivitesOnPc.Select(item => new Db_activity()
+            foreach (var activity in user.ListOfActivitesOnPc.Select(item => new DB_Model.Db_activity()
             {
                 Db_user = findUseruser,
                 name = item.NameActivity,
@@ -109,13 +110,13 @@ namespace SqliteDatabase
             }
         }
 
-        private static void InsertUser(BigBrotherEntities context, IUser user)
+        private static void InsertUser(TestingCloneEntities context, IUser user)
         {
-            var dbUser = new Db_user
+            var dbUser = new DB_Model.Db_user
             {
                 pc_name = user.PCName,
                 user_name = user.UserName,
-                timestamp = GetUserTimestamp(user)
+                user_timestamp = GetUserTimestamp(user)
             };
             
             AddActivity(dbUser, user);
@@ -128,11 +129,11 @@ namespace SqliteDatabase
 
         public void AddDateTimeEventWithEventAndObserver()
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
-                var @event = new Db_event() { event_name = "" };
-                var observer = new Db_observer() { first_name = "", last_name = "" };
-                var dateTimeEvent = new Db_date_time_event() { Db_event = @event, Db_observer = observer, start_event = "", end_event = "" };
+                var @event = new DB_Model.Db_event() { event_name = "" };
+                var observer = new DB_Model.Db_observer() { first_name = "", last_name = "" };
+                var dateTimeEvent = new DB_Model.Db_date_time_event() { Db_event = @event, Db_observer = observer, start_event = "", end_event = "" };
                 context.Db_date_time_event.Add(dateTimeEvent);
                 context.SaveChanges();
             }
@@ -140,7 +141,7 @@ namespace SqliteDatabase
 
         public int GetDateTimeEventId()
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
                 var id = context.Db_date_time_event.SingleOrDefault(e => e.Db_event.Equals("")).id_date_time_event;
                 return (int)id;
@@ -149,7 +150,7 @@ namespace SqliteDatabase
 
         public void UpdateDateTimeEventFinish(int id, DateTime finish)
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
                 context.Db_date_time_event.Single(d => d.id_date_time_event.Equals(id)).end_event = finish.ToString(DateTimeFormate);
                 context.SaveChanges();
@@ -157,11 +158,11 @@ namespace SqliteDatabase
         }
         #endregion
 
-        public IEnumerable<Db_user> GetCollectionUsersFromDb()
+        public IEnumerable<DB_Model.Db_user> GetCollectionUsersFromDb()
         {
-            using (var context = new BigBrotherEntities())
+            using (var context = new TestingCloneEntities())
             {
-                return context.Db_user.ToList();
+                return context.Db_user.Where(u=>u.Db_activity.Any(a=>a.id_user == u.id_user)).ToList();
             }
         }
     }

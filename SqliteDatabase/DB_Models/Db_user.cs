@@ -17,20 +17,18 @@ public partial class Db_user
     {
         this.Db_activity = new HashSet<Db_activity>();
         this.Db_date_time_event = new HashSet<Db_date_time_event>();
-        this.Db_user_timestamp = new HashSet<Db_user_timestamp>();
         this.Db_user_work = new HashSet<Db_user_work>();
     }
 
     public long id_user { get; set; }
     public string user_name { get; set; }
     public string pc_name { get; set; }
+    public string timestamp { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Db_activity> Db_activity { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Db_date_time_event> Db_date_time_event { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Db_user_timestamp> Db_user_timestamp { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Db_user_work> Db_user_work { get; set; }
 }
