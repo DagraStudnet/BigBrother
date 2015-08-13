@@ -7,24 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Data.Entity.ModelConfiguration.Conventions;
-
 namespace ClientTests.DB_Model
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TestingCloneEntities : DbContext
+    public partial class TestingCloneDBEntities : DbContext
     {
-        public TestingCloneEntities()
-            : base("name=TestingCloneEntities")
+        public TestingCloneDBEntities()
+            : base("name=TestingCloneDBEntities")
         {
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<Db_activity> Db_activity { get; set; }
@@ -32,6 +30,6 @@ namespace ClientTests.DB_Model
         public virtual DbSet<Db_event> Db_event { get; set; }
         public virtual DbSet<Db_observer> Db_observer { get; set; }
         public virtual DbSet<Db_user> Db_user { get; set; }
-        public virtual DbSet<Db_user_work> Db_user_work { get; set; }
+        public virtual DbSet<Db_user_date_time_event> Db_user_date_time_event { get; set; }
     }
 }

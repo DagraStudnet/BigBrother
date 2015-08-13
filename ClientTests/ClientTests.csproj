@@ -83,37 +83,37 @@
   <ItemGroup>
     <Compile Include="CloneDBTransaction.cs" />
     <Compile Include="DB_Model\Db_activity.cs">
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Model\Db_date_time_event.cs">
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Model\Db_event.cs">
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Model\Db_observer.cs">
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Model\Db_user.cs">
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB_Model\Db_user_work.cs">
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+    <Compile Include="DB_Model\Db_user_date_time_event.cs">
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB_Model\TestDBModel.Context.cs">
+    <Compile Include="DB_Model\TestDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestDBModel.Context.tt</DependentUpon>
+      <DependentUpon>TestDbModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB_Model\TestDBModel.cs">
+    <Compile Include="DB_Model\TestDbModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestDBModel.tt</DependentUpon>
+      <DependentUpon>TestDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB_Model\TestDBModel.Designer.cs">
+    <Compile Include="DB_Model\TestDbModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestDBModel.edmx</DependentUpon>
+      <DependentUpon>TestDbModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ManagmentMonitoringTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,22 +137,22 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="DB_Model\TestDBModel.edmx">
+    <EntityDeploy Include="DB_Model\TestDbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TestDBModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>TestDbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DB_Model\TestDBModel.Context.tt">
+    <None Include="DB_Model\TestDbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestDBModel.edmx</DependentUpon>
-      <LastGenOutput>TestDBModel.Context.cs</LastGenOutput>
+      <DependentUpon>TestDbModel.edmx</DependentUpon>
+      <LastGenOutput>TestDbModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="DB_Model\TestDBModel.edmx.diagram">
-      <DependentUpon>TestDBModel.edmx</DependentUpon>
+    <None Include="DB_Model\TestDbModel.edmx.diagram">
+      <DependentUpon>TestDbModel.edmx</DependentUpon>
     </None>
-    <None Include="DB_Model\TestDBModel.tt">
+    <None Include="DB_Model\TestDbModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestDBModel.edmx</DependentUpon>
-      <LastGenOutput>TestDBModel.cs</LastGenOutput>
+      <DependentUpon>TestDbModel.edmx</DependentUpon>
+      <LastGenOutput>TestDbModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

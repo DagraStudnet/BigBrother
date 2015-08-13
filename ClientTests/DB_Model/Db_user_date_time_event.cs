@@ -12,14 +12,14 @@ namespace ClientTests.DB_Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Db_activity
+    public partial class Db_user_date_time_event
     {
-        public long id_activity { get; set; }
-        public string name { get; set; }
-        public string time_activity { get; set; }
-        public Nullable<bool> attention { get; set; }
+        public long id_user_date_time_event { get; set; }
+        public string name_work { get; set; }
         public Nullable<long> id_user { get; set; }
+        public Nullable<long> id_date_time_event { get; set; }
     
+        public virtual Db_date_time_event Db_date_time_event { get; set; }
         public virtual Db_user Db_user { get; set; }
     }
 }

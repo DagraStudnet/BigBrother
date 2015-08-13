@@ -18,7 +18,6 @@ namespace ClientTests.DB_Model
         public Db_event()
         {
             this.Db_date_time_event = new HashSet<Db_date_time_event>();
-            this.Db_user_work = new HashSet<Db_user_work>();
         }
     
         public long id_event { get; set; }
@@ -26,7 +25,5 @@ namespace ClientTests.DB_Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Db_date_time_event> Db_date_time_event { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Db_user_work> Db_user_work { get; set; }
     }
 }
