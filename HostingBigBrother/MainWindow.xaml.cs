@@ -1,5 +1,10 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ServiceModel;
 using System.Windows;
+using System.Windows.Data;
+using HostingBigBrother.Model;
+using HostingBigBrother.ViewModel;
 using SqliteDatabase;
 using WcfServiceLibrary;
 
@@ -13,30 +18,18 @@ namespace HostingBigBrother
     {
         private readonly DBTransaction dbTransactionSingleton;
         private ServiceHost host;
+        private ViewModelMain main;
 
         public MainWindow()
         {
             InitializeComponent();
-            dbTransactionSingleton = DBTransaction.ReturnDatabaseInstance();
         }
 
-        private void OpenConnectionWcf()
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            host = new ServiceHost(typeof(Library));
-            V.Items.Add(host.State.ToString());
-            host.Open();
-            V.Items.Add(host.State.ToString());
+            main=new ViewModelMain();
+            DataContext = main;
         }
 
-
-        private void VypsatButton_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-
-        private void Pripojit_Click(object sender, RoutedEventArgs e)
-        {
-            OpenConnectionWcf();
-        }
     }
 }

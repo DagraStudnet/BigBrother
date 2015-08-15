@@ -128,10 +128,6 @@
       <Project>{BAD6C951-C15E-4467-92A4-6CDE833AF53F}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SqliteDatabase\SqliteDatabase.csproj">
-      <Project>{2F717557-A524-4B49-932B-0CC6A72D092F}</Project>
-      <Name>SqliteDatabase</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

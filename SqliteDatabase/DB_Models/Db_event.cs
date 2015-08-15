@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class Db_event
+namespace SqliteDatabase.DB_Models
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Db_event()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Db_event
     {
-        this.Db_date_time_event = new HashSet<Db_date_time_event>();
-        this.Db_user_work = new HashSet<Db_user_work>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Db_event()
+        {
+            this.Db_date_time_event = new HashSet<Db_date_time_event>();
+        }
+    
+        public long id_event { get; set; }
+        public string event_name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Db_date_time_event> Db_date_time_event { get; set; }
     }
-
-    public long id_event { get; set; }
-    public string event_name { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Db_date_time_event> Db_date_time_event { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Db_user_work> Db_user_work { get; set; }
 }

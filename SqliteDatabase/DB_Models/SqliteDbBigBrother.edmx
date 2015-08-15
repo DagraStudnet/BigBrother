@@ -12,8 +12,9 @@
           <Property Name="id_activity" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="time_activity" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="attention" Type="bit" />
+          <Property Name="attention" Type="integer" />
           <Property Name="id_user" Type="integer" />
+          <Property Name="ignore_attention" Type="integer" />
         </EntityType>
         <EntityType Name="Db_date_time_event">
           <Key>
@@ -24,7 +25,6 @@
           <Property Name="end_event" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="id_observer" Type="integer" Nullable="false" />
           <Property Name="id_event" Type="integer" Nullable="false" />
-          <Property Name="id_user" Type="integer" />
         </EntityType>
         <EntityType Name="Db_event">
           <Key>
@@ -48,16 +48,16 @@
           <Property Name="id_user" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="pc_name" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="timestamp" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="user_timestamp" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
-        <EntityType Name="Db_user_work">
+        <EntityType Name="Db_user_date_time_event">
           <Key>
-            <PropertyRef Name="id_user_work" />
+            <PropertyRef Name="id_user_date_time_event" />
           </Key>
-          <Property Name="id_user_work" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_user_date_time_event" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name_work" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="id_user" Type="integer" />
-          <Property Name="id_event" Type="integer" />
+          <Property Name="id_date_time_event" Type="integer" />
         </EntityType>
         <Association Name="FK_Db_activity_0_0">
           <End Role="Db_user" Type="Self.Db_user" Multiplicity="0..1" />
@@ -84,18 +84,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Db_date_time_event_1_0">
-          <End Role="Db_user" Type="Self.Db_user" Multiplicity="0..1" />
-          <End Role="Db_date_time_event" Type="Self.Db_date_time_event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Db_user">
-              <PropertyRef Name="id_user" />
-            </Principal>
-            <Dependent Role="Db_date_time_event">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Db_date_time_event_2_0">
           <End Role="Db_observer" Type="Self.Db_observer" Multiplicity="1" />
           <End Role="Db_date_time_event" Type="Self.Db_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
@@ -107,26 +95,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Db_user_work_0_0">
-          <End Role="Db_event" Type="Self.Db_event" Multiplicity="0..1" />
-          <End Role="Db_user_work" Type="Self.Db_user_work" Multiplicity="*" />
+        <Association Name="FK_Db_user_date_time_event_0_0">
+          <End Role="Db_date_time_event" Type="Self.Db_date_time_event" Multiplicity="0..1" />
+          <End Role="Db_user_date_time_event" Type="Self.Db_user_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Db_event">
-              <PropertyRef Name="id_event" />
+            <Principal Role="Db_date_time_event">
+              <PropertyRef Name="id_date_time_event" />
             </Principal>
-            <Dependent Role="Db_user_work">
-              <PropertyRef Name="id_event" />
+            <Dependent Role="Db_user_date_time_event">
+              <PropertyRef Name="id_date_time_event" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Db_user_work_1_0">
+        <Association Name="FK_Db_user_date_time_event_1_0">
           <End Role="Db_user" Type="Self.Db_user" Multiplicity="0..1" />
-          <End Role="Db_user_work" Type="Self.Db_user_work" Multiplicity="*" />
+          <End Role="Db_user_date_time_event" Type="Self.Db_user_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Db_user">
               <PropertyRef Name="id_user" />
             </Principal>
-            <Dependent Role="Db_user_work">
+            <Dependent Role="Db_user_date_time_event">
               <PropertyRef Name="id_user" />
             </Dependent>
           </ReferentialConstraint>
@@ -137,7 +125,7 @@
           <EntitySet Name="Db_event" EntityType="Self.Db_event" store:Type="Tables" />
           <EntitySet Name="Db_observer" EntityType="Self.Db_observer" store:Type="Tables" />
           <EntitySet Name="Db_user" EntityType="Self.Db_user" store:Type="Tables" />
-          <EntitySet Name="Db_user_work" EntityType="Self.Db_user_work" store:Type="Tables" />
+          <EntitySet Name="Db_user_date_time_event" EntityType="Self.Db_user_date_time_event" store:Type="Tables" />
           <AssociationSet Name="FK_Db_activity_0_0" Association="Self.FK_Db_activity_0_0">
             <End Role="Db_user" EntitySet="Db_user" />
             <End Role="Db_activity" EntitySet="Db_activity" />
@@ -147,58 +135,22 @@
             <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
           </AssociationSet>
           <AssociationSet Name="FK_Db_date_time_event_1_0" Association="Self.FK_Db_date_time_event_1_0">
-            <End Role="Db_user" EntitySet="Db_user" />
-            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Db_date_time_event_2_0" Association="Self.FK_Db_date_time_event_2_0">
             <End Role="Db_observer" EntitySet="Db_observer" />
             <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
           </AssociationSet>
-          <AssociationSet Name="FK_Db_user_work_0_0" Association="Self.FK_Db_user_work_0_0">
-            <End Role="Db_event" EntitySet="Db_event" />
-            <End Role="Db_user_work" EntitySet="Db_user_work" />
+          <AssociationSet Name="FK_Db_user_date_time_event_0_0" Association="Self.FK_Db_user_date_time_event_0_0">
+            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
+            <End Role="Db_user_date_time_event" EntitySet="Db_user_date_time_event" />
           </AssociationSet>
-          <AssociationSet Name="FK_Db_user_work_1_0" Association="Self.FK_Db_user_work_1_0">
+          <AssociationSet Name="FK_Db_user_date_time_event_1_0" Association="Self.FK_Db_user_date_time_event_1_0">
             <End Role="Db_user" EntitySet="Db_user" />
-            <End Role="Db_user_work" EntitySet="Db_user_work" />
+            <End Role="Db_user_date_time_event" EntitySet="Db_user_date_time_event" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BigBrotherDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="BigBrotherEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Db_activity" EntityType="BigBrotherDBModel.Db_activity" />
-          <EntitySet Name="Db_date_time_event" EntityType="BigBrotherDBModel.Db_date_time_event" />
-          <EntitySet Name="Db_event" EntityType="BigBrotherDBModel.Db_event" />
-          <EntitySet Name="Db_observer" EntityType="BigBrotherDBModel.Db_observer" />
-          <EntitySet Name="Db_user" EntityType="BigBrotherDBModel.Db_user" />
-          <EntitySet Name="Db_user_work" EntityType="BigBrotherDBModel.Db_user_work" />
-          <AssociationSet Name="FK_Db_activity_0_0" Association="BigBrotherDBModel.FK_Db_activity_0_0">
-            <End Role="Db_user" EntitySet="Db_user" />
-            <End Role="Db_activity" EntitySet="Db_activity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Db_date_time_event_0_0" Association="BigBrotherDBModel.FK_Db_date_time_event_0_0">
-            <End Role="Db_event" EntitySet="Db_event" />
-            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Db_date_time_event_1_0" Association="BigBrotherDBModel.FK_Db_date_time_event_1_0">
-            <End Role="Db_user" EntitySet="Db_user" />
-            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Db_date_time_event_2_0" Association="BigBrotherDBModel.FK_Db_date_time_event_2_0">
-            <End Role="Db_observer" EntitySet="Db_observer" />
-            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Db_user_work_0_0" Association="BigBrotherDBModel.FK_Db_user_work_0_0">
-            <End Role="Db_event" EntitySet="Db_event" />
-            <End Role="Db_user_work" EntitySet="Db_user_work" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Db_user_work_1_0" Association="BigBrotherDBModel.FK_Db_user_work_1_0">
-            <End Role="Db_user" EntitySet="Db_user" />
-            <End Role="Db_user_work" EntitySet="Db_user_work" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Db_activity">
           <Key>
             <PropertyRef Name="id_activity" />
@@ -206,9 +158,10 @@
           <Property Name="id_activity" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="time_activity" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="attention" Type="Boolean" />
+          <Property Name="attention" Type="Int32" />
           <Property Name="id_user" Type="Int64" />
-          <NavigationProperty Name="Db_user" Relationship="BigBrotherDBModel.FK_Db_activity_0_0" FromRole="Db_activity" ToRole="Db_user" />
+          <NavigationProperty Name="Db_user" Relationship="Self.FK_Db_activity_0_0" FromRole="Db_activity" ToRole="Db_user" />
+          <Property Name="ignore_attention" Type="Int32" />
         </EntityType>
         <EntityType Name="Db_date_time_event">
           <Key>
@@ -219,10 +172,9 @@
           <Property Name="end_event" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="id_observer" Type="Int64" Nullable="false" />
           <Property Name="id_event" Type="Int64" Nullable="false" />
-          <Property Name="id_user" Type="Int64" />
-          <NavigationProperty Name="Db_event" Relationship="BigBrotherDBModel.FK_Db_date_time_event_0_0" FromRole="Db_date_time_event" ToRole="Db_event" />
-          <NavigationProperty Name="Db_user" Relationship="BigBrotherDBModel.FK_Db_date_time_event_1_0" FromRole="Db_date_time_event" ToRole="Db_user" />
-          <NavigationProperty Name="Db_observer" Relationship="BigBrotherDBModel.FK_Db_date_time_event_2_0" FromRole="Db_date_time_event" ToRole="Db_observer" />
+          <NavigationProperty Name="Db_event" Relationship="Self.FK_Db_date_time_event_0_0" FromRole="Db_date_time_event" ToRole="Db_event" />
+          <NavigationProperty Name="Db_observer" Relationship="Self.FK_Db_date_time_event_1_0" FromRole="Db_date_time_event" ToRole="Db_observer" />
+          <NavigationProperty Name="Db_user_date_time_event" Relationship="Self.FK_Db_user_date_time_event_0_0" FromRole="Db_date_time_event" ToRole="Db_user_date_time_event" />
         </EntityType>
         <EntityType Name="Db_event">
           <Key>
@@ -230,8 +182,7 @@
           </Key>
           <Property Name="id_event" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="event_name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Db_date_time_event" Relationship="BigBrotherDBModel.FK_Db_date_time_event_0_0" FromRole="Db_event" ToRole="Db_date_time_event" />
-          <NavigationProperty Name="Db_user_work" Relationship="BigBrotherDBModel.FK_Db_user_work_0_0" FromRole="Db_event" ToRole="Db_user_work" />
+          <NavigationProperty Name="Db_date_time_event" Relationship="Self.FK_Db_date_time_event_0_0" FromRole="Db_event" ToRole="Db_date_time_event" />
         </EntityType>
         <EntityType Name="Db_observer">
           <Key>
@@ -240,7 +191,7 @@
           <Property Name="id_observer" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="first_name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="last_name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Db_date_time_event" Relationship="BigBrotherDBModel.FK_Db_date_time_event_2_0" FromRole="Db_observer" ToRole="Db_date_time_event" />
+          <NavigationProperty Name="Db_date_time_event" Relationship="Self.FK_Db_date_time_event_1_0" FromRole="Db_observer" ToRole="Db_date_time_event" />
         </EntityType>
         <EntityType Name="Db_user">
           <Key>
@@ -249,25 +200,24 @@
           <Property Name="id_user" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="pc_name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Db_activity" Relationship="BigBrotherDBModel.FK_Db_activity_0_0" FromRole="Db_user" ToRole="Db_activity" />
-          <NavigationProperty Name="Db_date_time_event" Relationship="BigBrotherDBModel.FK_Db_date_time_event_1_0" FromRole="Db_user" ToRole="Db_date_time_event" />
-          <NavigationProperty Name="Db_user_work" Relationship="BigBrotherDBModel.FK_Db_user_work_1_0" FromRole="Db_user" ToRole="Db_user_work" />
-          <Property Name="timestamp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Db_activity" Relationship="Self.FK_Db_activity_0_0" FromRole="Db_user" ToRole="Db_activity" />
+          <NavigationProperty Name="Db_user_date_time_event" Relationship="Self.FK_Db_user_date_time_event_1_0" FromRole="Db_user" ToRole="Db_user_date_time_event" />
+          <Property Name="user_timestamp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Db_user_work">
+        <EntityType Name="Db_user_date_time_event">
           <Key>
-            <PropertyRef Name="id_user_work" />
+            <PropertyRef Name="id_user_date_time_event" />
           </Key>
-          <Property Name="id_user_work" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_user_date_time_event" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name_work" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="id_user" Type="Int64" />
-          <Property Name="id_event" Type="Int64" />
-          <NavigationProperty Name="Db_event" Relationship="BigBrotherDBModel.FK_Db_user_work_0_0" FromRole="Db_user_work" ToRole="Db_event" />
-          <NavigationProperty Name="Db_user" Relationship="BigBrotherDBModel.FK_Db_user_work_1_0" FromRole="Db_user_work" ToRole="Db_user" />
+          <Property Name="id_date_time_event" Type="Int64" />
+          <NavigationProperty Name="Db_date_time_event" Relationship="Self.FK_Db_user_date_time_event_0_0" FromRole="Db_user_date_time_event" ToRole="Db_date_time_event" />
+          <NavigationProperty Name="Db_user" Relationship="Self.FK_Db_user_date_time_event_1_0" FromRole="Db_user_date_time_event" ToRole="Db_user" />
         </EntityType>
         <Association Name="FK_Db_activity_0_0">
-          <End Type="BigBrotherDBModel.Db_user" Role="Db_user" Multiplicity="0..1" />
-          <End Type="BigBrotherDBModel.Db_activity" Role="Db_activity" Multiplicity="*" />
+          <End Role="Db_user" Type="Self.Db_user" Multiplicity="0..1" />
+          <End Role="Db_activity" Type="Self.Db_activity" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Db_user">
               <PropertyRef Name="id_user" />
@@ -278,8 +228,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Db_date_time_event_0_0">
-          <End Type="BigBrotherDBModel.Db_event" Role="Db_event" Multiplicity="1" />
-          <End Type="BigBrotherDBModel.Db_date_time_event" Role="Db_date_time_event" Multiplicity="*" />
+          <End Role="Db_event" Type="Self.Db_event" Multiplicity="1" />
+          <End Role="Db_date_time_event" Type="Self.Db_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Db_event">
               <PropertyRef Name="id_event" />
@@ -290,20 +240,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Db_date_time_event_1_0">
-          <End Type="BigBrotherDBModel.Db_user" Role="Db_user" Multiplicity="0..1" />
-          <End Type="BigBrotherDBModel.Db_date_time_event" Role="Db_date_time_event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Db_user">
-              <PropertyRef Name="id_user" />
-            </Principal>
-            <Dependent Role="Db_date_time_event">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Db_date_time_event_2_0">
-          <End Type="BigBrotherDBModel.Db_observer" Role="Db_observer" Multiplicity="1" />
-          <End Type="BigBrotherDBModel.Db_date_time_event" Role="Db_date_time_event" Multiplicity="*" />
+          <End Role="Db_observer" Type="Self.Db_observer" Multiplicity="1" />
+          <End Role="Db_date_time_event" Type="Self.Db_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Db_observer">
               <PropertyRef Name="id_observer" />
@@ -313,31 +251,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Db_user_work_0_0">
-          <End Type="BigBrotherDBModel.Db_event" Role="Db_event" Multiplicity="0..1" />
-          <End Type="BigBrotherDBModel.Db_user_work" Role="Db_user_work" Multiplicity="*" />
+        <Association Name="FK_Db_user_date_time_event_0_0">
+          <End Role="Db_date_time_event" Type="Self.Db_date_time_event" Multiplicity="0..1" />
+          <End Role="Db_user_date_time_event" Type="Self.Db_user_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Db_event">
-              <PropertyRef Name="id_event" />
+            <Principal Role="Db_date_time_event">
+              <PropertyRef Name="id_date_time_event" />
             </Principal>
-            <Dependent Role="Db_user_work">
-              <PropertyRef Name="id_event" />
+            <Dependent Role="Db_user_date_time_event">
+              <PropertyRef Name="id_date_time_event" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Db_user_work_1_0">
-          <End Type="BigBrotherDBModel.Db_user" Role="Db_user" Multiplicity="0..1" />
-          <End Type="BigBrotherDBModel.Db_user_work" Role="Db_user_work" Multiplicity="*" />
+        <Association Name="FK_Db_user_date_time_event_1_0">
+          <End Role="Db_user" Type="Self.Db_user" Multiplicity="0..1" />
+          <End Role="Db_user_date_time_event" Type="Self.Db_user_date_time_event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Db_user">
               <PropertyRef Name="id_user" />
             </Principal>
-            <Dependent Role="Db_user_work">
+            <Dependent Role="Db_user_date_time_event">
               <PropertyRef Name="id_user" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="BigBrotherEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Db_activity" EntityType="Self.Db_activity" />
+          <EntitySet Name="Db_date_time_event" EntityType="Self.Db_date_time_event" />
+          <EntitySet Name="Db_event" EntityType="Self.Db_event" />
+          <EntitySet Name="Db_observer" EntityType="Self.Db_observer" />
+          <EntitySet Name="Db_user" EntityType="Self.Db_user" />
+          <EntitySet Name="Db_user_date_time_event" EntityType="Self.Db_user_date_time_event" />
+          <AssociationSet Name="FK_Db_activity_0_0" Association="Self.FK_Db_activity_0_0">
+            <End Role="Db_user" EntitySet="Db_user" />
+            <End Role="Db_activity" EntitySet="Db_activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Db_date_time_event_0_0" Association="Self.FK_Db_date_time_event_0_0">
+            <End Role="Db_event" EntitySet="Db_event" />
+            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Db_date_time_event_1_0" Association="Self.FK_Db_date_time_event_1_0">
+            <End Role="Db_observer" EntitySet="Db_observer" />
+            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Db_user_date_time_event_0_0" Association="Self.FK_Db_user_date_time_event_0_0">
+            <End Role="Db_date_time_event" EntitySet="Db_date_time_event" />
+            <End Role="Db_user_date_time_event" EntitySet="Db_user_date_time_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Db_user_date_time_event_1_0" Association="Self.FK_Db_user_date_time_event_1_0">
+            <End Role="Db_user" EntitySet="Db_user" />
+            <End Role="Db_user_date_time_event" EntitySet="Db_user_date_time_event" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -346,60 +312,60 @@
           <EntitySetMapping Name="Db_activity">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_activity">
               <MappingFragment StoreEntitySet="Db_activity">
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-                <ScalarProperty Name="attention" ColumnName="attention" />
-                <ScalarProperty Name="time_activity" ColumnName="time_activity" />
-                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ignore_attention" ColumnName="ignore_attention" />
                 <ScalarProperty Name="id_activity" ColumnName="id_activity" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="time_activity" ColumnName="time_activity" />
+                <ScalarProperty Name="attention" ColumnName="attention" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Db_date_time_event">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_date_time_event">
               <MappingFragment StoreEntitySet="Db_date_time_event">
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-                <ScalarProperty Name="id_event" ColumnName="id_event" />
-                <ScalarProperty Name="id_observer" ColumnName="id_observer" />
-                <ScalarProperty Name="end_event" ColumnName="end_event" />
-                <ScalarProperty Name="start_event" ColumnName="start_event" />
                 <ScalarProperty Name="id_date_time_event" ColumnName="id_date_time_event" />
+                <ScalarProperty Name="start_event" ColumnName="start_event" />
+                <ScalarProperty Name="end_event" ColumnName="end_event" />
+                <ScalarProperty Name="id_observer" ColumnName="id_observer" />
+                <ScalarProperty Name="id_event" ColumnName="id_event" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Db_event">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_event">
               <MappingFragment StoreEntitySet="Db_event">
-                <ScalarProperty Name="event_name" ColumnName="event_name" />
                 <ScalarProperty Name="id_event" ColumnName="id_event" />
+                <ScalarProperty Name="event_name" ColumnName="event_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Db_observer">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_observer">
               <MappingFragment StoreEntitySet="Db_observer">
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="id_observer" ColumnName="id_observer" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Db_user">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_user">
               <MappingFragment StoreEntitySet="Db_user">
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="pc_name" ColumnName="pc_name" />
-                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_timestamp" ColumnName="user_timestamp" />
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="pc_name" ColumnName="pc_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Db_user_work">
-            <EntityTypeMapping TypeName="BigBrotherDBModel.Db_user_work">
-              <MappingFragment StoreEntitySet="Db_user_work">
-                <ScalarProperty Name="id_event" ColumnName="id_event" />
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <EntitySetMapping Name="Db_user_date_time_event">
+            <EntityTypeMapping TypeName="BigBrotherDBModel.Db_user_date_time_event">
+              <MappingFragment StoreEntitySet="Db_user_date_time_event">
+                <ScalarProperty Name="id_user_date_time_event" ColumnName="id_user_date_time_event" />
                 <ScalarProperty Name="name_work" ColumnName="name_work" />
-                <ScalarProperty Name="id_user_work" ColumnName="id_user_work" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_date_time_event" ColumnName="id_date_time_event" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

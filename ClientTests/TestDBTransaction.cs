@@ -78,7 +78,7 @@ namespace ClientTests
         }
 
         [Test]
-        public void Add_event_with_observer_attention()
+        public void Add_users_to_event_with_observer()
         {
             InitDatabase(false);
             var testingEvent = new TestingEvent()
@@ -95,21 +95,26 @@ namespace ClientTests
             var hour = 1;
             foreach (var user in users)
             {
-                user.TimeStampDispatch = new DateTime(2015, 1, 1, hour, 0, 0);
+                user.TimeStampDispatch = new DateTime(2015, 1, 1, hour , 0, 0);
                 dbTransaction.AddUser(user);
                 hour++;
             }
 
             dbTransaction.AddUser(new User() { UserName = "TestOutSideCollection", PCName = "", TimeStampDispatch = new DateTime(2014, 1, 1) });
 
-            var usersFromDb = dbTransaction.GetUserCollection(new DateTime(2015, 1, 1));
+            var usersFromDb = dbTransaction.GetUserCollection(testingEvent.StartEvent);
             Assert.AreEqual(4, usersFromDb.Count());
 
             dbTransaction.AddDateTimeEventWithEventAndObserver(testingEvent, testingObserver);
             var eventFromDb = dbTransaction.GetEvent(testingEvent.NameEvent);
+            Assert.AreEqual(testingEvent.NameEvent, eventFromDb.event_name);
+
             testingEvent.Id = (int)eventFromDb.id_event;
-            var dateTimeEventFromDb = dbTransaction.GetDateTimeEvents(testingEvent.Id);
-            dbTransaction.CreateRelationshipBetweenUsersAndDateTimeEvent(dateTimeEventFromDb,usersFromDb);
+            var dateTimeEventFromDb = dbTransaction.GetDateTimeEvent(testingEvent.Id);
+            dbTransaction.CreateRelationshipBetweenUsersAndDateTimeEvent(dateTimeEventFromDb, usersFromDb);
+            var usersBelongingToEventFromDb = dbTransaction.GetUsersBelongingToDateTimeEvent(testingEvent.Id, testingEvent.StartEvent);
+            Assert.AreEqual(4, usersBelongingToEventFromDb.Count());
+            UserAssert(TransformUsers(usersBelongingToEventFromDb));
 
         }
 

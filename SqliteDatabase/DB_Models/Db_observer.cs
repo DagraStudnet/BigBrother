@@ -7,21 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class Db_observer
+namespace SqliteDatabase.DB_Models
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Db_observer()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Db_observer
     {
-        this.Db_date_time_event = new HashSet<Db_date_time_event>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Db_observer()
+        {
+            this.Db_date_time_event = new HashSet<Db_date_time_event>();
+        }
+    
+        public long id_observer { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Db_date_time_event> Db_date_time_event { get; set; }
     }
-
-    public long id_observer { get; set; }
-    public string first_name { get; set; }
-    public string last_name { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Db_date_time_event> Db_date_time_event { get; set; }
 }

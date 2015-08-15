@@ -7,26 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-
-public partial class BigBrotherEntities : DbContext
+namespace SqliteDatabase.DB_Models
 {
-    public BigBrotherEntities()
-        : base("name=BigBrotherEntities")
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class BigBrotherEntities : DbContext
     {
+        public BigBrotherEntities()
+            : base("name=BigBrotherEntities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public virtual DbSet<Db_activity> Db_activity { get; set; }
+        public virtual DbSet<Db_date_time_event> Db_date_time_event { get; set; }
+        public virtual DbSet<Db_event> Db_event { get; set; }
+        public virtual DbSet<Db_observer> Db_observer { get; set; }
+        public virtual DbSet<Db_user> Db_user { get; set; }
+        public virtual DbSet<Db_user_date_time_event> Db_user_date_time_event { get; set; }
     }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
-    }
-
-    public virtual DbSet<Db_activity> Db_activity { get; set; }
-    public virtual DbSet<Db_date_time_event> Db_date_time_event { get; set; }
-    public virtual DbSet<Db_event> Db_event { get; set; }
-    public virtual DbSet<Db_observer> Db_observer { get; set; }
-    public virtual DbSet<Db_user> Db_user { get; set; }
-    public virtual DbSet<Db_user_work> Db_user_work { get; set; }
 }

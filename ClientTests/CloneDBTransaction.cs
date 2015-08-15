@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using ClassLibrary.UserLibrary;
 using ClientTests.DB_Model;
-using Db_date_time_event = ClientTests.DB_Model.Db_date_time_event;
 
 namespace ClientTests
 {
     public class CloneDBTransaction
     {
-        private const string DateTimeFormate = "dd-MM-yyyy HH:MM:ss";
+        private const string DateTimeFormate = "dd-MM-yyyy HH:mm:ss";
         private static CloneDBTransaction cloneDbTransaction;
 
         private CloneDBTransaction()
@@ -26,14 +25,16 @@ namespace ClientTests
         {
             using (var context = new TestingCloneDBEntities())
             {
-                List<DB_Model.Db_user> users = context.Db_user.ToList();
-                List<DB_Model.Db_event> events = context.Db_event.ToList();
-                List<DB_Model.Db_date_time_event> dateTimeEvent = context.Db_date_time_event.ToList();
-                List<DB_Model.Db_activity> activities = context.Db_activity.ToList();
-                List<DB_Model.Db_user_date_time_event> userWork = context.Db_user_date_time_event.ToList();
+                List<Db_user> users = context.Db_user.ToList();
+                List<Db_observer> observers = context.Db_observer.ToList();
+                List<Db_event> events = context.Db_event.ToList();
+                List<Db_date_time_event> dateTimeEvent = context.Db_date_time_event.ToList();
+                List<Db_activity> activities = context.Db_activity.ToList();
+                List<Db_user_date_time_event> userWork = context.Db_user_date_time_event.ToList();
 
                 context.Db_activity.RemoveRange(activities);
                 context.Db_event.RemoveRange(events);
+                context.Db_observer.RemoveRange(observers);
                 context.Db_date_time_event.RemoveRange(dateTimeEvent);
                 context.Db_user.RemoveRange(users);
                 context.Db_user_date_time_event.RemoveRange(userWork);
@@ -41,7 +42,7 @@ namespace ClientTests
             }
         }
 
-        public IEnumerable<DB_Model.Db_user> GetCollectionUsersFromDb()
+        public IEnumerable<Db_user> GetCollectionUsersFromDb()
         {
             using (var context = new TestingCloneDBEntities())
             {
@@ -49,26 +50,44 @@ namespace ClientTests
             }
         }
 
-        public IEnumerable<DB_Model.Db_activity> GetCollectionUserActivitiesFromDb(long userId)
+        public IEnumerable<Db_activity> GetCollectionUserActivitiesFromDb(long userId)
         {
             using (var context = new TestingCloneDBEntities())
             {
-                List<DB_Model.Db_activity> neco = context.Db_activity.Where(a => a.id_user == userId).ToList();
+                List<Db_activity> neco = context.Db_activity.Where(a => a.id_user == userId).ToList();
                 return neco;
             }
         }
 
         #region Operation with user
 
+        public List<Db_user> GetUsersBelongingToDateTimeEvent(int eventId, DateTime startEvenTime)
+        {
+            using (var context = new TestingCloneDBEntities())
+            {
+                Db_date_time_event dateTimeEvent = null;
+                foreach (Db_date_time_event dateTime in context.Db_date_time_event)
+                {
+                    if (dateTime.id_event == eventId && DateTime.Parse(dateTime.start_event) == startEvenTime)
+                    {
+                        dateTimeEvent = dateTime;
+                    }
+                }
+                return dateTimeEvent != null
+                    ? dateTimeEvent.Db_user_date_time_event.Select(ud => ud.Db_user).ToList()
+                    : null;
+            }
+        }
+
         public void UpdateUserWork(int idUser, int idEvent, string nameWork)
         {
             using (var context = new TestingCloneDBEntities())
             {
-                DB_Model.Db_user user = context.Db_user.Single(u => u.id_user.Equals(idUser));
-                DB_Model.Db_date_time_event dateTimeEvent = context.Db_date_time_event.Single(u => u.id_event.Equals(idEvent));
-                var userDateTimeEvent = new DB_Model.Db_user_date_time_event()
+                Db_user user = context.Db_user.Single(u => u.id_user.Equals(idUser));
+                Db_date_time_event dateTimeEvent =
+                    context.Db_date_time_event.Single(u => u.id_event.Equals(idEvent));
+                var userDateTimeEvent = new Db_user_date_time_event
                 {
-
                     Db_date_time_event = dateTimeEvent,
                     Db_user = user,
                     name_work = nameWork
@@ -82,7 +101,7 @@ namespace ClientTests
         {
             using (var context = new TestingCloneDBEntities())
             {
-                DB_Model.Db_activity activity = context.Db_activity.Single(a => a.id_activity.Equals(id));
+                Db_activity activity = context.Db_activity.Single(a => a.id_activity.Equals(id));
                 activity.attention = attention;
                 context.SaveChanges();
             }
@@ -92,7 +111,7 @@ namespace ClientTests
         {
             using (var context = new TestingCloneDBEntities())
             {
-                DB_Model.Db_user findUser =
+                Db_user findUser =
                     context.Db_user.SingleOrDefault(
                         u => u.user_name.Equals(user.UserName) && u.pc_name.Equals(user.PCName));
                 if (findUser == null)
@@ -105,7 +124,7 @@ namespace ClientTests
             }
         }
 
-        private void UpdateUser(DB_Model.Db_user findUseruser, IUser user)
+        private void UpdateUser(Db_user findUseruser, IUser user)
         {
             AddActivity(findUseruser, user);
             findUseruser.user_timestamp = GetUserTimestamp(user);
@@ -116,9 +135,9 @@ namespace ClientTests
             return user.TimeStampDispatch.ToString(DateTimeFormate);
         }
 
-        private static void AddActivity(DB_Model.Db_user findUseruser, IUser user)
+        private static void AddActivity(Db_user findUseruser, IUser user)
         {
-            foreach (DB_Model.Db_activity activity in user.ListOfActivitesOnPc.Select(item => new DB_Model.Db_activity
+            foreach (Db_activity activity in user.ListOfActivitesOnPc.Select(item => new Db_activity
             {
                 Db_user = findUseruser,
                 name = item.NameActivity,
@@ -132,7 +151,7 @@ namespace ClientTests
 
         private static void InsertUser(TestingCloneDBEntities context, IUser user)
         {
-            var dbUser = new DB_Model.Db_user
+            var dbUser = new Db_user
             {
                 pc_name = user.PCName,
                 user_name = user.UserName,
@@ -143,6 +162,31 @@ namespace ClientTests
             context.Db_user.Add(dbUser);
         }
 
+        public void CreateRelationshipBetweenUsersAndDateTimeEvent(Db_date_time_event dateTimeEvent,
+            IEnumerable<Db_user> users)
+        {
+            using (var context = new TestingCloneDBEntities())
+            {
+                List<Db_user> usersFromDb = context.Db_user.ToList();
+                IEnumerable<Db_user> dbUsers = usersFromDb.Where(
+                    userDb => users.Any(user => user.user_name == userDb.user_name && user.pc_name == userDb.pc_name));
+
+                Db_date_time_event dateTimeEventFromDb =
+                    context.Db_date_time_event.Single(d => d.id_date_time_event == dateTimeEvent.id_date_time_event);
+
+                foreach (Db_user user in dbUsers)
+                {
+                    context.Db_user_date_time_event.Add(new Db_user_date_time_event
+                    {
+                        Db_user = user,
+                        Db_date_time_event = dateTimeEventFromDb
+                    });
+                }
+
+                context.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region Operation with events
@@ -151,13 +195,13 @@ namespace ClientTests
         {
             using (var context = new TestingCloneDBEntities())
             {
-                var @event = new DB_Model.Db_event { event_name = testingEvent.NameEvent };
-                var observer = new DB_Model.Db_observer
+                var @event = new Db_event {event_name = testingEvent.NameEvent};
+                var observer = new Db_observer
                 {
                     first_name = testingObserver.FirstName,
                     last_name = testingObserver.LastName
                 };
-                var dateTimeEvent = new DB_Model.Db_date_time_event
+                var dateTimeEvent = new Db_date_time_event
                 {
                     Db_event = @event,
                     Db_observer = observer,
@@ -168,16 +212,16 @@ namespace ClientTests
                 context.SaveChanges();
             }
         }
-        
-        public DB_Model.Db_date_time_event GetDateTimeEvents(int eventId)
+
+        public Db_date_time_event GetDateTimeEvent(int eventId)
         {
-            using (var context =  new TestingCloneDBEntities())
+            using (var context = new TestingCloneDBEntities())
             {
                 return context.Db_date_time_event.SingleOrDefault(d => d.id_event == eventId);
             }
         }
 
-        public DB_Model.Db_observer GetObserver(int observerId)
+        public Db_observer GetObserver(int observerId)
         {
             using (var context = new TestingCloneDBEntities())
             {
@@ -185,7 +229,7 @@ namespace ClientTests
             }
         }
 
-        public DB_Model.Db_event GetEvent(string nameEvent)
+        public Db_event GetEvent(string nameEvent)
         {
             using (var context = new TestingCloneDBEntities())
             {
@@ -193,21 +237,23 @@ namespace ClientTests
             }
         }
 
-        public IEnumerable<DB_Model.Db_user> GetUserCollection(DateTime starTimeEvent)
-        {   
+        public IEnumerable<Db_user> GetUserCollection(DateTime starTimeEvent)
+        {
+            var userList = new List<Db_user>();
             using (var context = new TestingCloneDBEntities())
             {
-                return context.Db_user.Where(u => DateTime.Parse(u.user_timestamp) >= starTimeEvent).ToList();
+                // ReSharper disable once LoopCanBeConvertedToQuery dateTime parse doesn't work in linq
+                foreach (Db_user dbUser in context.Db_user)
+                {
+                    if (DateTime.Parse(dbUser.user_timestamp) >= starTimeEvent)
+                    {
+                        userList.Add(dbUser);
+                    }
+                }
+                return userList;
             }
         }
-        //public int GetDateTimeEventId(int id)
-        //{
-        //    using (var context = new TestingCloneDBEntities())
-        //    {
-        //        long id = context.Db_date_time_event.SingleOrDefault(e => e.Db_event.Equals("")).id_date_time_event;
-        //        return (int) id;
-        //    }
-        //}
+
 
         public void UpdateDateTimeEventFinish(int id, DateTime finish)
         {
@@ -220,30 +266,5 @@ namespace ClientTests
         }
 
         #endregion
-
-        public void CreateRelationshipBetweenUsersAndDateTimeEvent(DB_Model.Db_date_time_event dateTimeEvent, IEnumerable<DB_Model.Db_user> users)
-        {
-
-            using (var context = new TestingCloneDBEntities())
-            {
-                var usersFromDb = context.Db_user.ToList();
-                var dbUsers = usersFromDb.Where(
-                    userDb => users.Any(user => user.user_name == userDb.user_name && user.pc_name == userDb.pc_name));
-
-                var dateTimeEventFromDb =
-                    context.Db_date_time_event.Where(d => d.id_date_time_event == dateTimeEvent.id_date_time_event);
-
-                foreach (DB_Model.Db_user user in dbUsers)
-                {
-                    context.Db_user_date_time_event.Add(new Db_user_date_time_event()
-                    {
-                        Db_user = user,
-                        Db_date_time_event = dateTimeEvent
-                    });
-                }
-
-                context.SaveChanges();
-            }
-        }
     }
 }

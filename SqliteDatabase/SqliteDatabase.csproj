@@ -79,7 +79,7 @@
     <Compile Include="DB_Models\Db_user.cs">
       <DependentUpon>SqliteDbBigBrother.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB_Models\Db_user_work.cs">
+    <Compile Include="DB_Models\Db_user_date_time_event.cs">
       <DependentUpon>SqliteDbBigBrother.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\SqliteDbBigBrother.Context.cs">
@@ -118,7 +118,6 @@
     </None>
     <None Include="DB_Models\SqliteDbBigBrother.edmx.diagram">
       <DependentUpon>SqliteDbBigBrother.edmx</DependentUpon>
-      <SubType>Designer</SubType>
     </None>
     <None Include="DB_Models\SqliteDbBigBrother.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -44,7 +44,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.97.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.97.0\lib\net45\System.Data.SQLite.dll</HintPath>
@@ -78,8 +77,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\UserTransformation.cs" />
-    <Compile Include="ViewModel\TransformerUsersFromNdbStorage.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\Observer.cs" />
+    <Compile Include="Model\ReadWriteDB.cs" />
+    <Compile Include="Model\TransformationValuesFromDatabase.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -97,7 +99,7 @@
   <ItemGroup>
     <Compile Include="Model\MonitoringActivity.cs" />
     <Compile Include="Model\MonitoringUser.cs" />
-    <Compile Include="Model\UserCollection.cs" />
+    <Compile Include="Model\MonitoringUsersCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,7 +120,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\DataSources\UzivatelLibery.Uzivatel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

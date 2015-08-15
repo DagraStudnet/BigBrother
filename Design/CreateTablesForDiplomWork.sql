@@ -1,8 +1,7 @@
 CREATE TABLE Db_observer(
   id_observer     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, 
   first_name   TEXT, 
-  last_name TEXT ,
-  timestamp   TEXT,
+  last_name TEXT 
 );
 
 CREATE TABLE Db_event(
@@ -23,16 +22,18 @@ CREATE TABLE Db_date_time_event(
 CREATE TABLE Db_user(
   id_user     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, 
   user_name   TEXT, 
-  pc_name TEXT   
+  pc_name TEXT  ,
+  user_timestamp TEXT
 );
 
-CREATE TABLE Db_activity(
-  id_activity     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, 
-  name   TEXT, 
-  time_activity TEXT,
-  attention BOOL,
-  id_user INTEGER,  
-  FOREIGN KEY(id_user) REFERENCES Db_user(id_user)ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `Db_activity` (
+	`id_activity`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`name`	TEXT,
+	`time_activity`	TEXT,
+	`attention`	INTEGER DEFAULT 0,
+	`ignore_attention`	INTEGER DEFAULT 0,
+	`id_user`	INTEGER,
+	FOREIGN KEY(`id_user`) REFERENCES Db_user ( id_user ) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Db_user_date_time_event(
