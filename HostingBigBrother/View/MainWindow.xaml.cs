@@ -17,6 +17,7 @@ namespace HostingBigBrother.View
         private ServiceHost host;
         private ViewModelMain main;
         private AttentionsView attentionsView;
+        private EventView eventView;
 
         public MainWindow()
         {
@@ -63,7 +64,8 @@ namespace HostingBigBrother.View
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
         {
-
+            eventView = new EventView();
+            eventView.ShowDialog();
         }
     }
 }

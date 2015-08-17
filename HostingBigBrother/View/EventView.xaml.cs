@@ -76,5 +76,12 @@ namespace HostingBigBrother.View
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void EventName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
+
+   
 }
