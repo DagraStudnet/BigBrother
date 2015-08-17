@@ -14,7 +14,23 @@
                 <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Event name:"  HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox Name="EventName" Grid.Row="0" Grid.Column="1" Margin="5,5,10,5"/>
+            <TextBox Name="EventName" Grid.Row="0" Grid.Column="1" Margin="5,5,10,5">
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <!-- Placeholder for the TextBox itself -->
+                            <AdornedElementPlaceholder x:Name="textBox"/>
+                            <ItemsControl ItemsSource="{Binding}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Observer first name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBox Name="ObserverFirstName" Grid.Row="1" Grid.Column="1" Margin="5,5,10,5"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Observer first name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />

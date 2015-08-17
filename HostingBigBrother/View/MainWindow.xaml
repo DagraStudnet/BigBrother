@@ -6,7 +6,7 @@
         d:DesignWidth="719" Closing="Window_Closing" 
         >
     <Grid>
-        <Grid DataContext="{Binding EventView}" HorizontalAlignment="Left" Height="75" Margin="10,40,0,0" VerticalAlignment="Top" Width="256">
+        <Grid Name="EventInformation" DataContext="{Binding EventView}" HorizontalAlignment="Left" Height="75" Margin="10,40,0,0" VerticalAlignment="Top" Width="256">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="25"/>
@@ -34,7 +34,7 @@
             <Label Content="User:" Grid.Column="0" />
             <Label Content="User activities:" Grid.Column="1" Margin="10 0 0 0"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top">
+        <Grid Name="UsersInformation" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="280" />
                 <ColumnDefinition Width="*" />

@@ -13,12 +13,15 @@ namespace HostingBigBrother.ViewModel
     public class ViewModelMain : BindableBase, INotifyPropertyChanged
     {
         private readonly ReadWriteDB readWriteDb;
-        private ObservableCollection<MonitoringActivity> activities;
-        private MonitoringUser selectedUserValue;
+        
         private ServiceHost serviceHost;
 
         private ObservableCollection<MonitoringUser> users;
+        private ObservableCollection<MonitoringActivity> activities;
+        private MonitoringUser selectedUserValue;
 
+        public List<Attention> Attentions { get; set; }
+        public Event EventView { get; set; }
         public ViewModelMain()
         {
             GetEvent();
@@ -35,10 +38,6 @@ namespace HostingBigBrother.ViewModel
             Attentions.Add(new Attention {Name = "USB"});
             Attentions.Add(new Attention {Name = "Lite"});
         }
-
-        public List<Attention> Attentions { get; set; }
-
-        public Event EventView { get; set; }
 
         public ObservableCollection<MonitoringUser> Users
         {
