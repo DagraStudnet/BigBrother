@@ -10,7 +10,7 @@ namespace HostingBigBrother.Model
             return new MonitoringUser
             {
                 Id = (int) dbUser.id_user,
-                Attention = false,
+                Attention = Convert.ToBoolean(dbUser.attention),
                 PCName = dbUser.user_name,
                 UserName = dbUser.user_name,
                 TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp)
@@ -24,8 +24,8 @@ namespace HostingBigBrother.Model
                 Id = (int) dbActivity.id_activity,
                 NameActivity = dbActivity.name,
                 TimeActivity = DateTime.Parse(dbActivity.time_activity),
-                IgnoreAttention = Convert.ToBoolean(dbActivity.ignore_attention),
-                Attention = Convert.ToBoolean(dbActivity.attention)
+                IgnoreAttention = Convert.ToBoolean(dbActivity.ignore_attention)
+                
             };
         }
     }

@@ -1,0 +1,93 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="HostingBigBrother.View.MainWindow"
+        Title="MainWindow" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" 
+        d:DesignWidth="719" Closing="Window_Closing" 
+        >
+    <Grid>
+        <Grid DataContext="{Binding EventView}" HorizontalAlignment="Left" Height="75" Margin="10,40,0,0" VerticalAlignment="Top" Width="256">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Observer:" />
+            <Label Grid.Row="0" Grid.Column="1" Margin="0 0 0 0" Content="{Binding ObserverEvent.FullName}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Event:" />
+            <Label Grid.Row="1" Grid.Column="1" Margin="0 0 0 0" Content="{Binding NameEvent}" />
+            <Label Grid.Row="2" Grid.Column="0" Content="Star event:"  />
+            <Label Grid.Row="2" Grid.Column="1" Margin="0 0 0 0" Content="{Binding StarTimeEvent}" />
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="30" Margin="10,120,0,0" VerticalAlignment="Top" Width="742" RenderTransformOrigin="1.147,0.478">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Content="User:" Grid.Column="0" />
+            <Label Content="User activities:" Grid.Column="1" Margin="10 0 0 0"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="UsersDataGrid" Grid.Column="0" Margin="0,0,0,0" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single"
+                          SelectionUnit="FullRow" CanUserAddRows="False"
+                          CanUserDeleteRows="False"   >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow" >
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Attention}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"  IsReadOnly="True" />
+                    <DataGridTextColumn Header="User Name" Binding="{Binding UserName}"  IsReadOnly="True" />
+                    <DataGridTextColumn Header="Pc Name" Binding="{Binding PCName}"  IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Work" Binding="{Binding NameWork, Mode=TwoWay}"  IsReadOnly="False"/>
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeStampDispatch}"  IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="UserActivitiesDataGrid" Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Activities}" AutoGenerateColumns="False" SelectionMode="Single"
+                          SelectionUnit="Cell" CanUserAddRows="False"
+                          CanUserDeleteRows="False" >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow" >
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MarkRow}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" />
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" />
+                    <DataGridCheckBoxColumn Header="Ignore" Binding="{Binding IgnoreAttention, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Menu HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="693">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Create event" Click="Add_event_Click"/>
+                <MenuItem Header="_Add attentions" Click="Add_attentions_Click"/>
+                <MenuItem Header="_Exit" Click="Exit_Click"/>
+            </MenuItem>
+        </Menu>
+    </Grid>
+
+</Window>

@@ -49,6 +49,7 @@
           <Property Name="user_name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="pc_name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="user_timestamp" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="attention" Type="integer" />
         </EntityType>
         <EntityType Name="Db_user_date_time_event">
           <Key>
@@ -203,6 +204,7 @@
           <NavigationProperty Name="Db_activity" Relationship="Self.FK_Db_activity_0_0" FromRole="Db_user" ToRole="Db_activity" />
           <NavigationProperty Name="Db_user_date_time_event" Relationship="Self.FK_Db_user_date_time_event_1_0" FromRole="Db_user" ToRole="Db_user_date_time_event" />
           <Property Name="user_timestamp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="attention" Type="Int32" />
         </EntityType>
         <EntityType Name="Db_user_date_time_event">
           <Key>
@@ -352,6 +354,7 @@
           <EntitySetMapping Name="Db_user">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_user">
               <MappingFragment StoreEntitySet="Db_user">
+                <ScalarProperty Name="attention" ColumnName="attention" />
                 <ScalarProperty Name="user_timestamp" ColumnName="user_timestamp" />
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />

@@ -10,27 +10,29 @@ namespace HostingBigBrother.Model
     public class ReadWriteDB
     {
         private readonly DBTransaction dbTransaction;
+        private List<MonitoringUser> users;
+        private readonly List<Attention> attentions;
         
-        //public ReadWriteDB(MonitoringUsersCollection monitoringUsers, Event @event)
-        public ReadWriteDB(Event @event)
+        public ReadWriteDB(Event @event, List<Attention> attentions)
         {
-            //MonitoringUsers = monitoringUsers;
             EventInstance = @event;
             dbTransaction = DBTransaction.ReturnDatabaseInstance();
+            this.attentions = attentions;
         }
 
-        //public MonitoringUsersCollection MonitoringUsers { get; set; }
         public Event EventInstance { get; set; }
 
         public void SaveEventWithObserverToDb()
         {
             dbTransaction.AddEventWithObserver(EventInstance.NameEvent, EventInstance.ObserverEvent.FirstName,
                 EventInstance.ObserverEvent.LastName, EventInstance.StarTimeEvent);
+            GetEventId();
         }
 
         public void SaveEventFinishToDb()
         {
-            dbTransaction.UpdateDateTimeEventFinish(EventInstance.Id, EventInstance.EndTimeEvent);
+            var dateTimeEvent = dbTransaction.GetDateTimeEvent(EventInstance.Id, EventInstance.StarTimeEvent);
+            dbTransaction.UpdateDateTimeEventFinish((int)dateTimeEvent.id_date_time_event, EventInstance.EndTimeEvent);
         }
 
         public void SaveNameWorkUserToDb(int userId, string nameWork)
@@ -51,56 +53,68 @@ namespace HostingBigBrother.Model
 
         public void SaveRelationshipBetweenEventAndUsers()
         {
-            Db_date_time_event dateTimeEventFromDB = dbTransaction.GetDateTimeEvent(EventInstance.Id);
+            Db_date_time_event dateTimeEventFromDB = dbTransaction.GetDateTimeEvent(EventInstance.Id,EventInstance.StarTimeEvent);
             DateTime startTimeEvent = DateTime.Parse(dateTimeEventFromDB.start_event);
             List<Db_user> usersFromDB =
                 dbTransaction.GetUserCollection(startTimeEvent).ToList();
             dbTransaction.CreateRelationshipBetweenUsersAndDateTimeEvent(dateTimeEventFromDB, usersFromDB);
         }
 
-        public void GetEventId()
+        private void GetEventId()
         {
-            EventInstance.Id = (int) dbTransaction.GetEvent(EventInstance.NameEvent).id_event;
+            EventInstance.Id = (int)dbTransaction.GetEvent(EventInstance.NameEvent).id_event;
         }
 
         public IEnumerable<Db_user> GetUsersWithOutEventFromDb()
         {
             List<Db_user> usersDateTimeEvent = dbTransaction.GetUsersBelongingToDateTimeEvent(EventInstance.Id,
                 EventInstance.StarTimeEvent);
-            return
-                dbTransaction.GetUserCollection(EventInstance.EndTimeEvent)
-                    .Where(
-                        user => usersDateTimeEvent.Any(userDateTimeEvent => userDateTimeEvent.id_user != user.id_user));
+            var users = dbTransaction.GetUserCollection(EventInstance.StarTimeEvent);
+            return usersDateTimeEvent.Count > 0 ? users.Where(user => usersDateTimeEvent.Any(userDateTimeEvent => userDateTimeEvent.id_user != user.id_user)).ToList() : users;
         }
 
         public IEnumerable<MonitoringUser> GetUsersWithEventFromDb()
         {
-            IEnumerable<Db_user> dbUsers = GetUsersBelongingToDateTimeEvent();
-            IEnumerable<MonitoringUser> usersList = GetTransformatoinUsersList(dbUsers);
-            SaveUserWorkNameEvent(usersList);
-            IEnumerable<Db_user> usersListWithOutEvent = GetUsersWithOutEventFromDb();
-            if (usersList.Count() >= usersListWithOutEvent.Count())
-                return usersList;
-            var anotherUsers = new List<Db_user>();
-
-            foreach (var anotherUser in usersListWithOutEvent)
+            var dbUsers = GetUsersBelongingToDateTimeEvent().ToList();
+            var usersListWithOutEvent = GetUsersWithOutEventFromDb().ToList();
+            if (dbUsers.Count() <= usersListWithOutEvent.Count())
             {
-                var userEquals = false;
-                foreach (var dbUser in dbUsers)
+                var anotherUsers = new List<Db_user>();
+
+                foreach (var user in usersListWithOutEvent)
                 {
-                    if (anotherUser.id_user == dbUser.id_user)
-                        userEquals = true;
+                    var userEquals = false;
+                    foreach (var dbUser in dbUsers)
+                    {
+                        if (user.id_user == dbUser.id_user)
+                            userEquals = true;
+                    }
+                    if (userEquals)
+                        continue;
+                    anotherUsers.Add(user);
                 }
-                if (userEquals)
-                    continue;
-                anotherUsers.Add(anotherUser);
+                var dateTimeEventFromDb = dbTransaction.GetDateTimeEvent(EventInstance.Id, EventInstance.StarTimeEvent);
+                dbTransaction.CreateRelationshipBetweenUsersAndDateTimeEvent(dateTimeEventFromDb, anotherUsers);
             }
-            Db_date_time_event dateTimeEventFromDB = dbTransaction.GetDateTimeEvent(EventInstance.Id);
-            dbTransaction.CreateRelationshipBetweenUsersAndDateTimeEvent(dateTimeEventFromDB, anotherUsers);
-            dbUsers = GetUsersBelongingToDateTimeEvent();
-            usersList = GetTransformatoinUsersList(dbUsers);
-            SaveUserWorkNameEvent(usersList);
-            return usersList;
+            dbUsers = GetUsersBelongingToDateTimeEvent().ToList();
+            users = GetTransformatoinUsersList(dbUsers).ToList();
+            SetAttentionUser(users);
+            SaveUserWorkNameEvent(users);
+            return users;
+        }
+
+        private void SetAttentionUser(IEnumerable<MonitoringUser> usersList)
+        {
+            foreach (var monitoringUser in usersList)
+            {
+                var activities = dbTransaction.GetCollectionUserActivitiesFromDb(monitoringUser.Id);
+                foreach (var activity in activities)
+                {
+                    if (ExisUsertAttention(activity))
+                        monitoringUser.Attention = true;
+                }
+
+            }
         }
 
         private void SaveUserWorkNameEvent(IEnumerable<MonitoringUser> usersList)
@@ -111,6 +125,24 @@ namespace HostingBigBrother.Model
             }
         }
 
+        private void RefreshUserAttention(object sender, PropertyChangedEventArgs e)
+        {
+            var activity = (sender as MonitoringActivity);
+            var userId = dbTransaction.GetUserIdFromActivityDb(activity.Id);
+            var activities = dbTransaction.GetCollectionUserActivitiesFromDb(userId);
+            var findAttention = activities.Any(ExisUsertAttention);
+            //dbTransaction.UpdateUserAttention(userId, Convert.ToInt32(findAttention));
+            var user = users.Find(u => u.Id == userId);
+            user.Attention = findAttention;
+
+        }
+
+        private bool ExisUsertAttention(Db_activity dbActivity)
+        {
+            //return Convert.ToBoolean(dbActivity.attention) && !Convert.ToBoolean(dbActivity.ignore_attention);
+            return attentions.Any(a => dbActivity.name.Contains(a.Name)) && !Convert.ToBoolean(dbActivity.ignore_attention); 
+        }
+
         private IEnumerable<Db_user> GetUsersBelongingToDateTimeEvent()
         {
             return dbTransaction.GetUsersBelongingToDateTimeEvent(EventInstance.Id, EventInstance.StarTimeEvent);
@@ -118,11 +150,12 @@ namespace HostingBigBrother.Model
 
         private IEnumerable<MonitoringUser> GetTransformatoinUsersList(IEnumerable<Db_user> dbUsers)
         {
-            return dbUsers.Select(dbUser =>
+            users = dbUsers.Select(dbUser =>
             {
-                MonitoringUser user = TransformationValuesFromDatabase.TransformUserFromDB(dbUser);
+                var user = TransformationValuesFromDatabase.TransformUserFromDB(dbUser);
                 return user;
             }).ToList();
+            return users;
         }
 
         public IEnumerable<MonitoringActivity> GetUserActivities(int userId)
@@ -131,15 +164,26 @@ namespace HostingBigBrother.Model
                 dbTransaction.GetCollectionUserActivitiesFromDb(userId)
                     .Select(TransformationValuesFromDatabase.TransformActivityFromDB)
                     .ToList();
-            SaveIngnoreAttention(monitoringActivities);
+            ExistUserActivityAttention(monitoringActivities);
+            SetupEventsForPropertyChanged(monitoringActivities);
             return monitoringActivities;
         }
 
-        private void SaveIngnoreAttention(IEnumerable<MonitoringActivity> monitoringActivities)
+        private void ExistUserActivityAttention(IEnumerable<MonitoringActivity> monitoringActivities)
+        {
+            foreach (var activity in monitoringActivities)
+            {
+                activity.Attention = attentions.Any(a => activity.NameActivity.Contains(a.Name));    
+            }
+            
+        }
+
+        private void SetupEventsForPropertyChanged(IEnumerable<MonitoringActivity> monitoringActivities)
         {
             foreach (var monitoringActivity in monitoringActivities)
             {
                 monitoringActivity.PropertyChanged += SaveIngnoreAttentionToDb;
+                monitoringActivity.PropertyChanged += RefreshUserAttention;
             }
         }
 

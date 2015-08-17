@@ -10,7 +10,19 @@ namespace HostingBigBrother.Model
     public class MonitoringActivity : IActivity, INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public bool Attention { get; set; }
+
+        private bool attention;
+        public bool Attention
+        {
+            get { return attention; }
+            set
+            {
+                attention = value;
+                MarkRow = !IgnoreAttention && Attention;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _ignoreAttention;
         public bool IgnoreAttention
@@ -19,11 +31,23 @@ namespace HostingBigBrother.Model
             set
             {
                 _ignoreAttention = value;
+                MarkRow = !IgnoreAttention && Attention;
                 OnPropertyChanged();
             }
         }
         public string NameActivity { get; set; }
         public DateTime TimeActivity { get; set; }
+        private bool markRow;
+        public bool MarkRow
+        {
+            get { return markRow; }
+            set
+            {
+                markRow = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

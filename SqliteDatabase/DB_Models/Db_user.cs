@@ -25,6 +25,7 @@ namespace SqliteDatabase.DB_Models
         public string user_name { get; set; }
         public string pc_name { get; set; }
         public string user_timestamp { get; set; }
+        public Nullable<int> attention { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Db_activity> Db_activity { get; set; }

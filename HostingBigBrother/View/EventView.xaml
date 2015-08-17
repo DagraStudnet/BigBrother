@@ -1,0 +1,28 @@
+﻿<Window x:Class="HostingBigBrother.View.EventView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Monitoring event" Height="195" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Grid>
+        <Grid Name="EventInformation" DataContext="{Binding EventView}" HorizontalAlignment="Left" Height="110" Margin="10,10,0,0" VerticalAlignment="Top" Width="274">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Event name:"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="EventName" Grid.Row="0" Grid.Column="1" Margin="5,5,10,5"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Observer first name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="ObserverFirstName" Grid.Row="1" Grid.Column="1" Margin="5,5,10,5"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Observer first name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox Name="ObserverLastName" Grid.Row="2" Grid.Column="1" Margin="5,5,10,5"/>
+        </Grid>
+        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="87,120,87,10">
+            <Button Name="OKButton" Content="OK" Width="50" Margin="5,5,5,5" Click="OKButton_Click" IsDefault="True" />
+            <Button Name="StornoButton" Content="Storno" Width="50"   Margin="5,5,5,5" Click="StornoButton_Click" IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>

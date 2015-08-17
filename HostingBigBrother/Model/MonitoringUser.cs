@@ -12,9 +12,20 @@ namespace HostingBigBrother.Model
     public class MonitoringUser:INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public bool Attention { get; set; }
+
+        private bool attention;
+        public bool Attention {
+            get { return attention; }
+            set
+            {
+                attention = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string nameWork;
+        
+
         public string NameWork {
             get { return nameWork; }
             set

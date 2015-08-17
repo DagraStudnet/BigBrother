@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using ClassLibrary.UserLibrary;
 using SqliteDatabase.DB_Models;
 
@@ -96,7 +97,7 @@ namespace SqliteDatabase
             using (var context = new BigBrotherEntities())
             {
                 Db_activity activity = context.Db_activity.Single(a => a.id_activity.Equals(id));
-                activity.attention =Convert.ToInt32(attention);
+                activity.attention = Convert.ToInt32(attention);
                 context.SaveChanges();
             }
         }
@@ -105,7 +106,7 @@ namespace SqliteDatabase
         {
             using (var context = new BigBrotherEntities())
             {
-                Db_activity activity = context.Db_activity.Single(a => a.id_activity.Equals(id));
+                Db_activity activity = context.Db_activity.Single(a => a.id_activity == id);
                 activity.ignore_attention = Convert.ToInt32(attention);
                 context.SaveChanges();
             }
@@ -146,7 +147,7 @@ namespace SqliteDatabase
                 Db_user = findUseruser,
                 name = item.NameActivity,
                 time_activity = item.TimeActivity.ToString(DateTimeFormate)
-                
+
             }))
             {
                 findUseruser.Db_activity.Add(activity);
@@ -195,33 +196,49 @@ namespace SqliteDatabase
 
         #region Operation with events
 
-        public void AddEventWithObserver(string nameEvent, string fistNameObserver, string lastNameObserver, DateTime startEvent)
+        public void AddEventWithObserver(string nameEvent, string firstNameObserver, string lastNameObserver, DateTime startEvent)
         {
             using (var context = new BigBrotherEntities())
             {
-                var @event = new Db_event { event_name = nameEvent };
-                var observer = new Db_observer
+                var existEvent = context.Db_event.SingleOrDefault(e => e.event_name == nameEvent);
+                var existObserver = context.Db_observer.SingleOrDefault(o => o.first_name == firstNameObserver && o.last_name == lastNameObserver);
+                var @event = existEvent ?? new Db_event { event_name = nameEvent };
+                var observer = existObserver ?? new Db_observer
                 {
-                    first_name = fistNameObserver,
+                    first_name = firstNameObserver,
                     last_name = lastNameObserver
                 };
+
+                foreach (var dbDateTimeEvent in context.Db_date_time_event)
+                {
+                    if (dbDateTimeEvent.id_event == @event.id_event && dbDateTimeEvent.id_observer == observer.id_observer && DateTime.Parse(dbDateTimeEvent.start_event) == startEvent) 
+                        return;  
+                }
+                
+
                 var dateTimeEvent = new Db_date_time_event
                 {
                     Db_event = @event,
                     Db_observer = observer,
                     start_event = startEvent.ToString(DateTimeFormate)
                 };
-
                 context.Db_date_time_event.Add(dateTimeEvent);
                 context.SaveChanges();
             }
         }
 
-        public Db_date_time_event GetDateTimeEvent(int eventId)
+        public Db_date_time_event GetDateTimeEvent(int eventId, DateTime startEvent)
         {
             using (var context = new BigBrotherEntities())
             {
-                return context.Db_date_time_event.SingleOrDefault(d => d.id_event == eventId);
+                Db_date_time_event dateTimeEvent = null;
+                foreach (var dbDateTimeEvent in context.Db_date_time_event)
+                {
+                    var date = DateTime.Parse(dbDateTimeEvent.start_event);
+                    if (dbDateTimeEvent.id_event == eventId && DateTime.Compare(date,startEvent) == 0)
+                        dateTimeEvent = dbDateTimeEvent;
+                }
+                return dateTimeEvent;
             }
         }
 
@@ -263,11 +280,36 @@ namespace SqliteDatabase
         {
             using (var context = new BigBrotherEntities())
             {
-                context.Db_date_time_event.Single(d => d.id_date_time_event.Equals(id)).end_event =
+                context.Db_date_time_event.Single(d => d.id_date_time_event == id).end_event =
                     finish.ToString(DateTimeFormate);
                 context.SaveChanges();
             }
         }
         #endregion
+
+        public int GetUserIdFromActivityDb(int id)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return (int)context.Db_activity.Single(a => a.id_activity == id).id_user;
+            }
+        }
+
+        public Db_user GetUserFromDb(int userId)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_user.Single(u => u.id_user == userId);
+            }
+        }
+
+        public void UpdateUserAttention(int userId, int userAttention)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                context.Db_user.Single(u => u.id_user == userId).attention = userAttention;
+                context.SaveChanges();
+            }
+        }
     }
 }
