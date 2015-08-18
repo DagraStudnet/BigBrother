@@ -7,20 +7,41 @@ namespace HostingBigBrother.Model
 {
     public class Event : INotifyPropertyChanged
     {
+        public Event()
+        {
+            ObserverEvent = new Observer();
+        }
         public int Id { get; set; }
-        public string NameEvent { get; set; }
+
+        public string NameEvent
+        {
+            get { return _nameEvent; }
+            set
+            {
+                _nameEvent = value;
+                OnPropertyChanged();
+            }
+        }
+
         public DateTime StarTimeEvent { get; set; }
 
         private DateTime endTimeEvent;
-        public DateTime EndTimeEvent {
+        private string _nameEvent;
+
+        public DateTime EndTimeEvent
+        {
             get { return endTimeEvent; }
-            set{
+            set
+            {
                 {
                     endTimeEvent = value;
                     OnPropertyChanged();
                 }
-            } }
+            }
+        }
+
         public Observer ObserverEvent { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

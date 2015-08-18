@@ -12,26 +12,30 @@ namespace HostingBigBrother.ViewModel
 {
     public class ViewModelMain : BindableBase, INotifyPropertyChanged
     {
-        private readonly ReadWriteDB readWriteDb;
+        private ReadWriteDB readWriteDb;
         
         private ServiceHost serviceHost;
 
         private ObservableCollection<MonitoringUser> users;
         private ObservableCollection<MonitoringActivity> activities;
         private MonitoringUser selectedUserValue;
+        private Event _eventView;
 
         public List<Attention> Attentions { get; set; }
-        public Event EventView { get; set; }
+
+        public Event EventView
+        {
+            get { return _eventView; }
+            set
+            {
+                SetProperty(ref _eventView,value);
+                RaiseNotification("EventView");
+            }
+        }
+
         public ViewModelMain()
         {
-            GetEvent();
             Attentions = new List<Attention>();
-            readWriteDb = new ReadWriteDB(EventView, Attentions);
-            readWriteDb.SaveEventWithObserverToDb();
-            var dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 1, 0); //interval v minutach
-            dispatcherTimer.Start();
             StartHosting();
             Attentions.Add(new Attention {Name = "Visual"});
             Attentions.Add(new Attention {Name = "Not"});
@@ -84,16 +88,17 @@ namespace HostingBigBrother.ViewModel
                 SelectedUser = users[0];
         }
 
-        private void GetEvent()
+        private void StartSaveEvent(object sender, PropertyChangedEventArgs e)
         {
-            System.Globalization.CultureInfo.CurrentCulture.ClearCachedData();
-            EventView = new Event
-            {
-                NameEvent = "Zkouska",
-                StarTimeEvent = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,DateTime.Now.Hour,DateTime.Now.Minute,DateTime.Now.Second),
-                ObserverEvent = new Observer {LastName = "Rajm", FirstName = "Lukas"},
-            };
-            EventView.PropertyChanged += SetFinishEvent;
+            var @event = sender as Event;
+            if (@event != null) return;
+            if (@event.NameEvent.Length <= 0) return;
+            readWriteDb = new ReadWriteDB(EventView, Attentions);
+            readWriteDb.SaveEventWithObserverToDb();
+            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 1, 0); //interval v minutach
+            dispatcherTimer.Start();
         }
 
         private void SetFinishEvent(object sender, PropertyChangedEventArgs e)

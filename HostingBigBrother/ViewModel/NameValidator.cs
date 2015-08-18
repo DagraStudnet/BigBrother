@@ -9,10 +9,10 @@ namespace HostingBigBrother.ViewModel
             (object value, CultureInfo cultureInfo)
         {
             if (value == null)
-                return new ValidationResult(false, "value cannot be empty.");
-            if (value.ToString().Length > 3)
+                return new ValidationResult(false, "Name can't be empty.");
+            if (value.ToString().Length < 3)
                 return new ValidationResult
-                    (false, "Name cannot be more than 3 characters long.");
+                    (false, "Name must be more than 3 characters long.");
             return ValidationResult.ValidResult;
         }
     }

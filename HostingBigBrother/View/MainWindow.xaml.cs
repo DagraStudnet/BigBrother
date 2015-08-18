@@ -64,7 +64,11 @@ namespace HostingBigBrother.View
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
         {
-            eventView = new EventView();
+            //main.EventView = new Event();
+            //main.EventView.PropertyChanged += SetFinishEvent;
+            //main.EventView.PropertyChanged += StartSaveEvent;
+
+            eventView = new EventView(main);
             eventView.ShowDialog();
         }
     }

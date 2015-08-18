@@ -1,61 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using HostingBigBrother.Annotations;
+﻿using System.Windows;
+using HostingBigBrother.Model;
+using HostingBigBrother.ViewModel;
 
 namespace HostingBigBrother.View
 {
     /// <summary>
-    /// Interaction logic for EventView.xaml
+    ///     Interaction logic for EventView.xaml
     /// </summary>
-    public partial class EventView : Window,INotifyPropertyChanged
+    public partial class EventView : Window
     {
-        private string eventName;
-        public string EventNameProperty {
-            get { return eventName; }
-            set
-            {
-                eventName = value;
-                OnPropertyChanged();
-            }
-        }
 
-        private string observerFirstName;
-        public string ObserverFirstNameProperty
-        {
-            get { return observerFirstName; }
-            set
-            {
-                observerFirstName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string observerLastName;
-        public string ObserverLastNameProperty
-        {
-            get { return observerLastName; }
-            set
-            {
-                observerLastName = value;
-                OnPropertyChanged();
-            }
-        }
-        public EventView()
+        public EventView(ViewModelMain viewModelMain)
         {
             InitializeComponent();
+            DataContext = viewModelMain;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
@@ -67,21 +25,6 @@ namespace HostingBigBrother.View
         {
             DialogResult = false;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void EventName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        
     }
-
-   
 }
