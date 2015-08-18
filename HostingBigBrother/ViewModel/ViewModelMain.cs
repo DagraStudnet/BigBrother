@@ -13,35 +13,38 @@ namespace HostingBigBrother.ViewModel
     public class ViewModelMain : BindableBase, INotifyPropertyChanged
     {
         private ReadWriteDB readWriteDb;
-        
+
         private ServiceHost serviceHost;
 
         private ObservableCollection<MonitoringUser> users;
         private ObservableCollection<MonitoringActivity> activities;
         private MonitoringUser selectedUserValue;
-        private Event _eventView;
+        private List<Attention> _attentions;
 
-        public List<Attention> Attentions { get; set; }
-
-        public Event EventView
+        public List<Attention> Attentions
         {
-            get { return _eventView; }
+            get { return _attentions; }
             set
             {
-                SetProperty(ref _eventView,value);
-                RaiseNotification("EventView");
+                SetProperty(ref _attentions, value);
+                if (value.Count > 0 && readWriteDb != null) readWriteDb.Attentions = _attentions;
+                RaiseNotification("Attentions");
             }
         }
 
+        public Event EventView { get; set; }
+
         public ViewModelMain()
         {
+
             Attentions = new List<Attention>();
             StartHosting();
-            Attentions.Add(new Attention {Name = "Visual"});
-            Attentions.Add(new Attention {Name = "Not"});
-            Attentions.Add(new Attention {Name = "USB"});
-            Attentions.Add(new Attention {Name = "Lite"});
+            Attentions.Add(new Attention { Name = "Visual" });
+            Attentions.Add(new Attention { Name = "Not" });
+            Attentions.Add(new Attention { Name = "USB" });
+            Attentions.Add(new Attention { Name = "Lite" });
         }
+
 
         public ObservableCollection<MonitoringUser> Users
         {
@@ -77,7 +80,7 @@ namespace HostingBigBrother.ViewModel
 
         private void StartHosting()
         {
-            serviceHost = new ServiceHost(typeof (Library));
+            serviceHost = new ServiceHost(typeof(Library));
             serviceHost.Open();
         }
 
@@ -88,11 +91,12 @@ namespace HostingBigBrother.ViewModel
                 SelectedUser = users[0];
         }
 
-        private void StartSaveEvent(object sender, PropertyChangedEventArgs e)
+        public void StartSaveEvent()
         {
-            var @event = sender as Event;
-            if (@event != null) return;
-            if (@event.NameEvent.Length <= 0) return;
+            if (EventView.NameEvent.Length <= 0) return;
+            if (EventView.ObserverEvent.FirstName.Length <= 0) return;
+            if (EventView.ObserverEvent.LastName.Length <= 0) return;
+            EventView.PropertyChanged += SetFinishEvent;
             readWriteDb = new ReadWriteDB(EventView, Attentions);
             readWriteDb.SaveEventWithObserverToDb();
             var dispatcherTimer = new DispatcherTimer();
@@ -103,7 +107,8 @@ namespace HostingBigBrother.ViewModel
 
         private void SetFinishEvent(object sender, PropertyChangedEventArgs e)
         {
-            readWriteDb.SaveEventFinishToDb();
+            if (readWriteDb != null)
+                readWriteDb.SaveEventFinishToDb();
         }
     }
 

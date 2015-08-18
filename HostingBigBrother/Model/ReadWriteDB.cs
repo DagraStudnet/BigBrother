@@ -11,13 +11,13 @@ namespace HostingBigBrother.Model
     {
         private readonly DBTransaction dbTransaction;
         private List<MonitoringUser> users;
-        private readonly List<Attention> attentions;
+        public  List<Attention> Attentions { get; set; } 
         
         public ReadWriteDB(Event @event, List<Attention> attentions)
         {
             EventInstance = @event;
             dbTransaction = DBTransaction.ReturnDatabaseInstance();
-            this.attentions = attentions;
+            Attentions = attentions;
         }
 
         public Event EventInstance { get; set; }
@@ -34,16 +34,11 @@ namespace HostingBigBrother.Model
             var dateTimeEvent = dbTransaction.GetDateTimeEvent(EventInstance.Id, EventInstance.StarTimeEvent);
             dbTransaction.UpdateDateTimeEventFinish((int)dateTimeEvent.id_date_time_event, EventInstance.EndTimeEvent);
         }
-
-        public void SaveNameWorkUserToDb(int userId, string nameWork)
-        {
-            dbTransaction.UpdateUserWork(userId, EventInstance.Id, nameWork);
-        }
-
+        
         public void SaveNameWorkUserToDb(object sender, EventArgs e)
         {
             var user = (sender as MonitoringUser);
-            dbTransaction.UpdateUserWork(user.Id, EventInstance.Id, user.NameWork);
+            dbTransaction.UpdateUserWork(user.Id, EventInstance.Id,EventInstance.StarTimeEvent, user.NameWork);
         }
 
         public void SaveUserActivityAttentionToDb(int userId, bool attention)
@@ -98,9 +93,19 @@ namespace HostingBigBrother.Model
             }
             dbUsers = GetUsersBelongingToDateTimeEvent().ToList();
             users = GetTransformatoinUsersList(dbUsers).ToList();
+            SetUsersNameWork(users);
             SetAttentionUser(users);
             SaveUserWorkNameEvent(users);
             return users;
+        }
+
+        private void SetUsersNameWork(IEnumerable<MonitoringUser> monitoringUsers)
+        {
+            foreach (var monitoringUser in monitoringUsers)
+            {
+                monitoringUser.NameWork = dbTransaction.GetUserDateTimeEvent(monitoringUser.Id,EventInstance.Id,EventInstance.StarTimeEvent);
+            }
+            
         }
 
         private void SetAttentionUser(IEnumerable<MonitoringUser> usersList)
@@ -140,7 +145,7 @@ namespace HostingBigBrother.Model
         private bool ExisUsertAttention(Db_activity dbActivity)
         {
             //return Convert.ToBoolean(dbActivity.attention) && !Convert.ToBoolean(dbActivity.ignore_attention);
-            return attentions.Any(a => dbActivity.name.Contains(a.Name)) && !Convert.ToBoolean(dbActivity.ignore_attention); 
+            return Attentions.Any(a => dbActivity.name.Contains(a.Name)) && !Convert.ToBoolean(dbActivity.ignore_attention); 
         }
 
         private IEnumerable<Db_user> GetUsersBelongingToDateTimeEvent()
@@ -173,7 +178,7 @@ namespace HostingBigBrother.Model
         {
             foreach (var activity in monitoringActivities)
             {
-                activity.Attention = attentions.Any(a => activity.NameActivity.Contains(a.Name));    
+                activity.Attention = Attentions.Any(a => activity.NameActivity.Contains(a.Name));    
             }
             
         }

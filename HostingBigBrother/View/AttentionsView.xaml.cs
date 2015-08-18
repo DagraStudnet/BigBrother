@@ -29,17 +29,13 @@ namespace HostingBigBrother.View
                 sb.Append(attention.Name + ",");
             }
             var textAttentions = sb.ToString();
-            textAttentions.Remove(textAttentions.Length - 1);
+            textAttentions = textAttentions.Remove(textAttentions.Length - 1);
             TextBoxAttentions.Text = textAttentions;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            var text = TextBoxAttentions.Text;
-            if (text.Length > 0)
-            {
-                DialogResult = true;
-            }
+            DialogResult = true;
         }
 
         private void StornoButton_Click(object sender, RoutedEventArgs e)

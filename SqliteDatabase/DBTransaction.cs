@@ -79,13 +79,12 @@ namespace SqliteDatabase
             }
         }
 
-        public void UpdateUserWork(int idUser, int idEvent, string nameWork)
+        public void UpdateUserWork(int idUser, int idEvent, DateTime starTimeEvent, string nameWork)
         {
             using (var context = new BigBrotherEntities())
             {
                 Db_user user = context.Db_user.Single(u => u.id_user.Equals(idUser));
-                Db_date_time_event dateTimeEvent =
-                    context.Db_date_time_event.Single(u => u.id_event.Equals(idEvent));
+                var dateTimeEvent = GetDateTimeEvent(idEvent,starTimeEvent);
                 var userDateTimeEvent = context.Db_user_date_time_event.SingleOrDefault(ud => ud.id_user == user.id_user && dateTimeEvent.id_date_time_event == ud.id_date_time_event);
                 userDateTimeEvent.name_work = nameWork;
                 context.SaveChanges();
@@ -310,6 +309,18 @@ namespace SqliteDatabase
                 context.Db_user.Single(u => u.id_user == userId).attention = userAttention;
                 context.SaveChanges();
             }
+        }
+
+        public string GetUserDateTimeEvent(int userid, int idEvent, DateTime starTimeEvent)
+        {
+            string userWork = null;
+            using (var context = new BigBrotherEntities())
+            {
+                var dateTimeEvent = GetDateTimeEvent(idEvent, starTimeEvent);
+                var userDateTimeEvent = context.Db_user_date_time_event.SingleOrDefault(ud => ud.id_user == userid && dateTimeEvent.id_date_time_event == ud.id_date_time_event);
+                if (userDateTimeEvent != null) userWork = userDateTimeEvent.name_work;
+            }
+            return userWork;
         }
     }
 }

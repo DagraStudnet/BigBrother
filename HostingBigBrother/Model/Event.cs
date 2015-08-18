@@ -7,10 +7,6 @@ namespace HostingBigBrother.Model
 {
     public class Event : INotifyPropertyChanged
     {
-        public Event()
-        {
-            ObserverEvent = new Observer();
-        }
         public int Id { get; set; }
 
         public string NameEvent

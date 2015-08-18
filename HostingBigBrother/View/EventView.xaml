@@ -12,7 +12,7 @@
     </Window.Resources>
 
     <Grid>
-        <Grid Name="EventInformation" DataContext="{Binding EventView}" HorizontalAlignment="Center" Height="189" Margin="10,0,0,0" VerticalAlignment="Top" Width="319">
+        <Grid Name="EventInformation" DataContext="{Binding }" HorizontalAlignment="Center" Height="189" Margin="10,0,0,0" VerticalAlignment="Top" Width="319">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="60"/>
@@ -35,7 +35,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Observer first name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBox Name="ObserverFirstName" Grid.Row="1" Grid.Column="1" Margin="5,21,-27,14" Height="26" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="ObserverEvent.FirstName" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
+                    <Binding Path="FirstNameObserver" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
                         <Binding.ValidationRules>
                             <viewModel:NameValidator ValidatesOnTargetUpdated="True"></viewModel:NameValidator>
                         </Binding.ValidationRules>
@@ -45,7 +45,7 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Observer last name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBox Name="ObserverLastName" Grid.Row="2" Grid.Column="1" Margin="5,22,-27,15" Height="24" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="ObserverEvent.LastName" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
+                    <Binding Path="LastNameObserver" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
                         <Binding.ValidationRules>
                             <viewModel:NameValidator ValidatesOnTargetUpdated="True"></viewModel:NameValidator>
                         </Binding.ValidationRules>

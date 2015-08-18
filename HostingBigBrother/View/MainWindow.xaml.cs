@@ -34,10 +34,12 @@ namespace HostingBigBrother.View
         {
             attentionsView = new AttentionsView(main.Attentions);
             attentionsView.ShowDialog();
-            if (attentionsView.DialogResult == null) return;
+            if (attentionsView.DialogResult == false) return;
             var text = attentionsView.TextBoxAttentions.Text;
             if (text.Length <= 0) return;
             var attentionNameList = text.Split(',').ToList();
+            var index = attentionNameList.FindIndex(a => a == string.Empty);
+            attentionNameList.RemoveAt(index);
             var attentions = attentionNameList.Select(attentionName => new Attention { Name = attentionName }).ToList();
             main.Attentions = attentions;
         }
@@ -56,20 +58,24 @@ namespace HostingBigBrother.View
                 e.Cancel = true;
                 return;
             }
-            if (main.EventView != null)
-            {
-                main.EventView.EndTimeEvent = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-            }
+            if (main.EventView.NameEvent == null) return;
+            if (main.EventView.NameEvent != string.Empty)
+                main.EventView.EndTimeEvent = GetDateTimeNow();
         }
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
         {
-            //main.EventView = new Event();
-            //main.EventView.PropertyChanged += SetFinishEvent;
-            //main.EventView.PropertyChanged += StartSaveEvent;
-
-            eventView = new EventView(main);
+            eventView = new EventView();
             eventView.ShowDialog();
+            if (eventView.DialogResult == false) return;
+            main.EventView = new Event { NameEvent = eventView.NameEvent, StarTimeEvent = GetDateTimeNow(), ObserverEvent = new Observer { FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver } };
+            main.StartSaveEvent();
+            
+        }
+
+        private static DateTime GetDateTimeNow()
+        {
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
         }
     }
 }
