@@ -9,5 +9,7 @@ namespace WcfServiceLibrary
     {
         [OperationContract]
         void AddUser(User user);
+        [OperationContract]
+        bool IsAlive();
     }
 }

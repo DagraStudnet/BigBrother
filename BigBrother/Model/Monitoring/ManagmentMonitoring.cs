@@ -8,16 +8,23 @@ namespace ClientBigBrother.Model.Monitoring
     public class ManagmentMonitoring : IManagmentMonitoring
     {
         private readonly IUserMonitoring<IUser> userMonitoring;
+        private bool CanMonitoring { get; set; }
 
         public ManagmentMonitoring(DispatcherTimer dispatcherTimer)
         {
             PcUser = new User();
             userMonitoring = new UserMonitoring<IUser>();
-
-            userMonitoring.SaveStartUpApplicationsOnDestop(PcUser);
-            userMonitoring.SaveInformationAboutUserPc(PcUser);
+            StartMonitoring();
 
             dispatcherTimer.Tick += dispatcherTimer_Tick;
+        }
+
+        public bool StartMonitoring()
+        {
+            userMonitoring.SaveStartUpApplicationsOnDestop(PcUser);
+            userMonitoring.SaveInformationAboutUserPc(PcUser);
+            CanMonitoring = true;
+            return true;
         }
 
         public IUser PcUser { get; private set; }
@@ -30,6 +37,7 @@ namespace ClientBigBrother.Model.Monitoring
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
+            if(CanMonitoring)
             Monitoring();
         }
     }

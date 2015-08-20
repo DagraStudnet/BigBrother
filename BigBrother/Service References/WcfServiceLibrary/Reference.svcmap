@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost/Test/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://localhost:8080/Test/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="3e5e4a88-03ea-419c-86dc-3ea477c34f35" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="4e711561-f728-4ee1-a009-8123d34d5b31" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="71a23f40-206a-4211-a481-ee3929826a60" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
-    <MetadataFile FileName="ClassLibrary.xsd" MetadataType="Schema" ID="84064c11-83bd-4d8f-adfa-efb1e396af6c" SourceId="1" SourceUrl="net.tcp://localhost/Test/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="19e6bf60-1c2c-46b3-a470-e0eed19cd0fc" SourceId="1" SourceUrl="net.tcp://localhost:8080/Test/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="7731bcc4-f8d4-4358-940e-6d54036716af" SourceId="1" SourceUrl="net.tcp://localhost:8080/Test/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="363db138-f4b9-477f-bea2-e92620053a2a" SourceId="1" SourceUrl="net.tcp://localhost:8080/Test/mex" />
+    <MetadataFile FileName="ClassLibrary.UserLibrary.xsd" MetadataType="Schema" ID="489ccb75-3c16-4ee6-9654-f02dd168e552" SourceId="1" SourceUrl="net.tcp://localhost:8080/Test/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

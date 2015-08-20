@@ -17,7 +17,6 @@ namespace HostingBigBrother.ViewModel
         private ServiceHost serviceHost;
 
         private ObservableCollection<MonitoringUser> users;
-        private ObservableCollection<MonitoringActivity> activities;
         private MonitoringUser selectedUserValue;
         private List<Attention> _attentions;
         private Event _eventView;

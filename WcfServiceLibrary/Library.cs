@@ -14,5 +14,10 @@ namespace WcfServiceLibrary
             DBTransaction dbTransaction = DBTransaction.ReturnDatabaseInstance();
             dbTransaction.AddUser(user);
         }
+
+        public bool IsAlive()
+        {
+            return true;
+        }
     }
 }

@@ -13,8 +13,6 @@ namespace HostingBigBrother.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly DBTransaction dbTransactionSingleton;
-        private ServiceHost host;
         private ViewModelMain main;
         private AttentionsView attentionsView;
         private EventView eventView;
@@ -63,7 +61,7 @@ namespace HostingBigBrother.View
                 e.Cancel = true;
                 return;
             }
-            if (main.EventView.NameEvent == null) return;
+            if (main.EventView == null) return;
             if (main.EventView.NameEvent != string.Empty)
                 main.EventView.EndTimeEvent = GetDateTimeNow();
         }

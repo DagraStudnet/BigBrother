@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Windows;
-using ClassLibrary;
 using ClassLibrary.UserLibrary;
 using ClientBigBrother.WcfServiceLibrary;
+
 
 namespace ClientBigBrother.Model.WcfService
 {
@@ -15,14 +15,28 @@ namespace ClientBigBrother.Model.WcfService
         public CommunicationWithService(WcfServiceClientConfiguration wcfServiceClientConfiguration)
         {
             this.wcfServiceClientConfiguration = wcfServiceClientConfiguration;
-            
+        }
+
+        public bool HostingIsAlive()
+        {
+            try
+            {
+                proxy = ConnectionProxy();
+                return proxy.IsAlive();
+            }
+            catch (Exception e)
+            {
+                proxy.Abort();
+                proxy = null;
+                return false;
+            }
         }
 
         public void SendInformationToService(IUser user)
         {
             try
             {                
-                proxy = new LibraryClient(wcfServiceClientConfiguration.NetTcpBinding,wcfServiceClientConfiguration.Address);
+                proxy = ConnectionProxy();
                 if (proxy.State == CommunicationState.Faulted)
                     throw new CommunicationObjectFaultedException("Connection fault.");
                 if (proxy.State == CommunicationState.Closed)
@@ -36,6 +50,11 @@ namespace ClientBigBrother.Model.WcfService
                 MessageBox.Show(e.ToString());
                 proxy.Abort();
             }
+        }
+
+        private LibraryClient ConnectionProxy()
+        {
+            return new LibraryClient(wcfServiceClientConfiguration.NetTcpBinding,wcfServiceClientConfiguration.Address);
         }
     }
 }

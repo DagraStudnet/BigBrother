@@ -15,6 +15,7 @@ namespace ClientBigBrother.View
         {
             InitializeComponent();
             vmMain = new ViewModelMain();
+            DataContext = vmMain;
             if(vmMain.ConfigFileDoesntWork)
                 Close();
         }

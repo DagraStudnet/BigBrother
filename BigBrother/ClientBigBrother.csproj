@@ -67,8 +67,10 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.97.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -90,6 +92,10 @@
     <Compile Include="Model\Monitoring\IUserMonitoring.cs" />
     <Compile Include="Model\Monitoring\ManagmentMonitoring.cs" />
     <Compile Include="Model\Monitoring\UserMonitoring.cs" />
+    <Page Include="View\IndicationEllipse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +106,7 @@
     </Compile>
     <Compile Include="Model\WcfService\CommunicationWithService.cs" />
     <Compile Include="Model\WindowsFunction\WindowsApiFunction.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service References\WcfServiceLibrary\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,6 +114,9 @@
     </Compile>
     <Compile Include="Model\WcfService\WCFServiceClientConfiguration.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
+    <Compile Include="View\IndicationEllipse.xaml.cs">
+      <DependentUpon>IndicationEllipse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -139,14 +149,14 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\WcfServiceLibrary\ClassLibrary.xsd">
+    <None Include="Service References\WcfServiceLibrary\ClassLibrary.UserLibrary.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WcfServiceLibrary\service.wsdl" />
-    <None Include="Service References\WcfServiceLibrary\service.xsd">
+    <None Include="Service References\WcfServiceLibrary\service1.wsdl" />
+    <None Include="Service References\WcfServiceLibrary\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WcfServiceLibrary\service1.xsd">
+    <None Include="Service References\WcfServiceLibrary\service21.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
