@@ -20,6 +20,7 @@ namespace HostingBigBrother.ViewModel
         private ObservableCollection<MonitoringActivity> activities;
         private MonitoringUser selectedUserValue;
         private List<Attention> _attentions;
+        private Event _eventView;
 
         public List<Attention> Attentions
         {
@@ -32,7 +33,15 @@ namespace HostingBigBrother.ViewModel
             }
         }
 
-        public Event EventView { get; set; }
+        public Event EventView
+        {
+            get { return _eventView; }
+            set
+            {
+                SetProperty(ref _eventView, value);
+                RaiseNotification("EvenView");
+            }
+        }
 
         public ViewModelMain()
         {

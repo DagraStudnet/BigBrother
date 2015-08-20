@@ -11,7 +11,7 @@ namespace HostingBigBrother.Model
             {
                 Id = (int) dbUser.id_user,
                 Attention = Convert.ToBoolean(dbUser.attention),
-                PCName = dbUser.user_name,
+                PCName = dbUser.pc_name,
                 UserName = dbUser.user_name,
                 TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp)
             };

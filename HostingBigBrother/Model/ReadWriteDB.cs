@@ -112,7 +112,7 @@ namespace HostingBigBrother.Model
         {
             foreach (var monitoringUser in usersList)
             {
-                var activities = dbTransaction.GetCollectionUserActivitiesFromDb(monitoringUser.Id);
+                var activities = dbTransaction.GetCollectionUserActivitiesFromDb(monitoringUser.Id, EventInstance.StarTimeEvent);
                 foreach (var activity in activities)
                 {
                     if (ExisUsertAttention(activity))
@@ -134,7 +134,7 @@ namespace HostingBigBrother.Model
         {
             var activity = (sender as MonitoringActivity);
             var userId = dbTransaction.GetUserIdFromActivityDb(activity.Id);
-            var activities = dbTransaction.GetCollectionUserActivitiesFromDb(userId);
+            var activities = dbTransaction.GetCollectionUserActivitiesFromDb(userId, EventInstance.StarTimeEvent);
             var findAttention = activities.Any(ExisUsertAttention);
             //dbTransaction.UpdateUserAttention(userId, Convert.ToInt32(findAttention));
             var user = users.Find(u => u.Id == userId);
@@ -166,7 +166,7 @@ namespace HostingBigBrother.Model
         public IEnumerable<MonitoringActivity> GetUserActivities(int userId)
         {
             var monitoringActivities =
-                dbTransaction.GetCollectionUserActivitiesFromDb(userId)
+                dbTransaction.GetCollectionUserActivitiesFromDb(userId,EventInstance.StarTimeEvent)
                     .Select(TransformationValuesFromDatabase.TransformActivityFromDB)
                     .ToList();
             ExistUserActivityAttention(monitoringActivities);

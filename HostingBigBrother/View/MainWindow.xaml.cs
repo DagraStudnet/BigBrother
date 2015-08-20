@@ -38,8 +38,13 @@ namespace HostingBigBrother.View
             var text = attentionsView.TextBoxAttentions.Text;
             if (text.Length <= 0) return;
             var attentionNameList = text.Split(',').ToList();
-            var index = attentionNameList.FindIndex(a => a == string.Empty);
-            attentionNameList.RemoveAt(index);
+            int index = 0;
+            do
+            {
+                index = attentionNameList.FindIndex(a => a == string.Empty);
+                if (index > -1) attentionNameList.RemoveAt(index);
+            } while (index > -1);
+
             var attentions = attentionNameList.Select(attentionName => new Attention { Name = attentionName }).ToList();
             main.Attentions = attentions;
         }
@@ -65,12 +70,34 @@ namespace HostingBigBrother.View
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
         {
+            if (main.EventView == null)
+            {
+                CreateEvent();
+                return;
+            }
+            var result = MessageBox.Show("Do you want to finish this event? Pres button OK.", "Finish event", MessageBoxButton.OKCancel,
+                MessageBoxImage.Question);
+            if (result == MessageBoxResult.OK)
+            {
+                main.EventView.EndTimeEvent = GetDateTimeNow();
+                main.Users = null;
+                main.SelectedUser = null;
+                CreateEvent();
+            }
+        }
+
+        private void CreateEvent()
+        {
             eventView = new EventView();
             eventView.ShowDialog();
             if (eventView.DialogResult == false) return;
-            main.EventView = new Event { NameEvent = eventView.NameEvent, StarTimeEvent = GetDateTimeNow(), ObserverEvent = new Observer { FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver } };
+            main.EventView = new Event
+            {
+                NameEvent = eventView.NameEvent,
+                StarTimeEvent = GetDateTimeNow(),
+                ObserverEvent = new Observer { FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver }
+            };
             main.StartSaveEvent();
-            
         }
 
         private static DateTime GetDateTimeNow()

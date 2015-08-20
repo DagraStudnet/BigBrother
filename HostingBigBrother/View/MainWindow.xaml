@@ -83,7 +83,8 @@
         </Grid>
         <Menu HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="693">
             <MenuItem Header="_File">
-                <MenuItem Header="_Create event" Click="Add_event_Click"/>
+                <MenuItem Header="_Create event" Click="Add_event_Click">
+                </MenuItem>
                 <MenuItem Header="_Add attentions" Click="Add_attentions_Click"/>
                 <MenuItem Header="_Exit" Click="Exit_Click"/>
             </MenuItem>

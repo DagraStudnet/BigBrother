@@ -51,11 +51,19 @@ namespace SqliteDatabase
             }
         }
 
-        public IEnumerable<Db_activity> GetCollectionUserActivitiesFromDb(long userId)
+        public IEnumerable<Db_activity> GetCollectionUserActivitiesFromDb(long userId, DateTime starTimeEvent)
         {
             using (var context = new BigBrotherEntities())
             {
-                return context.Db_activity.Where(a => a.id_user == userId).ToList();
+                var activities = new List<Db_activity>();
+                var dateTime = starTimeEvent.Date;
+                foreach (var dbActivity in context.Db_activity)
+                {
+                    if (dbActivity.id_user == userId && DateTime.Parse(dbActivity.time_activity) > dateTime)
+                        activities.Add(dbActivity);
+                }
+                return activities;
+                //return context.Db_activity.Where(a => a.id_user == userId).ToList();
             }
         }
 
@@ -84,7 +92,7 @@ namespace SqliteDatabase
             using (var context = new BigBrotherEntities())
             {
                 Db_user user = context.Db_user.Single(u => u.id_user.Equals(idUser));
-                var dateTimeEvent = GetDateTimeEvent(idEvent,starTimeEvent);
+                var dateTimeEvent = GetDateTimeEvent(idEvent, starTimeEvent);
                 var userDateTimeEvent = context.Db_user_date_time_event.SingleOrDefault(ud => ud.id_user == user.id_user && dateTimeEvent.id_date_time_event == ud.id_date_time_event);
                 userDateTimeEvent.name_work = nameWork;
                 context.SaveChanges();
@@ -210,10 +218,10 @@ namespace SqliteDatabase
 
                 foreach (var dbDateTimeEvent in context.Db_date_time_event)
                 {
-                    if (dbDateTimeEvent.id_event == @event.id_event && dbDateTimeEvent.id_observer == observer.id_observer && DateTime.Parse(dbDateTimeEvent.start_event) == startEvent) 
-                        return;  
+                    if (dbDateTimeEvent.id_event == @event.id_event && dbDateTimeEvent.id_observer == observer.id_observer && DateTime.Parse(dbDateTimeEvent.start_event) == startEvent)
+                        return;
                 }
-                
+
 
                 var dateTimeEvent = new Db_date_time_event
                 {
@@ -234,7 +242,7 @@ namespace SqliteDatabase
                 foreach (var dbDateTimeEvent in context.Db_date_time_event)
                 {
                     var date = DateTime.Parse(dbDateTimeEvent.start_event);
-                    if (dbDateTimeEvent.id_event == eventId && DateTime.Compare(date,startEvent) == 0)
+                    if (dbDateTimeEvent.id_event == eventId && DateTime.Compare(date, startEvent) == 0)
                         dateTimeEvent = dbDateTimeEvent;
                 }
                 return dateTimeEvent;
