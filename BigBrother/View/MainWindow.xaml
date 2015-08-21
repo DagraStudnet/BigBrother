@@ -1,11 +1,31 @@
 ﻿<Window x:Class="ClientBigBrother.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:viewModel="clr-namespace:ClientBigBrother.ViewModel"
-        xmlns:local ="clr-namespace:ClientBigBrother.View"
         Title="Big Brother" Height="350" Width="525">
     <Window.Resources/>
     <Grid>
-        <local:IndicationEllipse DataContext="{Binding Path=HostingIsOnline, Mode=TwoWay}" Margin="199,128,272,144" />
+        <Ellipse  HorizontalAlignment="Left"
+                  Height="25"
+                  Margin="10,10,0,0"
+                  Stroke="Black"
+                  VerticalAlignment="Top"
+                  Width="25">
+            <Ellipse.Style>
+                <Style TargetType="Ellipse">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HostingIsOnline, Mode=OneWay}"
+                                     Value="True">
+                            <Setter Property="Fill"
+                                    Value="Green" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding HostingIsOnline, Mode=OneWay}"
+                                     Value="False">
+                            <Setter Property="Fill"
+                                    Value="Red" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Ellipse.Style>
+        </Ellipse>
     </Grid>
 </Window>

@@ -28,6 +28,7 @@ namespace ClientBigBrother.ViewModel
             set
             {
                 _hostingIsOnline = value;
+                if(!monitoringStart && _hostingIsOnline) StartMonitoring();
                 OnPropertyChanged();
             }
         }
@@ -55,7 +56,7 @@ namespace ClientBigBrother.ViewModel
             managmentMonitoring = new ManagmentMonitoring(timer);
         }
 
-        private void StartMonitoring(object sender, PropertyChangedEventArgs e)
+        private void StartMonitoring()
         {
             if (!monitoringStart)
                 monitoringStart = managmentMonitoring.StartMonitoring();

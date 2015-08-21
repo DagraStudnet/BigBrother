@@ -16,7 +16,7 @@
             <Ellipse.Style>
                 <Style TargetType="Ellipse">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsAvailable}"
+                        <DataTrigger Binding="{Binding Path=HostingIsOnline}"
                                      Value="True">
                             <Setter Property="Fill"
                                     Value="Green" />
