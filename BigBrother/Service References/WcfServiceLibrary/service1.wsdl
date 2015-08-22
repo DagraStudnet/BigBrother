@@ -5,8 +5,6 @@
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
-        <msf:Streamed xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-        </msf:Streamed>
         <wsaw:UsingAddressing>
         </wsaw:UsingAddressing>
       </wsp:All>
