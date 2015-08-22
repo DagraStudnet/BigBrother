@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Threading;
-using ClassLibrary;
 using ClassLibrary.UserLibrary;
 
 namespace ClientBigBrother.Model.Monitoring
@@ -8,7 +7,6 @@ namespace ClientBigBrother.Model.Monitoring
     public class ManagmentMonitoring : IManagmentMonitoring
     {
         private readonly IUserMonitoring<IUser> userMonitoring;
-        private bool CanMonitoring { get; set; }
 
         public ManagmentMonitoring(DispatcherTimer dispatcherTimer)
         {
@@ -19,15 +17,16 @@ namespace ClientBigBrother.Model.Monitoring
             dispatcherTimer.Tick += dispatcherTimer_Tick;
         }
 
+        public bool CanMonitoring { get; set; }
+
+        public IUser PcUser { get; private set; }
+
         public bool StartMonitoring()
         {
             userMonitoring.SaveStartUpApplicationsOnDestop(PcUser);
             userMonitoring.SaveInformationAboutUserPc(PcUser);
-            CanMonitoring = true;
-            return true;
+            return CanMonitoring = true;
         }
-
-        public IUser PcUser { get; private set; }
 
         private void Monitoring()
         {
@@ -37,8 +36,8 @@ namespace ClientBigBrother.Model.Monitoring
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if(CanMonitoring)
-            Monitoring();
+            if (CanMonitoring)
+                Monitoring();
         }
     }
 }

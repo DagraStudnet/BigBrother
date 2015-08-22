@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BigBrotherDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\diplomka\BigBrother\SqliteDatabase\App_Data\BigBrotherDB.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BigBrotherDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Lukas\LukasRajm-Diplomka\SqliteDatabase\App_Data\BigBrotherDB.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Db_activity">
           <Key>
             <PropertyRef Name="id_activity" />
@@ -12,7 +12,6 @@
           <Property Name="id_activity" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="time_activity" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="attention" Type="integer" />
           <Property Name="id_user" Type="integer" />
           <Property Name="ignore_attention" Type="integer" />
         </EntityType>
@@ -49,7 +48,6 @@
           <Property Name="user_name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="pc_name" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="user_timestamp" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="attention" Type="integer" />
         </EntityType>
         <EntityType Name="Db_user_date_time_event">
           <Key>
@@ -159,7 +157,6 @@
           <Property Name="id_activity" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="time_activity" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="attention" Type="Int32" />
           <Property Name="id_user" Type="Int64" />
           <NavigationProperty Name="Db_user" Relationship="Self.FK_Db_activity_0_0" FromRole="Db_activity" ToRole="Db_user" />
           <Property Name="ignore_attention" Type="Int32" />
@@ -204,7 +201,6 @@
           <NavigationProperty Name="Db_activity" Relationship="Self.FK_Db_activity_0_0" FromRole="Db_user" ToRole="Db_activity" />
           <NavigationProperty Name="Db_user_date_time_event" Relationship="Self.FK_Db_user_date_time_event_1_0" FromRole="Db_user" ToRole="Db_user_date_time_event" />
           <Property Name="user_timestamp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="attention" Type="Int32" />
         </EntityType>
         <EntityType Name="Db_user_date_time_event">
           <Key>
@@ -318,7 +314,6 @@
                 <ScalarProperty Name="id_activity" ColumnName="id_activity" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="time_activity" ColumnName="time_activity" />
-                <ScalarProperty Name="attention" ColumnName="attention" />
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -354,7 +349,6 @@
           <EntitySetMapping Name="Db_user">
             <EntityTypeMapping TypeName="BigBrotherDBModel.Db_user">
               <MappingFragment StoreEntitySet="Db_user">
-                <ScalarProperty Name="attention" ColumnName="attention" />
                 <ScalarProperty Name="user_timestamp" ColumnName="user_timestamp" />
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />

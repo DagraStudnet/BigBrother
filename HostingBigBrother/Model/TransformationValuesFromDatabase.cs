@@ -10,10 +10,10 @@ namespace HostingBigBrother.Model
             return new MonitoringUser
             {
                 Id = (int) dbUser.id_user,
-                Attention = Convert.ToBoolean(dbUser.attention),
                 PCName = dbUser.pc_name,
                 UserName = dbUser.user_name,
-                TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp)
+                TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp),
+                Connection = DateTime.Parse(dbUser.user_timestamp).AddMinutes(5) > DateTime.Now
             };
         }
 

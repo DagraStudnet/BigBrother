@@ -16,6 +16,14 @@ namespace HostingBigBrother.View
         private ViewModelMain main;
         private AttentionsView attentionsView;
         private EventView eventView;
+        private DateTime _time;
+
+        public DateTime Time
+
+        {
+            get { return _time; }
+            set { _time = value; }
+        }
 
         public MainWindow()
         {

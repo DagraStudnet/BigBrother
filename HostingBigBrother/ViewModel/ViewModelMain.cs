@@ -46,7 +46,6 @@ namespace HostingBigBrother.ViewModel
         {
 
             Attentions = new List<Attention>();
-            StartHosting();
             Attentions.Add(new Attention { Name = "Visual" });
             Attentions.Add(new Attention { Name = "Not" });
             Attentions.Add(new Attention { Name = "USB" });
@@ -104,6 +103,7 @@ namespace HostingBigBrother.ViewModel
             if (EventView.NameEvent.Length <= 0) return;
             if (EventView.ObserverEvent.FirstName.Length <= 0) return;
             if (EventView.ObserverEvent.LastName.Length <= 0) return;
+            StartHosting();
             EventView.PropertyChanged += SetFinishEvent;
             readWriteDb = new ReadWriteDB(EventView, Attentions);
             readWriteDb.SaveEventWithObserverToDb();

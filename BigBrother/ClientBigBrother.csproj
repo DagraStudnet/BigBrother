@@ -92,10 +92,6 @@
     <Compile Include="Model\Monitoring\IUserMonitoring.cs" />
     <Compile Include="Model\Monitoring\ManagmentMonitoring.cs" />
     <Compile Include="Model\Monitoring\UserMonitoring.cs" />
-    <Page Include="View\IndicationEllipse.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -114,9 +110,6 @@
     </Compile>
     <Compile Include="Model\WcfService\WCFServiceClientConfiguration.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
-    <Compile Include="View\IndicationEllipse.xaml.cs">
-      <DependentUpon>IndicationEllipse.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

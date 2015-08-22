@@ -1,12 +1,12 @@
 ﻿<Window x:Class="ClientBigBrother.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Big Brother" Height="350" Width="525">
+        Title="Big Brother" Height="85" Width="192">
     <Window.Resources/>
-    <Grid>
+    <Grid Margin="0,0,0,-21">
         <Ellipse  HorizontalAlignment="Left"
                   Height="25"
-                  Margin="10,10,0,0"
+                  Margin="10,10,0,10"
                   Stroke="Black"
                   VerticalAlignment="Top"
                   Width="25">
@@ -27,5 +27,23 @@
                 </Style>
             </Ellipse.Style>
         </Ellipse>
+        <TextBox Name="Status" HorizontalAlignment="Left" TextAlignment="Left" Padding="2" BorderBrush="White" Height="25" Margin="40,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsReadOnly="True">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HostingIsOnline, Mode=OneWay}"
+                                     Value="True">
+                            <Setter Property="Text"
+                                    Value="Connected to server" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding HostingIsOnline, Mode=OneWay}"
+                                     Value="False">
+                            <Setter Property="Text"
+                                    Value="Disconnected server" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+            </TextBox>
     </Grid>
 </Window>

@@ -56,14 +56,12 @@ namespace SqliteDatabase
             using (var context = new BigBrotherEntities())
             {
                 var activities = new List<Db_activity>();
-                var dateTime = starTimeEvent.Date;
                 foreach (var dbActivity in context.Db_activity)
                 {
-                    if (dbActivity.id_user == userId && DateTime.Parse(dbActivity.time_activity) > dateTime)
+                    if (dbActivity.id_user == userId && DateTime.Parse(dbActivity.time_activity) > starTimeEvent)
                         activities.Add(dbActivity);
                 }
                 return activities;
-                //return context.Db_activity.Where(a => a.id_user == userId).ToList();
             }
         }
 
@@ -98,17 +96,7 @@ namespace SqliteDatabase
                 context.SaveChanges();
             }
         }
-
-        public void UpdateUserActvityAttention(int? id, bool attention)
-        {
-            using (var context = new BigBrotherEntities())
-            {
-                Db_activity activity = context.Db_activity.Single(a => a.id_activity.Equals(id));
-                activity.attention = Convert.ToInt32(attention);
-                context.SaveChanges();
-            }
-        }
-
+        
         public void UpdateUserActvityIgnoreAttention(int? id, bool attention)
         {
             using (var context = new BigBrotherEntities())
@@ -309,16 +297,7 @@ namespace SqliteDatabase
                 return context.Db_user.Single(u => u.id_user == userId);
             }
         }
-
-        public void UpdateUserAttention(int userId, int userAttention)
-        {
-            using (var context = new BigBrotherEntities())
-            {
-                context.Db_user.Single(u => u.id_user == userId).attention = userAttention;
-                context.SaveChanges();
-            }
-        }
-
+        
         public string GetUserDateTimeEvent(int userid, int idEvent, DateTime starTimeEvent)
         {
             string userWork = null;

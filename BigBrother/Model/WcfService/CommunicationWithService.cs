@@ -22,7 +22,8 @@ namespace ClientBigBrother.Model.WcfService
             try
             {
                 proxy = ConnectionProxy();
-                return proxy.IsAlive();
+                var isAlive = proxy.IsAlive();
+                return isAlive;
             }
             catch (Exception e)
             {

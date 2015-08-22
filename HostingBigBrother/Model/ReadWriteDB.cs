@@ -41,11 +41,6 @@ namespace HostingBigBrother.Model
             dbTransaction.UpdateUserWork(user.Id, EventInstance.Id,EventInstance.StarTimeEvent, user.NameWork);
         }
 
-        public void SaveUserActivityAttentionToDb(int userId, bool attention)
-        {
-            dbTransaction.UpdateUserActvityAttention(userId, attention);
-        }
-
         public void SaveRelationshipBetweenEventAndUsers()
         {
             Db_date_time_event dateTimeEventFromDB = dbTransaction.GetDateTimeEvent(EventInstance.Id,EventInstance.StarTimeEvent);

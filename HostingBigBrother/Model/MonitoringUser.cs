@@ -24,7 +24,8 @@ namespace HostingBigBrother.Model
         }
 
         private string nameWork;
-        
+        private bool _connection;
+
 
         public string NameWork {
             get { return nameWork; }
@@ -34,6 +35,18 @@ namespace HostingBigBrother.Model
                 OnPropertyChanged();
             }
         }
+
+        public bool Connection
+        {
+            get { return _connection; }
+            set
+            {
+                if (value.Equals(_connection)) return;
+                _connection = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string UserName { get; set; }
         public string PCName { get; set; }
         public DateTime TimeStampDispatch { get; set; }

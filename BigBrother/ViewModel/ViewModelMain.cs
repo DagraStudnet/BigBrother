@@ -15,7 +15,7 @@ namespace ClientBigBrother.ViewModel
     internal class ViewModelMain : INotifyPropertyChanged
     {
         private readonly CommunicationWithService communicationWithService;
-        private readonly ManagmentMonitoring managmentMonitoring;
+        private ManagmentMonitoring managmentMonitoring;
         private readonly WcfServiceClientConfiguration wcfServiceClientConfiguration;
         private int time;
         private DispatcherTimer timer;
@@ -28,7 +28,7 @@ namespace ClientBigBrother.ViewModel
             set
             {
                 _hostingIsOnline = value;
-                if(!monitoringStart && _hostingIsOnline) StartMonitoring();
+                if (!monitoringStart && _hostingIsOnline) StartMonitoring();
                 OnPropertyChanged();
             }
         }
@@ -37,6 +37,7 @@ namespace ClientBigBrother.ViewModel
 
         public ViewModelMain()
         {
+            HostingIsOnline = false;
             var confReader = new ConfigFileReader();
             confReader.LoadConfigFile(@"config.xml");
             if (!confReader.XmlDocumentIsEmpty())
@@ -49,7 +50,8 @@ namespace ClientBigBrother.ViewModel
             wcfServiceClientConfiguration = new WcfServiceClientConfiguration(
                 connectionServerConfigutation.Address, connectionServerConfigutation.TimeIntervalInSeconds);
             communicationWithService = new CommunicationWithService(wcfServiceClientConfiguration);
-            HostingIsOnline = communicationWithService.HostingIsAlive();
+            //var b = communicationWithService.HostingIsAlive();
+            //HostingIsOnline = b;
             timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += dispatcherTimer_Tick;
             timer.Start();
@@ -76,12 +78,16 @@ namespace ClientBigBrother.ViewModel
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            HostingIsOnline = !HostingIsOnline;
+            HostingIsOnline = communicationWithService.HostingIsAlive();
             var dispatcherTimer = sender as DispatcherTimer;
             if (dispatcherTimer != null) time += dispatcherTimer.Interval.Seconds;
             if (wcfServiceClientConfiguration == null) return;
-            if (time % wcfServiceClientConfiguration.TimeIntervalInSeconds == 0)
+            if (time%wcfServiceClientConfiguration.TimeIntervalInSeconds != 0) return;
+            
+            if (HostingIsOnline)
+            {
                 communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
