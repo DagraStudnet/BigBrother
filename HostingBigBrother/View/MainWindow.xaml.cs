@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows;
 using HostingBigBrother.Model;
 using HostingBigBrother.ViewModel;
-using SqliteDatabase;
 
 namespace HostingBigBrother.View
 {
@@ -13,21 +13,22 @@ namespace HostingBigBrother.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ViewModelMain main;
+        private DateTime _time;
         private AttentionsView attentionsView;
         private EventView eventView;
-        private DateTime _time;
+        private HistoricalEventView historicalEventView;
+        private ViewModelMain main;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
 
         public DateTime Time
 
         {
             get { return _time; }
             set { _time = value; }
-        }
-
-        public MainWindow()
-        {
-            InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -41,9 +42,9 @@ namespace HostingBigBrother.View
             attentionsView = new AttentionsView(main.Attentions);
             attentionsView.ShowDialog();
             if (attentionsView.DialogResult == false) return;
-            var text = attentionsView.TextBoxAttentions.Text;
+            string text = attentionsView.TextBoxAttentions.Text;
             if (text.Length <= 0) return;
-            var attentionNameList = text.Split(',').ToList();
+            List<string> attentionNameList = text.Split(',').ToList();
             int index = 0;
             do
             {
@@ -51,7 +52,8 @@ namespace HostingBigBrother.View
                 if (index > -1) attentionNameList.RemoveAt(index);
             } while (index > -1);
 
-            var attentions = attentionNameList.Select(attentionName => new Attention { Name = attentionName }).ToList();
+            List<Attention> attentions =
+                attentionNameList.Select(attentionName => new Attention {Name = attentionName}).ToList();
             main.Attentions = attentions;
         }
 
@@ -60,9 +62,10 @@ namespace HostingBigBrother.View
             Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            var result = MessageBox.Show("Do you want to close this window?", "Finish event", MessageBoxButton.OKCancel,
+            MessageBoxResult result = MessageBox.Show("Do you want to close this window?", "Finish event",
+                MessageBoxButton.OKCancel,
                 MessageBoxImage.Question);
             if (result == MessageBoxResult.Cancel)
             {
@@ -81,7 +84,8 @@ namespace HostingBigBrother.View
                 CreateEvent();
                 return;
             }
-            var result = MessageBox.Show("Do you want to finish this event? Pres button OK.", "Finish event", MessageBoxButton.OKCancel,
+            MessageBoxResult result = MessageBox.Show("Do you want to finish this event? Pres button OK.",
+                "Finish event", MessageBoxButton.OKCancel,
                 MessageBoxImage.Question);
             if (result == MessageBoxResult.OK)
             {
@@ -101,14 +105,24 @@ namespace HostingBigBrother.View
             {
                 NameEvent = eventView.NameEvent,
                 StarTimeEvent = GetDateTimeNow(),
-                ObserverEvent = new Observer { FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver }
+                ObserverEvent =
+                    new Observer {FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver}
             };
             main.StartSaveEvent();
         }
 
         private static DateTime GetDateTimeNow()
         {
-            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour,
+                DateTime.Now.Minute, DateTime.Now.Second);
+        }
+
+        private void Add_Historical_Event_Click(object sender, RoutedEventArgs e)
+        {
+            historicalEventView = new HistoricalEventView(main.Attentions);
+            Hide();
+            historicalEventView.ShowDialog();
+            Show();
         }
     }
 }

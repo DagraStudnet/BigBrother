@@ -78,6 +78,8 @@ namespace HostingBigBrother.ViewModel
             }
         }
 
+
+
         private ObservableCollection<MonitoringActivity> LoadActitvities(MonitoringUser user)
         {
             var details = new ObservableCollection<MonitoringActivity>(readWriteDb.GetUserActivities(user.Id));

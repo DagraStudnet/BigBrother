@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Event name:"  HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox Name="EventName" Grid.Row="0" Grid.Column="1" Margin="5,22,-27,10" Height="29" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+            <TextBox Name="EventName" Grid.Row="0" Grid.Column="1" Margin="5,22,-27,10" Height="29" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" KeyboardNavigation.TabIndex="0">
                 <TextBox.Text>
                     <Binding Path="NameEvent" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
                         <Binding.ValidationRules>
@@ -33,7 +33,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Observer first name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox Name="ObserverFirstName" Grid.Row="1" Grid.Column="1" Margin="5,21,-27,14" Height="26" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+            <TextBox Name="ObserverFirstName" Grid.Row="1" Grid.Column="1" Margin="5,21,-27,14" Height="26" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" KeyboardNavigation.TabIndex="1">
                 <TextBox.Text>
                     <Binding Path="FirstNameObserver" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
                         <Binding.ValidationRules>
@@ -43,9 +43,9 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Observer last name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox Name="ObserverLastName" Grid.Row="2" Grid.Column="1" Margin="5,22,-27,15" Height="24" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+            <TextBox Name="ObserverLastName" Grid.Row="2" Grid.Column="1" Margin="5,22,-27,15" Height="24" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" KeyboardNavigation.TabIndex="2">
                 <TextBox.Text>
-                    <Binding Path="LastNameObserver" Mode="TwoWay" UpdateSourceTrigger="LostFocus" >
+                    <Binding Path="LastNameObserver" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>
                             <viewModel:NameValidator ValidatesOnTargetUpdated="True"></viewModel:NameValidator>
                         </Binding.ValidationRules>
@@ -54,7 +54,7 @@
             </TextBox>
         </Grid>
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="126,204,121,10" Width="125">
-            <Button Name="OKButton" Content="OK" Width="50" Margin="5,5,5,5" Click="OKButton_Click" IsDefault="True" >
+            <Button Name="OKButton" Content="OK" Width="50" Margin="5,5,5,5" Click="OKButton_Click" IsDefault="True" KeyboardNavigation.TabIndex="3">
                 <Button.Style>
                     <Style>
                         <Setter Property="Button.IsEnabled" Value="False"/>
@@ -71,7 +71,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Name="StornoButton" Content="Storno" Width="50"   Margin="5,5,5,5" Click="StornoButton_Click" IsCancel="True" />
+            <Button Name="StornoButton" Content="Storno" Width="50"   Margin="5,5,5,5" Click="StornoButton_Click" IsCancel="True" KeyboardNavigation.TabIndex="4" />
         </StackPanel>
     </Grid>
 </Window>

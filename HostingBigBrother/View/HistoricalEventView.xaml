@@ -1,0 +1,126 @@
+﻿<Window x:Class="HostingBigBrother.View.HistoricalEventView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Historical event data" WindowState="Maximized" ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="125" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90" />
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
+            <GroupBox Header="Filters" HorizontalAlignment="Left" Margin="10,10,10,0" VerticalAlignment="Top"
+                      Height="80" Width="650" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="125" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Event:" Grid.Column="0" FontStyle="Italic" />
+                    <ComboBox Name="EventComboBoxFilter" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top"
+                              Width="120"  ItemsSource="{Binding EventCombobox}" DisplayMemberPath="NameEvent" SelectedValuePath="Id" SelectedValue="{Binding SelectedEventId}" />
+                    <Label Content="From:" Grid.Column="1" FontStyle="Italic" />
+                    <DatePicker Name="StartDatePicker" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+                                Width="120" SelectedDateChanged="DatePickerStart_OnSelectedDateChanged" SelectedDate="{Binding SelectedStartEvent, UpdateSourceTrigger=LostFocus, 
+            ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  />
+                    <Label Content="To:" Grid.Column="2" FontStyle="Italic" />
+                    <DatePicker Name="EndDatePicker" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" SelectedDate="{Binding SelectedEndEvent, UpdateSourceTrigger=LostFocus, 
+            ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                                Width="120" SelectedDateChanged="DatePickerEnd_OnSelectedDateChanged"  />
+                    <Label Content="Observer:" Grid.Column="3" FontStyle="Italic" />
+                    <ComboBox Name="OserverComboBoxFilter" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="1" VerticalAlignment="Top"
+                              Width="120" ItemsSource="{Binding ObserverCombox}" DisplayMemberPath="FullName" SelectedValuePath="Id" SelectedValue="{Binding SelectedObserverId}" />
+                    <Label Content="User:" Grid.Column="4" FontStyle="Italic" />
+                    <ComboBox Name="UserComboBoxFilter" HorizontalAlignment="Left" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top"
+                              Width="120" ItemsSource="{Binding UserCombobox}" DisplayMemberPath="UserName" SelectedValuePath="Id" SelectedValue="{Binding SelectedUserId}" />
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="1" Width="625" HorizontalAlignment="Left" Margin="10 0 0 0">
+                <Button Content="Filter" HorizontalAlignment="Center" Margin="-80 5 10 5" Grid.Row="1"
+                        VerticalAlignment="Top" Width="75" Click="Filter_Click"/>
+                <Button Content="Clear" HorizontalAlignment="Center" Margin="80 5 10 5" Grid.Row="1"
+                        VerticalAlignment="Top" Width="75" Click="FilterClear_OnClick"/>
+            </Grid>
+        </Grid>
+        <DataGrid ItemsSource="{Binding FiltredEventDataGird}" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Top" AutoGenerateColumns="False" SelectionUnit="FullRow" CanUserAddRows="False"
+                          CanUserDeleteRows="False" SelectedItem="{Binding SelectedEvent, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Event name" Binding="{Binding NameEvent}" IsReadOnly="True" Width="0.15*" />
+                <DataGridTextColumn Header="Event from" Binding="{Binding StarTimeEvent}" IsReadOnly="True" Width="0.15*" />
+                <DataGridTextColumn Header="Event to" Binding="{Binding EndTimeEvent}" Width="0.25*"
+                                    IsReadOnly="True" />
+                <DataGridTextColumn Header="Observer" Binding="{Binding ObserverEvent.FullName}" IsReadOnly="True"
+                                    Width="0.25*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid HorizontalAlignment="Stretch" Margin="10" Grid.Row="2" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Users:" Grid.Column="0" />
+            <Label Content="User activities:" Grid.Column="1" Margin="10 0 0 0" />
+            <DataGrid x:Name="UsersDataGrid" Grid.Column="0" Margin="0,30,0,0" ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding SelectedUser, Mode=TwoWay}" AutoGenerateColumns="False"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow" CanUserAddRows="False"
+                      CanUserDeleteRows="False">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Attention}" Value="True">
+                                <Setter Property="Background" Value="Red" />
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="User Name" Binding="{Binding UserName}" IsReadOnly="True" Width="0.15*" />
+                    <DataGridTextColumn Header="Pc Name" Binding="{Binding PCName}" IsReadOnly="True" Width="0.15*" />
+                    <DataGridTextColumn Header="Work" Binding="{Binding NameWork}" Width="0.25*"
+                                        IsReadOnly="True" />
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="UserActivitiesDataGrid" Grid.Column="1" Margin="10,30,0,0"
+                      ItemsSource="{Binding Activities}" AutoGenerateColumns="False" SelectionMode="Single"
+                      SelectionUnit="Cell" CanUserAddRows="False" HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
+                      CanUserDeleteRows="False">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MarkRow}" Value="True">
+                                <Setter Property="Background" Value="Red" />
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" Width="0.6*"
+                                        IsReadOnly="True" />
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" Width="0.3*"
+                                        IsReadOnly="True" />
+                    <DataGridCheckBoxColumn Header="Ignore"
+                                            Binding="{Binding IgnoreAttention, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            Width="0.05*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+    </Grid>
+</Window>

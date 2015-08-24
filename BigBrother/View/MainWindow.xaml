@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ClientBigBrother.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Big Brother" Height="85" Width="192">
+        Title="Big Brother" Height="85" Width="200" ResizeMode="NoResize">
     <Window.Resources/>
     <Grid Margin="0,0,0,-21">
         <Ellipse  HorizontalAlignment="Left"

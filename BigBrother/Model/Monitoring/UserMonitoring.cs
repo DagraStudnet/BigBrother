@@ -6,10 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
-using ClassLibrary;
 using ClassLibrary.UserLibrary;
 using ClientBigBrother.Model.WindowsFunction;
-using ClientBigBrother.ViewModel;
 
 namespace ClientBigBrother.Model.Monitoring
 {
@@ -21,7 +19,7 @@ namespace ClientBigBrother.Model.Monitoring
         private string previousName = string.Empty;
 
         /// <summary>
-        /// Metoda uklada informace o nazvu pc a nazvu uzivatele do instance user
+        ///     Metoda uklada informace o nazvu pc a nazvu uzivatele do instance user
         /// </summary>
         /// <param name="user">IUser</param>
         public void SaveInformationAboutUserPc(T user)
@@ -30,10 +28,10 @@ namespace ClientBigBrother.Model.Monitoring
             string[] text = windowsIdentity.Name.Split('\\');
             user.PCName = text[0];
             user.UserName = text[1];
-
         }
+
         /// <summary>
-        /// Metoda uklada informace o pripojenych usb a behem aplikace pripojovanych usb
+        ///     Metoda uklada informace o pripojenych usb a behem aplikace pripojovanych usb
         /// </summary>
         /// <param name="user"></param>
         public void SaveUsbConnection(T user)
@@ -58,31 +56,31 @@ namespace ClientBigBrother.Model.Monitoring
                 }
             }
         }
+
         /// <summary>
-        /// Metoda uklada nazev aplikace se kterou uzivatel prave pracuje.
+        ///     Metoda uklada nazev aplikace se kterou uzivatel prave pracuje.
         /// </summary>
         /// <param name="user"></param>
         public void SaveNowRuningApplicationUser(T user)
         {
             WindowsApiFunction.GetWindowText(WindowsApiFunction.GetForegroundWindow(), nameActivities,
                 nameActivities.Capacity);
-            if (nameActivities.ToString() != previousName)
-            {
-                user.ListOfActivitesOnPc.Add(CreateActivity(nameActivities.ToString()));
-                previousName = nameActivities.ToString();
-                nameActivities.Clear();
-            }
+            if (nameActivities.ToString() == previousName && nameActivities.ToString() != string.Empty &&
+                nameActivities.ToString() != "Big Brother") return;
+            user.ListOfActivitesOnPc.Add(CreateActivity(nameActivities.ToString()));
+            previousName = nameActivities.ToString();
+            nameActivities.Clear();
         }
 
         /// <summary>
-        /// Metoda uklada nazvy aplikaci ketere jsou spusteny pri spusteni sledovaci aplikace.
+        ///     Metoda uklada nazvy aplikaci ketere jsou spusteny pri spusteni sledovaci aplikace.
         /// </summary>
         /// <param name="user"></param>
         public void SaveStartUpApplicationsOnDestop(T user)
         {
             foreach (
-               Process process in
-                   Process.GetProcesses().Where(process => !string.IsNullOrEmpty(process.MainWindowTitle)))
+                Process process in
+                    Process.GetProcesses().Where(process => !string.IsNullOrEmpty(process.MainWindowTitle)))
             {
                 user.ListOfActivitesOnPc.Add(CreateActivity(process.MainWindowTitle));
             }
@@ -90,7 +88,7 @@ namespace ClientBigBrother.Model.Monitoring
 
         private static Activity CreateActivity(string nameActivity)
         {
-            return new Activity { NameActivity = string.Format("{0}", nameActivity), TimeActivity = DateTime.Now };
+            return new Activity {NameActivity = string.Format("{0}", nameActivity), TimeActivity = DateTime.Now};
         }
     }
 }

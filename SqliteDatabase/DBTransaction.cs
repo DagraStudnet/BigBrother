@@ -96,7 +96,7 @@ namespace SqliteDatabase
                 context.SaveChanges();
             }
         }
-        
+
         public void UpdateUserActvityIgnoreAttention(int? id, bool attention)
         {
             using (var context = new BigBrotherEntities())
@@ -237,7 +237,7 @@ namespace SqliteDatabase
             }
         }
 
-        public Db_observer GetObserver(int observerId)
+        public Db_observer GetObserverById(int observerId)
         {
             using (var context = new BigBrotherEntities())
             {
@@ -245,7 +245,7 @@ namespace SqliteDatabase
             }
         }
 
-        public Db_event GetEvent(string nameEvent)
+        public Db_event GetEventByName(string nameEvent)
         {
             using (var context = new BigBrotherEntities())
             {
@@ -297,8 +297,8 @@ namespace SqliteDatabase
                 return context.Db_user.Single(u => u.id_user == userId);
             }
         }
-        
-        public string GetUserDateTimeEvent(int userid, int idEvent, DateTime starTimeEvent)
+
+        public string GetUserNameWork(int userid, int idEvent, DateTime starTimeEvent)
         {
             string userWork = null;
             using (var context = new BigBrotherEntities())
@@ -308,6 +308,80 @@ namespace SqliteDatabase
                 if (userDateTimeEvent != null) userWork = userDateTimeEvent.name_work;
             }
             return userWork;
+        }
+
+        public IEnumerable<Db_event> GetAllEvents()
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_event.ToList();
+            }
+        }
+
+        public IEnumerable<Db_observer> GetAllObservers()
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_observer.ToList();
+            }
+        }
+
+        public IEnumerable<Db_user> GetAllUsers()
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_user.ToList();
+            }
+        }
+
+        public IEnumerable<Db_date_time_event> GetAllDateTimeEven()
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_date_time_event.ToList();
+            }
+        }
+
+        public Db_event GetEventById(long idEvent)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_event.Single(e => e.id_event == idEvent);
+            }
+        }
+
+        public IEnumerable<Db_user_date_time_event> GetUserDateTimeEvent(int userId)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                return context.Db_user_date_time_event.Where(udte => udte.id_user == userId).ToList();
+            }
+        }
+
+        public IEnumerable<Db_activity> GetCollectionUserActivitiesFromDb(int userId, DateTime starTimeEvent, DateTime endTimeEvent)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                var activities = new List<Db_activity>();
+                foreach (var dbActivity in context.Db_activity)
+                {
+                    if (dbActivity.id_user == userId && DateTime.Parse(dbActivity.time_activity) >= starTimeEvent && DateTime.Parse(dbActivity.time_activity) <= endTimeEvent)
+                        activities.Add(dbActivity);
+                }
+                return activities;
+            }
+        }
+
+        public void SetUserDisconnectActivity(int userId, string disconnect)
+        {
+            using (var context = new BigBrotherEntities())
+            {
+                context.Db_activity.Add(new Db_activity()
+                {
+                    name = disconnect,
+                    time_activity = DateTime.Now.ToString(DateTimeFormate)
+                });
+            }
         }
     }
 }

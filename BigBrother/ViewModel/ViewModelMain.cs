@@ -50,8 +50,6 @@ namespace ClientBigBrother.ViewModel
             wcfServiceClientConfiguration = new WcfServiceClientConfiguration(
                 connectionServerConfigutation.Address, connectionServerConfigutation.TimeIntervalInSeconds);
             communicationWithService = new CommunicationWithService(wcfServiceClientConfiguration);
-            //var b = communicationWithService.HostingIsAlive();
-            //HostingIsOnline = b;
             timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += dispatcherTimer_Tick;
             timer.Start();

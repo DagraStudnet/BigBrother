@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 namespace ClientBigBrother.Model.WcfService
 {
@@ -6,8 +7,14 @@ namespace ClientBigBrother.Model.WcfService
     {
         public WcfServiceClientConfiguration(string address, string timeSend)
         {
-            NetTcpBinding = new NetTcpBinding();
+            NetTcpBinding = new NetTcpBinding(SecurityMode.None);
             Address = new EndpointAddress(address);
+            NetTcpBinding.ReceiveTimeout = TimeSpan.FromMinutes(5);
+            NetTcpBinding.OpenTimeout = TimeSpan.FromMinutes(5);
+            NetTcpBinding.MaxReceivedMessageSize = 2147483647;
+            NetTcpBinding.MaxBufferSize = 2147483647;
+            NetTcpBinding.MaxBufferPoolSize = 2147483647;
+            NetTcpBinding.TransferMode = TransferMode.Buffered;
             TimeIntervalInSeconds = int.Parse(timeSend);
         }
 

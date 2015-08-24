@@ -52,7 +52,7 @@ namespace HostingBigBrother.Model
 
         private void GetEventId()
         {
-            EventInstance.Id = (int)dbTransaction.GetEvent(EventInstance.NameEvent).id_event;
+            EventInstance.Id = (int)dbTransaction.GetEventByName(EventInstance.NameEvent).id_event;
         }
 
         public IEnumerable<Db_user> GetUsersWithOutEventFromDb()
@@ -98,7 +98,7 @@ namespace HostingBigBrother.Model
         {
             foreach (var monitoringUser in monitoringUsers)
             {
-                monitoringUser.NameWork = dbTransaction.GetUserDateTimeEvent(monitoringUser.Id,EventInstance.Id,EventInstance.StarTimeEvent);
+                monitoringUser.NameWork = dbTransaction.GetUserNameWork(monitoringUser.Id,EventInstance.Id,EventInstance.StarTimeEvent);
             }
             
         }
@@ -134,7 +134,6 @@ namespace HostingBigBrother.Model
             //dbTransaction.UpdateUserAttention(userId, Convert.ToInt32(findAttention));
             var user = users.Find(u => u.Id == userId);
             user.Attention = findAttention;
-
         }
 
         private bool ExisUsertAttention(Db_activity dbActivity)
@@ -153,6 +152,10 @@ namespace HostingBigBrother.Model
             users = dbUsers.Select(dbUser =>
             {
                 var user = TransformationValuesFromDatabase.TransformUserFromDB(dbUser);
+                if (!user.Connection)
+                {
+                    dbTransaction.SetUserDisconnectActivity(user.Id, "Disconnect");
+                }
                 return user;
             }).ToList();
             return users;
@@ -192,5 +195,7 @@ namespace HostingBigBrother.Model
             var activity = (sender as MonitoringActivity);
             dbTransaction.UpdateUserActvityIgnoreAttention(activity.Id, activity.IgnoreAttention);
         }
+
+
     }
 }

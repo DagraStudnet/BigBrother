@@ -77,6 +77,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ReadDB.cs" />
+    <Compile Include="ViewModel\HistoricalEventDataViewModel.cs" />
     <Compile Include="ViewModel\NameValidator.cs" />
     <Compile Include="View\AttentionsView.xaml.cs">
       <DependentUpon>AttentionsView.xaml</DependentUpon>
@@ -96,6 +98,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\HistoricalEventView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +112,9 @@
     </Compile>
     <Compile Include="View\EventView.xaml.cs">
       <DependentUpon>EventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HistoricalEventView.xaml.cs">
+      <DependentUpon>HistoricalEventView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

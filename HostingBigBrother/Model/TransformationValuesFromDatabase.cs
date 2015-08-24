@@ -13,7 +13,7 @@ namespace HostingBigBrother.Model
                 PCName = dbUser.pc_name,
                 UserName = dbUser.user_name,
                 TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp),
-                Connection = DateTime.Parse(dbUser.user_timestamp).AddMinutes(5) > DateTime.Now
+                Connection = DateTime.Parse(dbUser.user_timestamp).AddMinutes(3) > DateTime.Now
             };
         }
 
