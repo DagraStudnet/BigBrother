@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="HostingBigBrother.View.MainWindow"
-    Title="MainWindow" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+    Title="MainWindow" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
     Closing="Window_Closing" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
@@ -109,7 +109,6 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="0.05*" IsReadOnly="True" />
                     <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" Width="0.6*"
                                         IsReadOnly="True" />
                     <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" Width="0.3*"

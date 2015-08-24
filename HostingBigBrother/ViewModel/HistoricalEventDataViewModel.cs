@@ -192,10 +192,12 @@ namespace HostingBigBrother.ViewModel
         {
             get { return SelectedUser == null ? null : LoadActitvities(SelectedUser); }
         }
-        
+
         private ObservableCollection<MonitoringUser> LoadUsers(Event selectedEvent)
         {
-            return new ObservableCollection<MonitoringUser>(readDb.GetEventUsers(selectedEvent.Id,SelectedEvent.StarTimeEvent, SelectedEvent.EndTimeEvent));
+            var usersCollection = readDb.GetEventUsers(selectedEvent.Id, SelectedEvent.StarTimeEvent,
+                SelectedEvent.EndTimeEvent);
+            return usersCollection == null ? null : new ObservableCollection<MonitoringUser>(usersCollection);
         }
 
         public ObservableCollection<MonitoringUser> Users
@@ -246,7 +248,7 @@ namespace HostingBigBrother.ViewModel
             FiltredEventDataGird =
                 new ObservableCollection<Event>(readDb.GetFiltredEvent(SelectedEventId, SelectedObserverId,
                     SelectedUserId, SelectedStartEvent, SelectedEndEvent));
-            SelectedEvent= new Event();
+            SelectedEvent = new Event();
             SelectedUser = new MonitoringUser();
         }
     }

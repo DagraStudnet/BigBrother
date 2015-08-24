@@ -65,8 +65,8 @@ namespace ClientBigBrother.Model.Monitoring
         {
             WindowsApiFunction.GetWindowText(WindowsApiFunction.GetForegroundWindow(), nameActivities,
                 nameActivities.Capacity);
-            if (nameActivities.ToString() == previousName && nameActivities.ToString() != string.Empty &&
-                nameActivities.ToString() != "Big Brother") return;
+            if (nameActivities.ToString() == previousName)  return; 
+            if(nameActivities.ToString() == string.Empty || nameActivities.ToString() == "Big Brother") return;
             user.ListOfActivitesOnPc.Add(CreateActivity(nameActivities.ToString()));
             previousName = nameActivities.ToString();
             nameActivities.Clear();

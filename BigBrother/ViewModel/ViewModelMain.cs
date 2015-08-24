@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using ClassLibrary.ConfigFileLibrary;
+using ClassLibrary.UserLibrary;
 using ClientBigBrother.Annotations;
 using ClientBigBrother.Model.Monitoring;
 using ClientBigBrother.Model.WcfService;
@@ -86,6 +87,13 @@ namespace ClientBigBrother.ViewModel
             {
                 communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
             }
+        }
+
+        public void FinishApp()
+        {
+            if (!HostingIsOnline) return;
+            managmentMonitoring.PcUser.ListOfActivitesOnPc.Add(new Activity(){NameActivity = "Close monitoring application",TimeActivity = DateTime.Now});
+            communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

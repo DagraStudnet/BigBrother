@@ -152,10 +152,6 @@ namespace HostingBigBrother.Model
             users = dbUsers.Select(dbUser =>
             {
                 var user = TransformationValuesFromDatabase.TransformUserFromDB(dbUser);
-                if (!user.Connection)
-                {
-                    dbTransaction.SetUserDisconnectActivity(user.Id, "Disconnect");
-                }
                 return user;
             }).ToList();
             return users;

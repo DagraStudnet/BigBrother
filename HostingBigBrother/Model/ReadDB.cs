@@ -45,7 +45,7 @@ namespace HostingBigBrother.Model
         public IEnumerable<Event> GetFiltredEvent(int selectedEventId, int selectedObserverId, int selectedUserId, DateTime? selectedStartEvent, DateTime? selectedEndEvent)
         {
             var dbDateTimeEvents = dbTransaction.GetAllDateTimeEven();
-
+            dbDateTimeEvents = dbDateTimeEvents.Where(dte => dte.end_event != null);
             if (selectedEventId != 0)
                 dbDateTimeEvents = dbDateTimeEvents.Where(dte => dte.id_event == selectedEventId);
             if (selectedObserverId != 0)
@@ -113,6 +113,7 @@ namespace HostingBigBrother.Model
 
         public List<MonitoringUser> GetEventUsers(int eventId, DateTime starTimeEvent, DateTime endTimeEvent)
         {
+            if (eventId == 0) return null;
             starTimeEventValue = starTimeEvent;
             endTimeEventValue = endTimeEvent;
             monitoringUsers = dbTransaction.GetUsersBelongingToDateTimeEvent(eventId, starTimeEvent).Select(TransformationValuesFromDatabase.TransformUserFromDB).ToList();

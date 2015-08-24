@@ -19,5 +19,10 @@ namespace ClientBigBrother.View
             if(vmMain.ConfigFileDoesntWork)
                 Close();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            vmMain.FinishApp();
+        }
     }
 }
