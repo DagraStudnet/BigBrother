@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="HostingBigBrother.View.MainWindow"
     Title="MainWindow" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
-    Closing="Window_Closing" WindowState="Maximized">
+    Closing="Window_Closing" WindowState="Normal">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -115,7 +115,7 @@
                                         IsReadOnly="True" />
                     <DataGridCheckBoxColumn Header="Ignore"
                                             Binding="{Binding IgnoreAttention, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                            Width="0.05*" />
+                                            Width="0.1*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
