@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Windows.Threading;
-using HostingBigBrother.Model;
+using BigBrotherViewer.Model;
 using WcfServiceLibrary;
 
-namespace HostingBigBrother.ViewModel
+namespace BigBrotherViewer.ViewModel
 {
     public class ViewModelMain : BindableBase, INotifyPropertyChanged
     {
@@ -20,6 +21,8 @@ namespace HostingBigBrother.ViewModel
         private MonitoringUser selectedUserValue;
         private List<Attention> _attentions;
         private Event _eventView;
+        private string _fillNameActivity;
+        private bool _onlyAttentions;
 
         public List<Attention> Attentions
         {
@@ -44,7 +47,7 @@ namespace HostingBigBrother.ViewModel
 
         public ViewModelMain()
         {
-
+            
             Attentions = new List<Attention>();
             Attentions.Add(new Attention { Name = "Visual" });
             Attentions.Add(new Attention { Name = "Not" });
@@ -82,8 +85,37 @@ namespace HostingBigBrother.ViewModel
 
         private ObservableCollection<MonitoringActivity> LoadActitvities(MonitoringUser user)
         {
-            var details = new ObservableCollection<MonitoringActivity>(readWriteDb.GetUserActivities(user.Id));
-            return details;
+            var userActivities = ReturnUserActivity(user);
+            if (OnlyAttentions)
+                userActivities = userActivities.Where(a => a.Attention).ToList();
+            if (!string.IsNullOrEmpty(FillNameActivity))
+                userActivities = userActivities.Where(a => a.NameActivity.Contains(FillNameActivity)).ToList();
+            return new ObservableCollection<MonitoringActivity>(userActivities);
+        }
+
+        private IEnumerable<MonitoringActivity> ReturnUserActivity(MonitoringUser user)
+        {
+            return readWriteDb.GetUserActivities(user.Id);
+        }
+
+        public string FillNameActivity
+        {
+            get { return _fillNameActivity; }
+            set
+            {
+                SetProperty(ref _fillNameActivity, value);
+                RaiseNotification("Activities");
+            }
+        }
+
+        public bool OnlyAttentions
+        {
+            get { return _onlyAttentions; }
+            set
+            {
+                SetProperty(ref _onlyAttentions, value);
+                RaiseNotification("Activities");
+            }
         }
 
 

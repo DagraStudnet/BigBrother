@@ -1,7 +1,7 @@
-﻿<Window x:Class="HostingBigBrother.View.EventView"
+﻿<Window x:Class="BigBrotherViewer.View.EventView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:viewModel="clr-namespace:HostingBigBrother.ViewModel"
+        xmlns:viewModel="clr-namespace:BigBrotherViewer.ViewModel"
         Title="Monitoring event" Height="283.43" Width="377.702" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
     <Window.Resources>
         <ResourceDictionary>

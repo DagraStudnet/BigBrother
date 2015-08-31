@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using HostingBigBrother.Annotations;
+using BigBrotherViewer.Annotations;
 
-namespace HostingBigBrother.Model
+namespace BigBrotherViewer.Model
 {
     public class Event : INotifyPropertyChanged
     {

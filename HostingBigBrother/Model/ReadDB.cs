@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SqliteDatabase;
 using SqliteDatabase.DB_Models;
 
-namespace HostingBigBrother.Model
+namespace BigBrotherViewer.Model
 {
     public class ReadDB
     {
@@ -152,6 +152,11 @@ namespace HostingBigBrother.Model
         private bool ExisUsertAttention(Db_activity dbActivity)
         {
             return _attentions.Any(a => dbActivity.name.Contains(a.Name)) && !Convert.ToBoolean(dbActivity.ignore_attention);
+        }
+
+        public void DeleteDb()
+        {
+           dbTransaction.DeleteDB();
         }
     }
 }

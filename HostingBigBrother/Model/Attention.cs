@@ -1,4 +1,4 @@
-﻿namespace HostingBigBrother.Model
+﻿namespace BigBrotherViewer.Model
 {
     public class Attention
     {

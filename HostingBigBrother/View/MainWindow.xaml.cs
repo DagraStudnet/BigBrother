@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using HostingBigBrother.Model;
-using HostingBigBrother.ViewModel;
+using BigBrotherViewer.Model;
+using BigBrotherViewer.ViewModel;
 
-namespace HostingBigBrother.View
+namespace BigBrotherViewer.View
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -35,6 +35,7 @@ namespace HostingBigBrother.View
         {
             main = new ViewModelMain();
             DataContext = main;
+            StopEventMenu.IsEnabled = false;
         }
 
         private void Add_attentions_Click(object sender, RoutedEventArgs e)
@@ -64,15 +65,21 @@ namespace HostingBigBrother.View
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to close this window?", "Finish event",
-                MessageBoxButton.OKCancel,
-                MessageBoxImage.Question);
+            if (main.EventView == null)
+            {
+                var resultMessage = MessageBox.Show("Do you want finish application.", "Finish application",
+                    MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (resultMessage == MessageBoxResult.Yes)
+                    return;
+                
+            }
+            MessageBoxResult result = GetResultMessageBox();
             if (result == MessageBoxResult.Cancel)
             {
                 e.Cancel = true;
                 return;
             }
-            if (main.EventView == null) return;
+            
             if (main.EventView.NameEvent != string.Empty)
                 main.EventView.EndTimeEvent = GetDateTimeNow();
         }
@@ -82,18 +89,14 @@ namespace HostingBigBrother.View
             if (main.EventView == null)
             {
                 CreateEvent();
-                return;
             }
-            MessageBoxResult result = MessageBox.Show("Do you want to finish this event? Pres button OK.",
+        }
+
+        private static MessageBoxResult GetResultMessageBox()
+        {
+            return MessageBox.Show("Do you want to finish this event? Pres button OK.",
                 "Finish event", MessageBoxButton.OKCancel,
-                MessageBoxImage.Question);
-            if (result == MessageBoxResult.OK)
-            {
-                main.EventView.EndTimeEvent = GetDateTimeNow();
-                main.Users = null;
-                main.SelectedUser = null;
-                CreateEvent();
-            }
+                MessageBoxImage.Stop);
         }
 
         private void CreateEvent()
@@ -109,6 +112,8 @@ namespace HostingBigBrother.View
                     new Observer {FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver}
             };
             main.StartSaveEvent();
+            CreateEventMenu.IsEnabled = false;
+            StopEventMenu.IsEnabled = true;
         }
 
         private static DateTime GetDateTimeNow()
@@ -123,6 +128,16 @@ namespace HostingBigBrother.View
             Hide();
             historicalEventView.ShowDialog();
             Show();
+        }
+
+        private void Stop_event_Click(object sender, RoutedEventArgs e)
+        {
+            var resultMessageBox = GetResultMessageBox();
+            if (resultMessageBox != MessageBoxResult.OK) return;
+            CreateEventMenu.IsEnabled = true;
+            StopEventMenu.IsEnabled = false;
+            main.EventView.EndTimeEvent = GetDateTimeNow();
+            main.EventView = null;
         }
     }
 }

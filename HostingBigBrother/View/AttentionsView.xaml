@@ -1,4 +1,4 @@
-﻿<Window x:Class="HostingBigBrother.View.AttentionsView"
+﻿<Window x:Class="BigBrotherViewer.View.AttentionsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Attentions" Height="305" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >

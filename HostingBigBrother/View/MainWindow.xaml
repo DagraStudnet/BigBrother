@@ -3,14 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-    x:Class="HostingBigBrother.View.MainWindow"
-    Title="MainWindow" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+    x:Class="BigBrotherViewer.View.MainWindow"
+    Title="Observer overview" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
     Closing="Window_Closing" WindowState="Normal">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
             <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -40,7 +39,6 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Content="User:" Grid.Column="0" />
-            <Label Content="User activities:" Grid.Column="1" Margin="10 0 0 0" />
             <DataGrid x:Name="UsersDataGrid" Grid.Column="0" Margin="0,30,0,0" ItemsSource="{Binding Users}"
                       SelectedItem="{Binding SelectedUser, Mode=TwoWay}" AutoGenerateColumns="False"
                       SelectionMode="Single"
@@ -93,36 +91,49 @@
                                         Width="0.25*" />
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid x:Name="UserActivitiesDataGrid" Grid.Column="1" Margin="10,30,0,0"
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="User activities:" Grid.Row="1" Margin="10 0 0 0" />
+                <DataGrid x:Name="UserActivitiesDataGrid" Grid.Row="1" Margin="10,30,0,0"
                       ItemsSource="{Binding Activities}" AutoGenerateColumns="False" SelectionMode="Single"
                       SelectionUnit="Cell" CanUserAddRows="False" HorizontalAlignment="Stretch"
                       HorizontalContentAlignment="Stretch"
                       CanUserDeleteRows="False">
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding MarkRow}" Value="True">
-                                <Setter Property="Background" Value="Red" />
-                                <Setter Property="Foreground" Value="White" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" Width="0.6*"
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MarkRow}" Value="True">
+                                    <Setter Property="Background" Value="Red" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" Width="0.6*"
                                         IsReadOnly="True" />
-                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" Width="0.3*"
+                        <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" Width="0.3*"
                                         IsReadOnly="True" />
-                    <DataGridCheckBoxColumn Header="Ignore"
+                        <DataGridCheckBoxColumn Header="Ignore"
                                             Binding="{Binding IgnoreAttention, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Width="0.1*" />
-                </DataGrid.Columns>
-            </DataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Grid.Row="0">
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Text="{Binding FillNameActivity, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="Only attentions" HorizontalAlignment="Left" Margin="144,37,-24,0" VerticalAlignment="Top" Height="23" Width="122" IsChecked="{Binding OnlyAttentions}"/>
+                    <Label Content="Filters:"  HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Width="129" Height="26"/>
+                </Grid>
+            </Grid>
         </Grid>
 
         <Menu HorizontalAlignment="Stretch" Height="25" Grid.Row="0" VerticalAlignment="Top" Margin="10 0 0 0">
             <MenuItem Header="_File">
-                <MenuItem Header="_Create event" Click="Add_event_Click" />
+                <MenuItem Name="CreateEventMenu" Header="_Create event" Click="Add_event_Click" />
+                <MenuItem Name="StopEventMenu" Header="_Stop event" Click="Stop_event_Click" />
                 <MenuItem Header="_Add attentions" Click="Add_attentions_Click" />
                 <MenuItem Header="_Historical events data" Click="Add_Historical_Event_Click" />
                 <MenuItem Header="_Exit" Click="Exit_Click" />

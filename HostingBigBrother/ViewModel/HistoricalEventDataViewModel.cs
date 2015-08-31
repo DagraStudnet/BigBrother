@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using HostingBigBrother.Annotations;
-using HostingBigBrother.Model;
+using BigBrotherViewer.Annotations;
+using BigBrotherViewer.Model;
 
-namespace HostingBigBrother.ViewModel
+namespace BigBrotherViewer.ViewModel
 {
     public class HistoricalEventDataViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
@@ -14,21 +15,25 @@ namespace HostingBigBrother.ViewModel
         private readonly ReadDB readDb;
 
         private ObservableCollection<Event> _eventCombobox;
-
-
         private ObservableCollection<Event> _filtredEventDataGird;
         private ObservableCollection<MonitoringUser> _filtredUserDataGird;
         private ObservableCollection<Observer> _observerCombox;
+        private ObservableCollection<MonitoringActivity> _userActivitiesDataGird;
+        private ObservableCollection<MonitoringUser> _userCombobox;
+
+
+        
         private DateTime? _selectedEndEvent;
 
         private int _selectedEventId;
         private int _selectedObserverId;
         private DateTime? _selectedStartEvent;
         private int _selectedUserId;
-        private ObservableCollection<MonitoringActivity> _userActivitiesDataGird;
-        private ObservableCollection<MonitoringUser> _userCombobox;
+        
         private MonitoringUser selectedUserValue;
         private Event selectedEventValue;
+        private bool _onlyAttentions;
+        private string _fillNameActivity;
 
         public HistoricalEventDataViewModel(List<Attention> attentions)
         {
@@ -37,6 +42,18 @@ namespace HostingBigBrother.ViewModel
             ObserverCombox = new ObservableCollection<Observer>(readDb.GetAllObservers());
             UserCombobox = new ObservableCollection<MonitoringUser>(readDb.GetAllUsers());
             FiltredEventDataGird = new ObservableCollection<Event>(readDb.GetFiltredEvent(0, 0, 0, null, null));
+        }
+
+        public bool OnlyAttentions
+        {
+            get { return _onlyAttentions; }
+            set
+            {
+                if (value.Equals(_onlyAttentions)) return;
+                _onlyAttentions = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Activities");
+            }
         }
 
         public ObservableCollection<Event> FiltredEventDataGird
@@ -188,6 +205,18 @@ namespace HostingBigBrother.ViewModel
             }
         }
 
+        public string FillNameActivity
+        {
+            get { return _fillNameActivity; }
+            set
+            {
+                if (value == _fillNameActivity) return;
+                _fillNameActivity = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Activities");
+            }
+        }
+
         public ObservableCollection<MonitoringActivity> Activities
         {
             get { return SelectedUser == null ? null : LoadActitvities(SelectedUser); }
@@ -207,7 +236,18 @@ namespace HostingBigBrother.ViewModel
 
         private ObservableCollection<MonitoringActivity> LoadActitvities(MonitoringUser user)
         {
-            return new ObservableCollection<MonitoringActivity>(readDb.GetUserActivities(user.Id, SelectedEvent.StarTimeEvent, SelectedEvent.EndTimeEvent));
+            var userActivities = ReturnUserActivity(user);
+            if (OnlyAttentions)
+                userActivities = userActivities.Where(a => a.Attention).ToList();
+            if (!string.IsNullOrEmpty(FillNameActivity))
+                userActivities = userActivities.Where(a=>a.NameActivity.Contains(FillNameActivity)).ToList();
+            return  new ObservableCollection<MonitoringActivity>(userActivities);
+        }
+        
+        private List<MonitoringActivity> ReturnUserActivity(MonitoringUser user)
+        {
+            return readDb.GetUserActivities(user.Id,
+                SelectedEvent.StarTimeEvent, SelectedEvent.EndTimeEvent);
         }
 
         public string this[string columnName]
@@ -250,6 +290,11 @@ namespace HostingBigBrother.ViewModel
                     SelectedUserId, SelectedStartEvent, SelectedEndEvent));
             SelectedEvent = new Event();
             SelectedUser = new MonitoringUser();
+        }
+
+        public void DeleteAllDb()
+        {
+            readDb.DeleteDb();
         }
     }
 }

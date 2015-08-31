@@ -5,7 +5,7 @@ using System.Linq;
 using SqliteDatabase;
 using SqliteDatabase.DB_Models;
 
-namespace HostingBigBrother.Model
+namespace BigBrotherViewer.Model
 {
     public class ReadWriteDB
     {

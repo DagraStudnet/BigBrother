@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientBigBrother", "BigBrot
 		{C8FAC881-BB59-48D3-9781-48520F648413} = {C8FAC881-BB59-48D3-9781-48520F648413}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostingBigBrother", "HostingBigBrother\HostingBigBrother.csproj", "{8DAFD391-5658-439B-BF0A-E903425F7695}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBrotherViewer", "HostingBigBrother\BigBrotherViewer.csproj", "{8DAFD391-5658-439B-BF0A-E903425F7695}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C8FAC881-BB59-48D3-9781-48520F648413} = {C8FAC881-BB59-48D3-9781-48520F648413}
 	EndProjectSection

@@ -16,7 +16,7 @@ namespace ClientBigBrother.ViewModel
     internal class ViewModelMain : INotifyPropertyChanged
     {
         private readonly CommunicationWithService communicationWithService;
-        private ManagmentMonitoring managmentMonitoring;
+        private readonly ManagmentMonitoring managmentMonitoring;
         private readonly WcfServiceClientConfiguration wcfServiceClientConfiguration;
         private int time;
         private DispatcherTimer timer;

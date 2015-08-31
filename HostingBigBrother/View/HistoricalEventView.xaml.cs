@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using HostingBigBrother.Model;
-using HostingBigBrother.ViewModel;
+using BigBrotherViewer.Model;
+using BigBrotherViewer.ViewModel;
 
-namespace HostingBigBrother.View
+namespace BigBrotherViewer.View
 {
     /// <summary>
     ///     Interaction logic for HistoricalEventView.xaml
@@ -45,6 +45,11 @@ namespace HostingBigBrother.View
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
             historicalEventDataViewModel.FilterData();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            historicalEventDataViewModel.DeleteAllDb();
         }
     }
 }

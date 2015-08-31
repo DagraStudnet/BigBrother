@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using HostingBigBrother.Annotations;
+using BigBrotherViewer.Annotations;
 
 
-namespace HostingBigBrother.View
+namespace BigBrotherViewer.View
 {
     /// <summary>
     ///     Interaction logic for EventView.xaml

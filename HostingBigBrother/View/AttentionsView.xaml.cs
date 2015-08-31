@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 using System.Windows;
-using HostingBigBrother.Model;
+using BigBrotherViewer.Model;
 
-namespace HostingBigBrother.View
+namespace BigBrotherViewer.View
 {
     /// <summary>
     ///     Interaction logic for AttentionsView.xaml

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using BigBrotherViewer.Annotations;
 using ClassLibrary;
 using ClassLibrary.UserLibrary;
-using HostingBigBrother.Annotations;
 
 
-namespace HostingBigBrother.Model
+namespace BigBrotherViewer.Model
 {
     public class MonitoringUser:INotifyPropertyChanged
     {

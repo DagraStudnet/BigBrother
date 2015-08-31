@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace HostingBigBrother.ViewModel
+namespace BigBrotherViewer.ViewModel
 {
     public class NameValidator : ValidationRule
     {

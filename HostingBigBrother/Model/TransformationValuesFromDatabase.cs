@@ -1,7 +1,7 @@
 ﻿using System;
 using SqliteDatabase.DB_Models;
 
-namespace HostingBigBrother.Model
+namespace BigBrotherViewer.Model
 {
     public static class TransformationValuesFromDatabase
     {
