@@ -43,7 +43,8 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Observer last name:" TextAlignment="Left" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox Name="ObserverLastName" Grid.Row="2" Grid.Column="1" Margin="5,22,-27,15" Height="24" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" KeyboardNavigation.TabIndex="2">
+            <TextBox Name="ObserverLastName" Grid.Row="2" Grid.Column="1" Margin="5,22,-27,15" Height="24" VerticalAlignment="Center"
+                     Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" KeyboardNavigation.TabIndex="2">
                 <TextBox.Text>
                     <Binding Path="LastNameObserver" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>

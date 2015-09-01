@@ -151,6 +151,7 @@ namespace BigBrotherViewer.ViewModel
         {
             if (readWriteDb != null)
                 readWriteDb.SaveEventFinishToDb();
+            serviceHost.Close();
         }
     }
 
