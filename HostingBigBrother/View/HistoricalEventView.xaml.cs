@@ -50,6 +50,8 @@ namespace BigBrotherViewer.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             historicalEventDataViewModel.DeleteAllDb();
+            FilterClear_OnClick(sender,e);
+            Filter_Click(sender,e);
         }
     }
 }

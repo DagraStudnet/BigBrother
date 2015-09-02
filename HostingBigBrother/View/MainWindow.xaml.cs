@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -25,7 +26,6 @@ namespace BigBrotherViewer.View
         }
 
         public DateTime Time
-
         {
             get { return _time; }
             set { _time = value; }
@@ -65,13 +65,13 @@ namespace BigBrotherViewer.View
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            main.SaveAttetions();
             if (main.EventView == null)
             {
-                var resultMessage = MessageBox.Show("Do you want finish application.", "Finish application",
+                MessageBoxResult resultMessage = MessageBox.Show("Do you want finish application.", "Finish application",
                     MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if (resultMessage == MessageBoxResult.Yes)
                     return;
-                
             }
             MessageBoxResult result = GetResultMessageBox();
             if (result == MessageBoxResult.Cancel)
@@ -79,7 +79,7 @@ namespace BigBrotherViewer.View
                 e.Cancel = true;
                 return;
             }
-            
+
             if (main.EventView.NameEvent != string.Empty)
                 main.EventView.EndTimeEvent = GetDateTimeNow();
         }
@@ -132,12 +132,15 @@ namespace BigBrotherViewer.View
 
         private void Stop_event_Click(object sender, RoutedEventArgs e)
         {
-            var resultMessageBox = GetResultMessageBox();
+            MessageBoxResult resultMessageBox = GetResultMessageBox();
             if (resultMessageBox != MessageBoxResult.OK) return;
             CreateEventMenu.IsEnabled = true;
             StopEventMenu.IsEnabled = false;
+            main.StopEvent();
             main.EventView.EndTimeEvent = GetDateTimeNow();
             main.EventView = null;
+            main.Users = new ObservableCollection<MonitoringUser>();
+            main.SelectedUser = null;
         }
     }
 }

@@ -131,14 +131,12 @@ namespace BigBrotherViewer.Model
             var userId = dbTransaction.GetUserIdFromActivityDb(activity.Id);
             var activities = dbTransaction.GetCollectionUserActivitiesFromDb(userId, EventInstance.StarTimeEvent);
             var findAttention = activities.Any(ExisUsertAttention);
-            //dbTransaction.UpdateUserAttention(userId, Convert.ToInt32(findAttention));
             var user = users.Find(u => u.Id == userId);
             user.Attention = findAttention;
         }
 
         private bool ExisUsertAttention(Db_activity dbActivity)
         {
-            //return Convert.ToBoolean(dbActivity.attention) && !Convert.ToBoolean(dbActivity.ignore_attention);
             return Attentions.Any(a => dbActivity.name.Contains(a.Name)) && !Convert.ToBoolean(dbActivity.ignore_attention); 
         }
 

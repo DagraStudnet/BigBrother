@@ -74,7 +74,7 @@
                                                 <DataTrigger Binding="{Binding Connection, Mode=OneWay}"
                                                              Value="False">
                                                     <Setter Property="Fill"
-                                                            Value="Red" />
+                                                            Value="OrangeRed" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -87,7 +87,7 @@
                     <DataGridTextColumn Header="Pc Name" Binding="{Binding PCName}" IsReadOnly="True" Width="0.15*" />
                     <DataGridTextColumn Header="Work" Binding="{Binding NameWork, Mode=TwoWay}" Width="0.25*"
                                         IsReadOnly="False" />
-                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeStampDispatch}" IsReadOnly="True"
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeStampDispatch, ConverterCulture=cs-CZ}" IsReadOnly="True"
                                         Width="0.25*" />
                 </DataGrid.Columns>
             </DataGrid>
@@ -115,7 +115,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" Width="0.6*"
                                         IsReadOnly="True" />
-                        <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" Width="0.3*"
+                        <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity, ConverterCulture=cs-CZ}" Width="0.3*"
                                         IsReadOnly="True" />
                         <DataGridCheckBoxColumn Header="Ignore"
                                             Binding="{Binding IgnoreAttention, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

@@ -76,8 +76,8 @@
                           CanUserDeleteRows="False" SelectedItem="{Binding SelectedEvent, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Event name" Binding="{Binding NameEvent}" IsReadOnly="True" Width="0.15*" />
-                <DataGridTextColumn Header="Event from" Binding="{Binding StarTimeEvent}" IsReadOnly="True" Width="0.15*" />
-                <DataGridTextColumn Header="Event to" Binding="{Binding EndTimeEvent}" Width="0.25*"
+                <DataGridTextColumn Header="Event from" Binding="{Binding StarTimeEvent,ConverterCulture=cs-CZ}" IsReadOnly="True" Width="0.15*" />
+                <DataGridTextColumn Header="Event to" Binding="{Binding EndTimeEvent, ConverterCulture=cs-CZ}" Width="0.25*"
                                     IsReadOnly="True" />
                 <DataGridTextColumn Header="Observer" Binding="{Binding ObserverEvent.FullName}" IsReadOnly="True"
                                     Width="0.25*" />
@@ -136,7 +136,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Activity name" Binding="{Binding NameActivity}" Width="0.6*"
                                         IsReadOnly="True" />
-                        <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity}" Width="0.3*"
+                        <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeActivity,ConverterCulture=cs-CZ}" Width="0.3*"
                                         IsReadOnly="True" />
                         <DataGridCheckBoxColumn Header="Ignore"
                                             Binding="{Binding IgnoreAttention, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

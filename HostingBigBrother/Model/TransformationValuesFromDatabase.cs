@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using SqliteDatabase.DB_Models;
 
 namespace BigBrotherViewer.Model

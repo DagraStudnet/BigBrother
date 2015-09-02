@@ -23,6 +23,7 @@ namespace BigBrotherViewer.ViewModel
         private Event _eventView;
         private string _fillNameActivity;
         private bool _onlyAttentions;
+        private DispatcherTimer dispatcherTimer;
 
         public List<Attention> Attentions
         {
@@ -47,12 +48,7 @@ namespace BigBrotherViewer.ViewModel
 
         public ViewModelMain()
         {
-            
-            Attentions = new List<Attention>();
-            Attentions.Add(new Attention { Name = "Visual" });
-            Attentions.Add(new Attention { Name = "Not" });
-            Attentions.Add(new Attention { Name = "USB" });
-            Attentions.Add(new Attention { Name = "Lite" });
+            Attentions = AttentionsOperation.LoadAttentionsToTextFile();
         }
 
 
@@ -141,10 +137,15 @@ namespace BigBrotherViewer.ViewModel
             EventView.PropertyChanged += SetFinishEvent;
             readWriteDb = new ReadWriteDB(EventView, Attentions);
             readWriteDb.SaveEventWithObserverToDb();
-            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 1, 0); //interval v minutach
             dispatcherTimer.Start();
+        }
+
+        public void StopEvent()
+        {
+            dispatcherTimer.Stop();
         }
 
         private void SetFinishEvent(object sender, PropertyChangedEventArgs e)
@@ -152,6 +153,11 @@ namespace BigBrotherViewer.ViewModel
             if (readWriteDb != null)
                 readWriteDb.SaveEventFinishToDb();
             serviceHost.Close();
+        }
+
+        public void SaveAttetions()
+        {
+            AttentionsOperation.SaveAttentionsToTextFile(Attentions);
         }
     }
 

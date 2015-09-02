@@ -372,7 +372,7 @@ namespace SqliteDatabase
                 // ReSharper disable once LoopCanBeConvertedToQuery dateTime parse doesn't work in linq
                 foreach (Db_user dbUser in context.Db_user)
                 {
-                    if (DateTime.Parse(dbUser.user_timestamp) >= starTimeEvent)
+                    if (DateTime.Parse(dbUser.user_timestamp) >= starTimeEvent.AddMinutes(-1))
                     {
                         userList.Add(dbUser);
                     }
