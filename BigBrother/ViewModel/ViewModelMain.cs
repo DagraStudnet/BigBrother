@@ -39,40 +39,26 @@ namespace ClientBigBrother.ViewModel
         public ViewModelMain()
         {
             HostingIsOnline = false;
-            var confReader = new ConfigFileReader();
-            confReader.LoadConfigFile(@"config.xml");
-            if (!confReader.XmlDocumentIsEmpty())
+            var configuration = new LoadConfigurationFile();
+            if (!configuration.IsExistConfigFile())
             {
                 ConfigFileDoesntWork = true;
                 return;
             }
-            IEnumerable<XElement> elementsCollection = confReader.GetXmlElementsCollection("ConnectionServer");
-            ConfigAttribute connectionServerConfigutation = ConnectionServerConfigutation(confReader, elementsCollection);
-            wcfServiceClientConfiguration = new WcfServiceClientConfiguration(
-                connectionServerConfigutation.Address, connectionServerConfigutation.TimeIntervalInSeconds);
+
+            ConfigAttribute connectionServerConfigutation = configuration.ConnectionServerConfigutation();
+            wcfServiceClientConfiguration = new WcfServiceClientConfiguration(connectionServerConfigutation);
             communicationWithService = new CommunicationWithService(wcfServiceClientConfiguration);
-            timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
+            timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 10) };
             timer.Tick += dispatcherTimer_Tick;
             timer.Start();
-            managmentMonitoring = new ManagmentMonitoring(timer);
+            managmentMonitoring = new ManagmentMonitoring();
         }
 
         private void StartMonitoring()
         {
             if (!monitoringStart)
                 monitoringStart = managmentMonitoring.StartMonitoring();
-        }
-
-
-        private static ConfigAttribute ConnectionServerConfigutation(ConfigFileReader confReader,
-            IEnumerable<XElement> elementsCollection)
-        {
-            return confReader.GetConfiguration(() => (from n in elementsCollection
-                                                      select new ConfigAttribute
-                                                      {
-                                                          Address = n.Element("Address").Value,
-                                                          TimeIntervalInSeconds = n.Element("TimeIntervalInSeconds").Value
-                                                      }).FirstOrDefault());
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -91,6 +77,7 @@ namespace ClientBigBrother.ViewModel
 
         public void FinishApp()
         {
+            timer.Stop();
             if (!HostingIsOnline) return;
             managmentMonitoring.PcUser.ListOfActivitesOnPc.Add(new Activity(){NameActivity = "Close monitoring application",TimeActivity = DateTime.Now});
             communicationWithService.SendInformationToService(managmentMonitoring.PcUser);

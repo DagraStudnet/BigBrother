@@ -22,10 +22,11 @@ namespace ClientBigBrother.Model.WcfService
             try
             {
                 proxy = ConnectionProxy();
+                proxy.ChannelFactory.Open(TimeSpan.FromMilliseconds(1));
                 var isAlive = proxy.IsAlive();
                 return isAlive;
             }
-            catch (Exception e)
+            catch (EndpointNotFoundException e)
             {
                 proxy.Abort();
                 proxy = null;

@@ -7,13 +7,14 @@ namespace ClientBigBrother.Model.Monitoring
     public class ManagmentMonitoring : IManagmentMonitoring
     {
         private readonly IUserMonitoring<IUser> userMonitoring;
+        private DispatcherTimer dispatcherTimer;
 
-        public ManagmentMonitoring(DispatcherTimer dispatcherTimer)
+        public ManagmentMonitoring()
         {
+            dispatcherTimer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
+            dispatcherTimer.Start();
             PcUser = new User();
             userMonitoring = new UserMonitoring<IUser>();
-            StartMonitoring();
-
             dispatcherTimer.Tick += dispatcherTimer_Tick;
         }
 
