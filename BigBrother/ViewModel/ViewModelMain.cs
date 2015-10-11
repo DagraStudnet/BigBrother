@@ -22,6 +22,8 @@ namespace ClientBigBrother.ViewModel
         private DispatcherTimer timer;
         private bool monitoringStart;
         private bool _hostingIsOnline;
+        private BackgroundWorker backgroundWorkerServiceIsAlive;
+        private BackgroundWorker backgroundWorkerSendInformationService;
 
         public bool HostingIsOnline
         {
@@ -38,6 +40,8 @@ namespace ClientBigBrother.ViewModel
 
         public ViewModelMain()
         {
+            backgroundWorkerServiceIsAlive = new BackgroundWorker();
+            backgroundWorkerSendInformationService = new BackgroundWorker();
             HostingIsOnline = false;
             var configuration = new LoadConfigurationFile();
             if (!configuration.IsExistConfigFile())
@@ -49,7 +53,7 @@ namespace ClientBigBrother.ViewModel
             ConfigAttribute connectionServerConfigutation = configuration.ConnectionServerConfigutation();
             wcfServiceClientConfiguration = new WcfServiceClientConfiguration(connectionServerConfigutation);
             communicationWithService = new CommunicationWithService(wcfServiceClientConfiguration);
-            timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 10) };
+            timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += dispatcherTimer_Tick;
             timer.Start();
             managmentMonitoring = new ManagmentMonitoring();
@@ -63,23 +67,29 @@ namespace ClientBigBrother.ViewModel
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            HostingIsOnline = communicationWithService.HostingIsAlive();
+            if (!backgroundWorkerServiceIsAlive.IsBusy)
+            {
+                backgroundWorkerServiceIsAlive.DoWork += BackgroundWorkerServiceIsAliveOnDoWork;
+                backgroundWorkerServiceIsAlive.RunWorkerAsync();
+            }
             var dispatcherTimer = sender as DispatcherTimer;
             if (dispatcherTimer != null) time += dispatcherTimer.Interval.Seconds;
             if (wcfServiceClientConfiguration == null) return;
-            if (time%wcfServiceClientConfiguration.TimeIntervalInSeconds != 0) return;
-            
-            if (HostingIsOnline)
-            {
-                communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
-            }
+            if (time % wcfServiceClientConfiguration.TimeIntervalInSeconds != 0) return;
+            if (!HostingIsOnline) return;
+            communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
+        }
+
+        private void BackgroundWorkerServiceIsAliveOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
+        {
+            HostingIsOnline = communicationWithService.HostingIsAlive();
         }
 
         public void FinishApp()
         {
             timer.Stop();
             if (!HostingIsOnline) return;
-            managmentMonitoring.PcUser.ListOfActivitesOnPc.Add(new Activity(){NameActivity = "Close monitoring application",TimeActivity = DateTime.Now});
+            managmentMonitoring.PcUser.ListOfActivitesOnPc.Add(new Activity() { NameActivity = "Close monitoring application", TimeActivity = DateTime.Now });
             communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
         }
 

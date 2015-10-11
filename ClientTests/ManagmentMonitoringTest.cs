@@ -15,7 +15,7 @@ namespace ClientTests
             var exceptedActivity = "Microsoft Visual Studio";
             var dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1); //interval v sekundach
-            var managment = new ManagmentMonitoring(dispatcherTimer);
+            var managment = new ManagmentMonitoring();
             dispatcherTimer.Start();
             Assert.AreNotSame(managment.PcUser.ListOfActivitesOnPc.Count,0);
             var activity = managment.PcUser.ListOfActivitesOnPc.First(x => x.NameActivity.Contains(exceptedActivity));

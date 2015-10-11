@@ -51,6 +51,7 @@ namespace ClientBigBrother.Model.WcfService
             {
                 MessageBox.Show(e.ToString());
                 proxy.Abort();
+                proxy = null;
             }
         }
 
