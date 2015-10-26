@@ -13,8 +13,7 @@ namespace BigBrotherViewer.Model
                 Id = (int) dbUser.id_user,
                 PCName = dbUser.pc_name,
                 UserName = dbUser.user_name,
-                TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp),
-                Connection = DateTime.Parse(dbUser.user_timestamp).AddMinutes(2) > DateTime.Now
+                TimeStampDispatch = DateTime.Parse(dbUser.user_timestamp)
             };
         }
 

@@ -22,7 +22,6 @@ namespace ClientBigBrother.Model.WcfService
             try
             {
                 proxy = ConnectionProxy();
-                proxy.ChannelFactory.Open(TimeSpan.FromMilliseconds(1));
                 var isAlive = proxy.IsAlive();
                 return isAlive;
             }
@@ -37,14 +36,15 @@ namespace ClientBigBrother.Model.WcfService
         public void SendInformationToService(IUser user)
         {
             try
-            {                
-                proxy = ConnectionProxy();
+            {
+                //if (proxy == null)
+                    proxy = ConnectionProxy();
                 if (proxy.State == CommunicationState.Faulted)
                     throw new CommunicationObjectFaultedException("Connection fault.");
                 if (proxy.State == CommunicationState.Closed)
                     proxy.Open();
                 user.TimeStampDispatch = DateTime.Now;
-                proxy.AddUser((User) user);
+                proxy.AddUser((User)user);
                 user.ListOfActivitesOnPc.Clear();
             }
             catch (Exception e)
@@ -57,7 +57,7 @@ namespace ClientBigBrother.Model.WcfService
 
         private LibraryClient ConnectionProxy()
         {
-            return new LibraryClient(wcfServiceClientConfiguration.NetTcpBinding,wcfServiceClientConfiguration.Address);
+            return new LibraryClient(wcfServiceClientConfiguration.NetTcpBinding, wcfServiceClientConfiguration.Address);
         }
     }
 }

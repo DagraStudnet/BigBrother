@@ -12,10 +12,10 @@ namespace ClientBigBrother.Model.WcfService
                 connectionServerConfigutation.Port, connectionServerConfigutation.ServiceName);
             NetTcpBinding = new NetTcpBinding(SecurityMode.None);
             Address = new EndpointAddress(address);
-            NetTcpBinding.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
-            NetTcpBinding.SendTimeout = TimeSpan.FromMilliseconds(100);
-            NetTcpBinding.OpenTimeout = TimeSpan.FromMilliseconds(100);
-            NetTcpBinding.CloseTimeout = TimeSpan.FromMilliseconds(100);
+            NetTcpBinding.ReceiveTimeout = TimeSpan.FromMinutes(2);
+            NetTcpBinding.SendTimeout = TimeSpan.FromMinutes(2);
+            NetTcpBinding.OpenTimeout = TimeSpan.FromMinutes(2);
+            NetTcpBinding.CloseTimeout = TimeSpan.FromMinutes(2);
             
             NetTcpBinding.MaxReceivedMessageSize = 2147483647;
             NetTcpBinding.MaxBufferSize = 2147483647;

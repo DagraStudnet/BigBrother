@@ -19,11 +19,11 @@ namespace ClientBigBrother.ViewModel
         private readonly ManagmentMonitoring managmentMonitoring;
         private readonly WcfServiceClientConfiguration wcfServiceClientConfiguration;
         private int time;
-        private DispatcherTimer timer;
+        private readonly DispatcherTimer timer;
         private bool monitoringStart;
         private bool _hostingIsOnline;
-        private BackgroundWorker backgroundWorkerServiceIsAlive;
-        private BackgroundWorker backgroundWorkerSendInformationService;
+        private readonly BackgroundWorker backgroundWorkerServiceIsAlive;
+        
 
         public bool HostingIsOnline
         {
@@ -41,7 +41,6 @@ namespace ClientBigBrother.ViewModel
         public ViewModelMain()
         {
             backgroundWorkerServiceIsAlive = new BackgroundWorker();
-            backgroundWorkerSendInformationService = new BackgroundWorker();
             HostingIsOnline = false;
             var configuration = new LoadConfigurationFile();
             if (!configuration.IsExistConfigFile())

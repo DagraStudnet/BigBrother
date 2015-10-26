@@ -29,7 +29,7 @@
   <folder name="Technology" id="ab1880ad" type="technology">
     <element xsi:type="archimate:Device" id="10583bfd" name="User PC"/>
     <element xsi:type="archimate:Node" id="fe037bf4" name="Node"/>
-    <element xsi:type="archimate:Network" id="3c136295" name="LAN network"/>
+    <element xsi:type="archimate:Network" id="3c136295" name="Lan network"/>
     <element xsi:type="archimate:Device" id="aad60d45" name="Application server"/>
     <element xsi:type="archimate:CommunicationPath" id="9e8a2e1b" name="Communication Path"/>
     <element xsi:type="archimate:Node" id="51f18126" name="Client"/>
@@ -88,7 +88,7 @@
   <folder name="Views" id="6f28b90c" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" id="e5b9033d" name="Default View">
       <child xsi:type="archimate:Group" id="f95ecbfc" name="Bussnies layer">
-        <bounds x="12" y="12" width="865" height="169"/>
+        <bounds x="36" y="12" width="925" height="169"/>
         <child xsi:type="archimate:DiagramObject" id="e45b0c6f" textAlignment="2" archimateElement="b3d53364">
           <bounds x="36" y="102" width="85" height="35"/>
           <sourceConnection xsi:type="archimate:Connection" id="8d81b499" source="e45b0c6f" target="b7d0eeb9" relationship="3575de70"/>
@@ -128,7 +128,7 @@
         </child>
       </child>
       <child xsi:type="archimate:Group" id="72dd06e1" name="Hardware layer">
-        <bounds x="12" y="480" width="865" height="169"/>
+        <bounds x="36" y="480" width="925" height="169"/>
         <child xsi:type="archimate:DiagramObject" id="ba116784" textAlignment="2" targetConnections="8ba5af86 e2779253" archimateElement="3c136295">
           <bounds x="336" y="60" width="120" height="55"/>
         </child>
@@ -143,7 +143,7 @@
             </child>
           </child>
           <child xsi:type="archimate:DiagramObject" id="f7a1a9f4" textAlignment="2" archimateElement="5abad87c">
-            <bounds x="96" y="36" width="121" height="37"/>
+            <bounds x="108" y="36" width="109" height="37"/>
           </child>
         </child>
         <child xsi:type="archimate:DiagramObject" id="a41e23b7" textAlignment="2" archimateElement="cc1bb3d5">
@@ -162,7 +162,7 @@
         </child>
       </child>
       <child xsi:type="archimate:Group" id="b7769230" name="Application layer">
-        <bounds x="12" y="216" width="865" height="229"/>
+        <bounds x="36" y="216" width="925" height="229"/>
         <child xsi:type="archimate:DiagramObject" id="237744ee" textAlignment="2" targetConnections="b7e5b2b3 66195fd9 32850f47" archimateElement="d209b25e">
           <bounds x="528" y="36" width="325" height="181"/>
           <child xsi:type="archimate:DiagramObject" id="f76d0b64" textAlignment="2" archimateElement="da8c7303">

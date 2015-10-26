@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Windows.Threading;
 using BigBrotherViewer.Model;
+using ClassLibrary.ConfigFileLibrary;
 using WcfServiceLibrary;
 
 namespace BigBrotherViewer.ViewModel
@@ -21,10 +22,12 @@ namespace BigBrotherViewer.ViewModel
         private MonitoringUser selectedUserValue;
         private List<Attention> _attentions;
         private Event _eventView;
+        private int _refreshUsers;
         private string _fillNameActivity;
         private bool _onlyAttentions;
         private DispatcherTimer dispatcherTimer;
-
+        public UserConnectionIntervalCollection<UserConnectionInterval> UserConnectionCollection { get; set; }
+        
         public List<Attention> Attentions
         {
             get { return _attentions; }
@@ -46,11 +49,32 @@ namespace BigBrotherViewer.ViewModel
             }
         }
 
-        public ViewModelMain()
+        public int RefreshUsers
         {
-            Attentions = AttentionsOperation.LoadAttentionsToTextFile();
+            get { return _refreshUsers; }
+            set
+            {
+                SetProperty(ref _refreshUsers, value);
+                RaiseNotification("RefreshUsers");
+            }
         }
 
+        public ViewModelMain()
+        {
+            UserConnectionCollection = new UserConnectionIntervalCollection<UserConnectionInterval>();  
+            Attentions = AttentionsOperation.LoadAttentionsToTextFile();
+            var configuration = new LoadConfigurationFile();
+            if (!configuration.IsExistConfigFile())
+            {
+                ConfigFileDoesntWork = true;
+                return;
+            }
+
+            ConfigAttribute serverConfigutation = configuration.ConnectionServerConfigutation();
+            RefreshUsers = int.Parse(serverConfigutation.TimeIntervalInSeconds);
+        }
+
+        public bool ConfigFileDoesntWork { get; set; }
 
         public ObservableCollection<MonitoringUser> Users
         {
@@ -123,9 +147,25 @@ namespace BigBrotherViewer.ViewModel
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Users = new ObservableCollection<MonitoringUser>(readWriteDb.GetUsersWithEventFromDb());
+            var usersFromDb = readWriteDb.GetUsersWithEventFromDb();
+            usersFromDb.ToList().ForEach(user => UserConnectionCollection.AddUser(user));
+            usersFromDb.ToList().ForEach(user => user.Connection = IsConnection(user));
+            Users = new ObservableCollection<MonitoringUser>(usersFromDb);
             if (Users.Count > 0)
                 SelectedUser = users[0];
+        }
+
+        private bool IsConnection(MonitoringUser user)
+        {
+            var sendingInterval = UserConnectionCollection.GetInterval(user.Id);
+            if (sendingInterval >= RefreshUsers)
+            {
+                if(user.TimeStampDispatch.AddSeconds(sendingInterval) > DateTime.Now)
+                    return true;
+                else
+                    return false;
+            }
+            return user.TimeStampDispatch > DateTime.Now;
         }
 
         public void StartSaveEvent()
@@ -139,7 +179,7 @@ namespace BigBrotherViewer.ViewModel
             readWriteDb.SaveEventWithObserverToDb();
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 1, 0); //interval v minutach
+            dispatcherTimer.Interval = new TimeSpan(0, 0, RefreshUsers); //interval v minutach
             dispatcherTimer.Start();
         }
 

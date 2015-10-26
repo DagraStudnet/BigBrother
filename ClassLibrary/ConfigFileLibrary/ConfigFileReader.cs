@@ -22,7 +22,7 @@ namespace ClassLibrary.ConfigFileLibrary
                 xmlDocument = null;
             }
         }
-
+        
         public IEnumerable<XElement> GetXmlElementsCollection(string xmlNameAttribute)
         {
             return xmlDocument.Descendants(xmlNameAttribute);
