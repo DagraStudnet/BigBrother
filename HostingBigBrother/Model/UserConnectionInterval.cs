@@ -23,9 +23,10 @@ namespace BigBrotherViewer.Model
                 if (PreviousSendDateTime == null)
                     PreviousSendDateTime = NewSendDateTime;
             if (NewSendDateTime != newSendDateTime)
+            {
                 PreviousSendDateTime = NewSendDateTime;
-            NewSendDateTime = newSendDateTime;
-
+                NewSendDateTime = newSendDateTime;
+            }
         }
 
     }

@@ -37,7 +37,7 @@ namespace ClientBigBrother.Model.WcfService
         {
             try
             {
-                //if (proxy == null)
+                if (proxy == null)
                     proxy = ConnectionProxy();
                 if (proxy.State == CommunicationState.Faulted)
                     throw new CommunicationObjectFaultedException("Connection fault.");

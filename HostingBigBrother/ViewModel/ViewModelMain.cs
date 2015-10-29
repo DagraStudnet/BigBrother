@@ -160,7 +160,7 @@ namespace BigBrotherViewer.ViewModel
             var sendingInterval = UserConnectionCollection.GetInterval(user.Id);
             if (sendingInterval >= RefreshUsers)
             {
-                if(user.TimeStampDispatch.AddSeconds(sendingInterval) > DateTime.Now)
+                if (user.TimeStampDispatch.AddSeconds(sendingInterval * 1.5) > DateTime.Now)
                     return true;
                 else
                     return false;
