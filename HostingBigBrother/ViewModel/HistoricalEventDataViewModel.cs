@@ -240,7 +240,7 @@ namespace BigBrotherViewer.ViewModel
             if (OnlyAttentions)
                 userActivities = userActivities.Where(a => a.Attention).ToList();
             if (!string.IsNullOrEmpty(FillNameActivity))
-                userActivities = userActivities.Where(a=>a.NameActivity.Contains(FillNameActivity)).ToList();
+                userActivities = userActivities.Where(a => a.NameActivity.ToUpper().Contains(FillNameActivity.ToUpper())).ToList();
             return  new ObservableCollection<MonitoringActivity>(userActivities);
         }
         
