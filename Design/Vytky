@@ -11,13 +11,13 @@
 * Obr. 3 - měl byste vytvořit tabulku a ne naskenovaný obrázek *
 * Obr. 7 - měl byste vytvořit svůj vlastní obrázek v EA *
 * Obr. 8 - špatně čitelný
-* Obr. 9 - špatně čitelný - nejlépe nakreslit vlastní
-* Obr. 12 - špatně čitelný
+* Obr. 9 - špatně čitelný - nejlépe nakreslit vlastní*
+* Obr. 12 - špatně čitelný*
 * Str. 26, kapitola 2.1, odst. 1 - "Platforma .NET" *
 * Obr. 16 - špatně čitelný *
-* Str. 27, kapitola 2.1.1 - zavést zkratku IL nebo rozepsat.
+* Str. 27, kapitola 2.1.1 - zavést zkratku IL nebo rozepsat. *
 * Str. 28, kapitola 2.2.1 - místo XML má být XAML *
-* Obr. 17 - špatně čitelný
+* Obr. 17 - špatně čitelný *
 * Str. 29, kapitola 2.2.2 a 2.2.3 - kapitoly jsou krátké, nahradit nečíslovanými podkapitolami *
 * Str. 30, kapitola 2.3, odst. 1 - doplnit mezeru do uvedených názvů technologií *
 * Str. 30 - text "Z Obr. 19 ..." nahradit textem "Z obr. 19 ...". Opravit i na jiných místech v dokumentu, např. str. 41 *
@@ -39,19 +39,19 @@
 * Obr. 32 - špatně čitelný
 * Str. 45 - název "Tabulky" nahradit větou.
 * Str. 45 - uvést podrobnější popis tabulek
-* Str. 45 - místo zkratky VS uvádět úplný název
+* Str. 45 - místo zkratky VS uvádět úplný název *
 * Obr. 34 - špatně čitelný
 * Obr. 35 a další obsahující zdrojový text nahradit formátovaným textem bez černého pozadí.
 * Obr. 37 - bez černého pozadí
-* Str. 50 - API místo Api
+* Str. 50 - API místo Api*
 * Str. 51 - popsat položky konfiguračního souboru. Kde je uveden časový interval zjišťování aktivit a časový interval posílání dat na server, IP adresa serveru?
 * Obr. 42 - špatně čitelný
 * Obr. 44 - špatně čitelný
-* Str. 53 - slovo "textbox" nahradit textem "textové pole"
+* Str. 53 - slovo "textbox" nahradit textem "textové pole" *
 * Obr. 48 - špatně čitelný
 * Obr. 49 - špatně čitelný
 * Obr. 50 - špatně čitelný
-* Str. 59 - v odstavcích použité literatury aplikovat stejný formát jako v ostatních kapitolách.
+* Str. 59 - v odstavcích použité literatury aplikovat stejný formát jako v ostatních kapitolách.*
 Po zapracování připomínek mi prosím pošlete práci v elektronické podobě a já si ji znovu projdu.
 Dále prosím o zaslání poslední verze programu (spustitelnou verzi + zdrojové kódy). Pro vyzkoušení potřebuji vědět, kde se zadává IP adresa serveru, a dále instalaci SQLite. Doufám, že nic dalšího potřeba není.
 S pozdravem
