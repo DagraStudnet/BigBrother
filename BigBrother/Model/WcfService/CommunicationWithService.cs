@@ -57,7 +57,8 @@ namespace ClientBigBrother.Model.WcfService
 
         private LibraryClient ConnectionProxy()
         {
-            return new LibraryClient(wcfServiceClientConfiguration.NetTcpBinding, wcfServiceClientConfiguration.Address);
+            return new LibraryClient(
+                wcfServiceClientConfiguration.NetTcpBinding, wcfServiceClientConfiguration.Address);
         }
     }
 }

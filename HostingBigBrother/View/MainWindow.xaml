@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="BigBrotherViewer.View.MainWindow"
-    Title="Observer overview" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+    Title="Observer overview" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip"
     Closing="Window_Closing" WindowState="Normal">
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
         </Grid>
         <Grid Name="UsersInformation" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Top" Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Content="User:" Grid.Column="0" />

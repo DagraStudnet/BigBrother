@@ -1,10 +1,10 @@
-* Celou práci je potřebné znovu přečíst a opravit pravopisné chyby, překlepy, chybějící formátování identifikátorů, sjednotit odsazení odrážkových seznamů a zakončení odrážek.
+﻿* Celou práci je potřebné znovu přečíst a opravit pravopisné chyby, překlepy, chybějící formátování identifikátorů, sjednotit odsazení odrážkových seznamů a zakončení odrážek.
 * Většina obrázků je špatně čitelná - jejich výčet je dále.
 * Některé obrázky přesahují do pravého okraje stránky - opravit
 
 * U převzatých obrázků a tabulek uvádět zdroj - číselný odkaz do Seznamu literatury
 
-* Názvy identifikátorů jsou formátovány větší velikostí písma, změnit font nebo velikost písma v celém dokumentu.
+* Názvy identifikátorů jsou formátovány větší velikostí písma, změnit font nebo velikost písma v celém dokumentu. *
 * Poděkování - doplnit mezeru před Ph.D. *
 * Klíčová slova - nastavit stejné řádkování jako v jiných odstavcích *
 * Seznam zkratek - velké písmeno Z. Seznam seřadit podle abecedy *
@@ -22,7 +22,7 @@
 * Str. 30, kapitola 2.3, odst. 1 - doplnit mezeru do uvedených názvů technologií *
 * Str. 30 - text "Z Obr. 19 ..." nahradit textem "Z obr. 19 ...". Opravit i na jiných místech v dokumentu, např. str. 41 *
 * Str. 34, poslední odst. - formát textu "View model" *
-* Str. 35 - zavést zkratku ACID
+* Str. 35 - zavést zkratku ACID * 
 * Str. 36 - doplnit mezeru do textu ".NETframeworku". Odrážkový seznam je příliš odsazený zleva. Vymazat odstavec "podpora IntelliSense" *
 * Str. 38 - zavést zkratku EA nebo uvádět úplný název. Někde napsat, že pro vývoj jste použil EA a co to je. *
 * Str. 38 - nahradit slovo "tool" slovem "nástroj" *
@@ -31,13 +31,13 @@
 * Str. 39 - popis diagramu by mohl být delší (podrobnější)
 * Str. 40 - jména aktérů neformátovat jako identifikátor. *
 * Obr. 27 - opravit pravopisné chyby *
-* Str. 41 - zavést zkratku UC, ale spíše rozepsat
+* Str. 41 - zavést zkratku UC, ale spíše rozepsat *
 * Obr. 30 - špatně čitelný *
 * Str. 43 - popsat navržené analytické třídy
-* Str. 43 - opravit název kapitoly 3.5.3
+* Str. 43 - opravit název kapitoly 3.5.3 *
 * Obr. 31 - špatně čitelný *
 * Obr. 32 - špatně čitelný *
-* Str. 45 - název "Tabulky" nahradit větou.
+* Str. 45 - název "Tabulky" nahradit větou. *
 * Str. 45 - uvést podrobnější popis tabulek
 * Str. 45 - místo zkratky VS uvádět úplný název *
 * Obr. 34 - špatně čitelný *
