@@ -54,7 +54,7 @@ namespace BigBrotherViewer.View
             } while (index > -1);
 
             List<Attention> attentions =
-                attentionNameList.Select(attentionName => new Attention {Name = attentionName}).ToList();
+                attentionNameList.Select(attentionName => new Attention { Name = attentionName }).ToList();
             main.Attentions = attentions;
         }
 
@@ -72,16 +72,21 @@ namespace BigBrotherViewer.View
                     MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if (resultMessage == MessageBoxResult.Yes)
                     return;
-            }
-            MessageBoxResult result = GetResultMessageBox();
-            if (result == MessageBoxResult.Cancel)
-            {
                 e.Cancel = true;
-                return;
+            }
+            else if (main.EventView != null)
+            {
+                var result = GetResultMessageBox();
+                if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                if (main.EventView.NameEvent != string.Empty)
+                    main.EventView.EndTimeEvent = GetDateTimeNow();
             }
 
-            if (main.EventView.NameEvent != string.Empty)
-                main.EventView.EndTimeEvent = GetDateTimeNow();
+           
         }
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
@@ -109,7 +114,7 @@ namespace BigBrotherViewer.View
                 NameEvent = eventView.NameEvent,
                 StarTimeEvent = GetDateTimeNow(),
                 ObserverEvent =
-                    new Observer {FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver}
+                    new Observer { FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver }
             };
             main.StartSaveEvent();
             CreateEventMenu.IsEnabled = false;
