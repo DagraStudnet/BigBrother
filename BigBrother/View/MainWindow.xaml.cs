@@ -22,7 +22,7 @@ namespace ClientBigBrother.View
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            vmMain.FinishApp();
+            if(!vmMain.ConfigFileDoesntWork)vmMain.FinishApp();
         }
     }
 }

@@ -34,6 +34,7 @@ namespace BigBrotherViewer.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             main = new ViewModelMain();
+            if(main.ConfigFileDoesntWork) Exit_Click(sender,e);
             DataContext = main;
             StopEventMenu.IsEnabled = false;
         }
@@ -65,6 +66,7 @@ namespace BigBrotherViewer.View
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            if(main.ConfigFileDoesntWork) return;
             main.SaveAttetions();
             if (main.EventView == null)
             {

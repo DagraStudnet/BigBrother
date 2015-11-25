@@ -40,7 +40,6 @@ namespace ClientBigBrother.ViewModel
 
         public ViewModelMain()
         {
-            backgroundWorkerServiceIsAlive = new BackgroundWorker();
             HostingIsOnline = false;
             var configuration = new LoadConfigurationFile();
             if (!configuration.IsExistConfigFile())
@@ -48,7 +47,7 @@ namespace ClientBigBrother.ViewModel
                 ConfigFileDoesntWork = true;
                 return;
             }
-
+            backgroundWorkerServiceIsAlive = new BackgroundWorker();
             ConfigAttribute connectionServerConfigutation = configuration.ConnectionServerConfigutation();
             wcfServiceClientConfiguration = new WcfServiceClientConfiguration(connectionServerConfigutation);
             communicationWithService = new CommunicationWithService(wcfServiceClientConfiguration);
