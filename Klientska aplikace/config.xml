@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ConnectionServer>
+  <Address>net.tcp://localhost</Address>
+  <Port>8080</Port>
+  <ServiceName>Monitoring</ServiceName>
+  <SendingUserInformationTimeIntervalInSeconds>60</SendingUserInformationTimeIntervalInSeconds>
+</ConnectionServer>
