@@ -32,9 +32,19 @@ namespace ClientBigBrother
                 application.InitializeComponent();
                 application.Run();
 
+                var currentDomain = AppDomain.CurrentDomain;
+                currentDomain.UnhandledException += MyHandler;
+
                 // Allow single instance code to perform cleanup operations
                 SingleInstance<App>.Cleanup();
             }
+        }
+
+        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            var e = (Exception)args.ExceptionObject;
+            Console.WriteLine("MyHandler caught : " + e.Message);
+            Console.WriteLine("Runtime terminating: {0}", args.IsTerminating);
         }
     }
 }
