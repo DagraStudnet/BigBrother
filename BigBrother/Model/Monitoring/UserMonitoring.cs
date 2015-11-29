@@ -43,7 +43,7 @@ namespace ClientBigBrother.Model.Monitoring
             else
             {
                 DriveInfo[] drives = DriveInfo.GetDrives();
-                IEnumerable<DriveInfo> drivesRemovable = drives.Where(d => d.DriveType == DriveType.Removable);
+                IEnumerable<DriveInfo> drivesRemovable = drives.Where(d => d.DriveType == DriveType.Removable && d.IsReady);
                 IEnumerable<string> drivesIsNotConstainInFieldUsb = drivesRemovable.Select(d => d.Name + d.VolumeLabel).
                     Where(
                         driver =>
