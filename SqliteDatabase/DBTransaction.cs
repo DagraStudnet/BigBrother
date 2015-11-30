@@ -38,6 +38,12 @@ namespace SqliteDatabase
                 context.Db_date_time_event.RemoveRange(dateTimeEvent);
                 context.Db_user.RemoveRange(users);
                 context.Db_user_date_time_event.RemoveRange(userWork);
+                context.Database.ExecuteSqlCommand("UPDATE SQLITE_SEQUENCE SET seq = {0} WHERE name = {1}", "0", "Db_activity");
+                context.Database.ExecuteSqlCommand("UPDATE SQLITE_SEQUENCE SET seq = {0} WHERE name = {1}", "0", "Db_event");
+                context.Database.ExecuteSqlCommand("UPDATE SQLITE_SEQUENCE SET seq = {0} WHERE name = {1}", "0", "Db_observer");
+                context.Database.ExecuteSqlCommand("UPDATE SQLITE_SEQUENCE SET seq = {0} WHERE name = {1}", "0", "Db_date_time_event");
+                context.Database.ExecuteSqlCommand("UPDATE SQLITE_SEQUENCE SET seq = {0} WHERE name = {1}", "0", "Db_user");
+                context.Database.ExecuteSqlCommand("UPDATE SQLITE_SEQUENCE SET seq = {0} WHERE name = {1}", "0", "Db_user_date_time_event");
                 context.SaveChanges();
             }
         }
