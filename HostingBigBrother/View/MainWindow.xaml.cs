@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using BigBrotherViewer.Model;
 using BigBrotherViewer.ViewModel;
 
@@ -34,9 +36,16 @@ namespace BigBrotherViewer.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             main = new ViewModelMain();
-            if(main.ConfigFileDoesntWork) Exit_Click(sender,e);
+            main.Activities.CollectionChanged += ChangeCollection;
+            if (main.ConfigFileDoesntWork) Exit_Click(sender, e);
             DataContext = main;
             StopEventMenu.IsEnabled = false;
+        }
+
+        private void ChangeCollection(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UserActivitiesDataGrid.Items.MoveCurrentToLast();
+            UserActivitiesDataGrid.ScrollIntoView(UserActivitiesDataGrid.Items.CurrentItem);
         }
 
         private void Add_attentions_Click(object sender, RoutedEventArgs e)
@@ -66,7 +75,7 @@ namespace BigBrotherViewer.View
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if(main.ConfigFileDoesntWork) return;
+            if (main.ConfigFileDoesntWork) return;
             main.SaveAttetions();
             if (main.EventView == null)
             {
@@ -88,7 +97,7 @@ namespace BigBrotherViewer.View
                     main.EventView.EndTimeEvent = GetDateTimeNow();
             }
 
-           
+
         }
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
@@ -149,5 +158,15 @@ namespace BigBrotherViewer.View
             main.Users = new ObservableCollection<MonitoringUser>();
             main.SelectedUser = null;
         }
+
+
+        private void UserActivitiesDataGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            var grid = (sender as DataGrid);
+            if (grid.Items.Count <= 0) return;
+            grid.Items.MoveCurrentToLast();
+            grid.ScrollIntoView(grid.Items.CurrentItem);
+        }
+
     }
 }
