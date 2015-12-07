@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
+using System.Windows.Data;
 using System.Windows.Threading;
 using BigBrotherViewer.Model;
 using ClassLibrary.ConfigFileLibrary;
@@ -27,7 +28,7 @@ namespace BigBrotherViewer.ViewModel
         private bool _onlyAttentions;
         private DispatcherTimer dispatcherTimer;
         public UserConnectionIntervalCollection<UserConnectionInterval> UserConnectionCollection { get; set; }
-        
+
         public List<Attention> Attentions
         {
             get { return _attentions; }
@@ -61,7 +62,7 @@ namespace BigBrotherViewer.ViewModel
 
         public ViewModelMain()
         {
-            UserConnectionCollection = new UserConnectionIntervalCollection<UserConnectionInterval>();  
+            UserConnectionCollection = new UserConnectionIntervalCollection<UserConnectionInterval>();
             Attentions = AttentionsOperation.LoadAttentionsToTextFile();
             var configuration = new LoadConfigurationFile();
             if (!configuration.IsExistConfigFile())
@@ -69,7 +70,7 @@ namespace BigBrotherViewer.ViewModel
                 ConfigFileDoesntWork = true;
                 return;
             }
-
+            Users = new ObservableCollection<MonitoringUser>();
             ConfigAttribute serverConfigutation = configuration.ConnectionServerConfigutation();
             RefreshUsers = int.Parse(serverConfigutation.TimeIntervalInSeconds);
         }
@@ -109,7 +110,8 @@ namespace BigBrotherViewer.ViewModel
             if (OnlyAttentions)
                 userActivities = userActivities.Where(a => a.Attention).ToList();
             if (!string.IsNullOrEmpty(FillNameActivity))
-                userActivities = userActivities.Where(a => a.NameActivity.ToUpper().Contains(FillNameActivity.ToUpper())).ToList();
+                userActivities =
+                    userActivities.Where(a => a.NameActivity.ToUpper().Contains(FillNameActivity.ToUpper())).ToList();
             return new ObservableCollection<MonitoringActivity>(userActivities);
         }
 
@@ -138,10 +140,12 @@ namespace BigBrotherViewer.ViewModel
             }
         }
 
+        public bool EditingMode { get; set; }
+
 
         private void StartHosting()
         {
-            serviceHost = new ServiceHost(typeof(Library));
+            serviceHost = new ServiceHost(typeof (Library));
             serviceHost.Open();
         }
 
@@ -150,12 +154,33 @@ namespace BigBrotherViewer.ViewModel
             var usersFromDb = readWriteDb.GetUsersWithEventFromDb();
             usersFromDb.ToList().ForEach(user => UserConnectionCollection.AddUser(user));
             usersFromDb.ToList().ForEach(user => user.Connection = IsConnection(user));
-            Users = new ObservableCollection<MonitoringUser>(usersFromDb);
-            if (Users.Count > 0)
-                SelectedUser = users[0];
-        }
+            var newUsers = new List<MonitoringUser>();
+            foreach (var monitoringUser in usersFromDb)
+            {
+                var findUser = Users.SingleOrDefault(u => u.Id.Equals(monitoringUser.Id));
+                if (findUser != null)
+                {
+                    findUser.TimeStampDispatch = monitoringUser.TimeStampDispatch;
+                    findUser.Attention = monitoringUser.Attention;
+                }
+                else
+                {
+                    newUsers.Add(monitoringUser);
+                }
+            }
 
-        private bool IsConnection(MonitoringUser user)
+            foreach (var newUser in newUsers)
+            {
+                Users.Add(newUser);
+            }
+            if(!EditingMode)
+                CollectionViewSource.GetDefaultView(Users).Refresh();
+            if (Users.Count > 0 && SelectedUser == null)
+                SelectedUser = users[0];
+            else
+                SelectedUser = SelectedUser;
+        }
+    private bool IsConnection(MonitoringUser user)
         {
             var sendingInterval = UserConnectionCollection.GetInterval(user.Id);
             if (sendingInterval >= RefreshUsers)

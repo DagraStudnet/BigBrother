@@ -7,6 +7,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using ClientBigBrother;
 
 namespace BigBrotherViewer
@@ -14,24 +15,30 @@ namespace BigBrotherViewer
     [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
     public partial class App
     {
-        private const string Unique = "Change this to something that uniquely identifies your program.";
-
         [STAThread]
         public static void Main()
         {
-            var currentDomain = AppDomain.CurrentDomain;
-            currentDomain.UnhandledException += MyHandler;
-            var application = new App();
-            application.InitializeComponent();
-            application.Run();
+            try
+            {
+                var application = new App();
+                AppDomain.CurrentDomain.UnhandledException += MyHandler;
 
+                application.InitializeComponent();
+                application.Run();
+            }
+            catch (Exception e)
+            {
+                var sb = new StringBuilder();
+                sb.Append("Error message : " + e.Message + "\n" + e.InnerException.Message);
+                MessageBox.Show(sb.ToString());
+            }
         }
 
-        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        private static void MyHandler(object sender, UnhandledExceptionEventArgs e)
         {
-            var e = (Exception)args.ExceptionObject;
+            var exp =(Exception) e.ExceptionObject;
             var sb = new StringBuilder();
-            sb.Append("Error message : " + e.InnerException.Message);
+            sb.Append("Error message : " + exp.Message + "\n" + exp.InnerException.Message);
             MessageBox.Show(sb.ToString());
         }
     }

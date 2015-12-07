@@ -4,6 +4,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ClientBigBrother
@@ -31,27 +32,23 @@ namespace ClientBigBrother
         [STAThread]
         public static void Main()
         {
-                var currentDomain = AppDomain.CurrentDomain;
-                currentDomain.UnhandledException += MyHandler;
                 if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
                 {
-
                     var application = new App();
+                    AppDomain.CurrentDomain.UnhandledException += MyHandler;
                     application.InitializeComponent();
                     application.Run();
-
                     // Allow single instance code to perform cleanup operations
                     SingleInstance<App>.Cleanup();
                 }
         }
 
-        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        private static void MyHandler(object sender, UnhandledExceptionEventArgs e)
         {
-            var e = (Exception)args.ExceptionObject;
+            var exp = (Exception)e.ExceptionObject;
             var sb = new StringBuilder();
-            sb.Append("Error message : " + e.Message);
-            sb.Append("Inner error message : " + e.InnerException.Message);
-            MessageBox.Show(sb.ToString(), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            sb.Append("Error message : " + exp.Message + "\n" + exp.InnerException.Message);
+            MessageBox.Show(sb.ToString());
         }
     }
 }

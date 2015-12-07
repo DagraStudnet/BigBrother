@@ -18,6 +18,8 @@ namespace BigBrotherViewer.View
     {
         private DateTime _time;
         private AttentionsView attentionsView;
+        private ListSortDirection columnSortingDescription;
+        private int columnSortingIndex;
         private EventView eventView;
         private HistoricalEventView historicalEventView;
         private ViewModelMain main;
@@ -36,16 +38,42 @@ namespace BigBrotherViewer.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             main = new ViewModelMain();
-            main.Activities.CollectionChanged += ChangeCollection;
             if (main.ConfigFileDoesntWork) Exit_Click(sender, e);
             DataContext = main;
             StopEventMenu.IsEnabled = false;
+            ((INotifyCollectionChanged) UserActivitiesDataGrid.Items).CollectionChanged += OnCollectionChanged;
+            UsersDataGrid.SelectionChanged += UsersDataGridOnSelectionChanged;
+            UsersDataGrid.PreparingCellForEdit += UsersDataGridOnPreparingCellForEdit;
+            UsersDataGrid.RowEditEnding += UsersDataGridOnRowEditEnding;
         }
 
-        private void ChangeCollection(object sender, NotifyCollectionChangedEventArgs e)
+        private void UsersDataGridOnRowEditEnding(object sender,
+            DataGridRowEditEndingEventArgs dataGridRowEditEndingEventArgs)
         {
-            UserActivitiesDataGrid.Items.MoveCurrentToLast();
-            UserActivitiesDataGrid.ScrollIntoView(UserActivitiesDataGrid.Items.CurrentItem);
+            main.EditingMode = false;
+        }
+
+        private void UsersDataGridOnPreparingCellForEdit(object sender,
+            DataGridPreparingCellForEditEventArgs dataGridPreparingCellForEditEventArgs)
+        {
+            main.EditingMode = true;
+        }
+
+
+        private void UsersDataGridOnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+        {
+            main.SelectedUser = (UsersDataGrid.SelectedItem as MonitoringUser);
+        }
+
+
+        private void OnCollectionChanged(object sender,
+            NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if (UserActivitiesDataGrid.Items.Count == 0)
+            {
+                return;
+            }
+            UserActivitiesDataGrid.ScrollIntoView(UserActivitiesDataGrid.Items[UserActivitiesDataGrid.Items.Count - 1]);
         }
 
         private void Add_attentions_Click(object sender, RoutedEventArgs e)
@@ -54,7 +82,11 @@ namespace BigBrotherViewer.View
             attentionsView.ShowDialog();
             if (attentionsView.DialogResult == false) return;
             string text = attentionsView.TextBoxAttentions.Text;
-            if (text.Length <= 0) return;
+            if (text.Length <= 0)
+            {
+                main.Attentions.Clear();
+                return;
+            }
             List<string> attentionNameList = text.Split(',').ToList();
             int index = 0;
             do
@@ -64,7 +96,7 @@ namespace BigBrotherViewer.View
             } while (index > -1);
 
             List<Attention> attentions =
-                attentionNameList.Select(attentionName => new Attention { Name = attentionName }).ToList();
+                attentionNameList.Select(attentionName => new Attention {Name = attentionName}).ToList();
             main.Attentions = attentions;
         }
 
@@ -87,7 +119,7 @@ namespace BigBrotherViewer.View
             }
             else if (main.EventView != null)
             {
-                var result = GetResultMessageBox();
+                MessageBoxResult result = GetResultMessageBox();
                 if (result == MessageBoxResult.Cancel)
                 {
                     e.Cancel = true;
@@ -96,8 +128,6 @@ namespace BigBrotherViewer.View
                 if (main.EventView.NameEvent != string.Empty)
                     main.EventView.EndTimeEvent = GetDateTimeNow();
             }
-
-
         }
 
         private void Add_event_Click(object sender, RoutedEventArgs e)
@@ -125,7 +155,7 @@ namespace BigBrotherViewer.View
                 NameEvent = eventView.NameEvent,
                 StarTimeEvent = GetDateTimeNow(),
                 ObserverEvent =
-                    new Observer { FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver }
+                    new Observer {FirstName = eventView.FirstNameObserver, LastName = eventView.LastNameObserver}
             };
             main.StartSaveEvent();
             CreateEventMenu.IsEnabled = false;
@@ -158,15 +188,5 @@ namespace BigBrotherViewer.View
             main.Users = new ObservableCollection<MonitoringUser>();
             main.SelectedUser = null;
         }
-
-
-        private void UserActivitiesDataGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            var grid = (sender as DataGrid);
-            if (grid.Items.Count <= 0) return;
-            grid.Items.MoveCurrentToLast();
-            grid.ScrollIntoView(grid.Items.CurrentItem);
-        }
-
     }
 }

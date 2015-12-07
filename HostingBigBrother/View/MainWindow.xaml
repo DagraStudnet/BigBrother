@@ -83,6 +83,23 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn IsReadOnly="True" Width="15">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger  Binding="{Binding Attention, Mode=OneWay}" Value="True" >
+                                                    <Setter Property="Source" Value="../TriangleExclamation.ico"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="User Name" Binding="{Binding UserName}" IsReadOnly="True" Width="0.15*" />
                     <DataGridTextColumn Header="Pc Name" Binding="{Binding PCName}" IsReadOnly="True" Width="0.15*" />
                     <DataGridTextColumn Header="Work" Binding="{Binding NameWork, Mode=TwoWay}" Width="0.25*"
