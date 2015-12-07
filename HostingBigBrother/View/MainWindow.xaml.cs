@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using BigBrotherViewer.Model;
 using BigBrotherViewer.ViewModel;
 
@@ -45,6 +46,16 @@ namespace BigBrotherViewer.View
             UsersDataGrid.SelectionChanged += UsersDataGridOnSelectionChanged;
             UsersDataGrid.PreparingCellForEdit += UsersDataGridOnPreparingCellForEdit;
             UsersDataGrid.RowEditEnding += UsersDataGridOnRowEditEnding;
+             ((INotifyCollectionChanged) UsersDataGrid.Items).CollectionChanged += UserOnCollectionChanged;
+        }
+
+        private void UserOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if(main.SelectedUser == null)return;
+            var index = UsersDataGrid.Items.Cast<MonitoringUser>().ToList().FindIndex(u => u.Id == main.SelectedUser.Id);
+            UsersDataGrid.SelectedIndex = index;
+            UsersDataGrid.Focus();
+
         }
 
         private void UsersDataGridOnRowEditEnding(object sender,
@@ -188,5 +199,6 @@ namespace BigBrotherViewer.View
             main.Users = new ObservableCollection<MonitoringUser>();
             main.SelectedUser = null;
         }
+        
     }
 }

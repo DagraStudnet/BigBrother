@@ -153,7 +153,11 @@ namespace BigBrotherViewer.ViewModel
         {
             var usersFromDb = readWriteDb.GetUsersWithEventFromDb();
             usersFromDb.ToList().ForEach(user => UserConnectionCollection.AddUser(user));
-            usersFromDb.ToList().ForEach(user => user.Connection = IsConnection(user));
+          //  usersFromDb.ToList().ForEach(user => user.Connection = IsConnection(user));
+            usersFromDb.ToList().ForEach(user =>
+            {
+                user.Connection = CheckCloseApplication(user);
+            });
             var newUsers = new List<MonitoringUser>();
             foreach (var monitoringUser in usersFromDb)
             {
@@ -162,6 +166,7 @@ namespace BigBrotherViewer.ViewModel
                 {
                     findUser.TimeStampDispatch = monitoringUser.TimeStampDispatch;
                     findUser.Attention = monitoringUser.Attention;
+                    findUser.Connection = monitoringUser.Connection;
                 }
                 else
                 {
@@ -180,7 +185,21 @@ namespace BigBrotherViewer.ViewModel
             else
                 SelectedUser = SelectedUser;
         }
-    private bool IsConnection(MonitoringUser user)
+
+        private bool CheckCloseApplication(MonitoringUser user)
+        {
+            var userActivities = ReturnUserActivity(user);
+            if (!userActivities.Any()) return true;
+            var lastActivity = userActivities.Last();
+            var close = lastActivity.NameActivity != "Close monitoring application";
+            if (close)
+            {
+                close = IsConnection(user);
+            }
+            return close;
+        }
+
+        private bool IsConnection(MonitoringUser user)
         {
             var sendingInterval = UserConnectionCollection.GetInterval(user.Id);
             if (sendingInterval >= RefreshUsers)

@@ -18,20 +18,11 @@ namespace BigBrotherViewer
         [STAThread]
         public static void Main()
         {
-            try
-            {
                 var application = new App();
                 AppDomain.CurrentDomain.UnhandledException += MyHandler;
 
                 application.InitializeComponent();
                 application.Run();
-            }
-            catch (Exception e)
-            {
-                var sb = new StringBuilder();
-                sb.Append("Error message : " + e.Message + "\n" + e.InnerException.Message);
-                MessageBox.Show(sb.ToString());
-            }
         }
 
         private static void MyHandler(object sender, UnhandledExceptionEventArgs e)

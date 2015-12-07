@@ -3,5 +3,5 @@
   <Address>net.tcp://localhost</Address>
   <Port>8080</Port>
   <ServiceName>Monitoring</ServiceName>
-  <SendingUserInformationTimeIntervalInSeconds>30</SendingUserInformationTimeIntervalInSeconds>
+  <SendingUserInformationTimeIntervalInSeconds>10</SendingUserInformationTimeIntervalInSeconds>
 </ConnectionServer>
