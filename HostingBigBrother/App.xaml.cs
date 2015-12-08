@@ -18,19 +18,26 @@ namespace BigBrotherViewer
         [STAThread]
         public static void Main()
         {
-                var application = new App();
-                AppDomain.CurrentDomain.UnhandledException += MyHandler;
-
-                application.InitializeComponent();
-                application.Run();
+            var application = new App();
+            application.InitializeComponent();
+            application.Run();
         }
 
-        private static void MyHandler(object sender, UnhandledExceptionEventArgs e)
+
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            var exp =(Exception) e.ExceptionObject;
-            var sb = new StringBuilder();
-            sb.Append("Error message : " + exp.Message + "\n" + exp.InnerException.Message);
-            MessageBox.Show(sb.ToString());
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendFormat("{0}\n", e.Exception.Message);
+            stringBuilder.AppendFormat("{0}\n", e.Exception.InnerException.Message);
+            stringBuilder.AppendFormat(
+                    "Exception handled on main UI thread {0}.", e.Dispatcher.Thread.ManagedThreadId);
+         
+            MessageBox.Show("Application must exit:\n\n" + stringBuilder.ToString(),
+                            "app",MessageBoxButton.OK,MessageBoxImage.Error);
+            
+            this.Shutdown(0);
+            
+            e.Handled = true;
         }
     }
 }
