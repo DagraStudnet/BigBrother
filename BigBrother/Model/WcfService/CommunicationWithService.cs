@@ -33,7 +33,7 @@ namespace ClientBigBrother.Model.WcfService
             }
         }
 
-        public void SendInformationToService(IUser user)
+        public bool SendInformationToService(IUser user)
         {
             try
             {
@@ -46,12 +46,14 @@ namespace ClientBigBrother.Model.WcfService
                 user.TimeStampDispatch = DateTime.Now;
                 proxy.AddUser((User)user);
                 user.ListOfActivitesOnPc.Clear();
+                return true;
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("Server disconnect.","Disconnect", MessageBoxButton.OK, MessageBoxImage.Error);
                 proxy.Abort();
-                proxy = null;
+                proxy = null; 
+                return false;
             }
         }
 

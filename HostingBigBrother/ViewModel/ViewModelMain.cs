@@ -153,7 +153,6 @@ namespace BigBrotherViewer.ViewModel
         {
             var usersFromDb = readWriteDb.GetUsersWithEventFromDb();
             usersFromDb.ToList().ForEach(user => UserConnectionCollection.AddUser(user));
-          //  usersFromDb.ToList().ForEach(user => user.Connection = IsConnection(user));
             usersFromDb.ToList().ForEach(user =>
             {
                 user.Connection = CheckCloseApplication(user);

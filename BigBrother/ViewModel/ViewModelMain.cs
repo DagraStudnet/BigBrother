@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using ClassLibrary.ConfigFileLibrary;
@@ -18,12 +19,12 @@ namespace ClientBigBrother.ViewModel
         private readonly CommunicationWithService communicationWithService;
         private readonly ManagmentMonitoring managmentMonitoring;
         private readonly WcfServiceClientConfiguration wcfServiceClientConfiguration;
+        private ManualResetEvent _workerCompleted = new ManualResetEvent(false);
         private int time;
         private readonly DispatcherTimer timer;
         private bool monitoringStart;
         private bool _hostingIsOnline;
         private readonly BackgroundWorker backgroundWorkerServiceIsAlive;
-        
 
         public bool HostingIsOnline
         {
@@ -74,13 +75,15 @@ namespace ClientBigBrother.ViewModel
             if (dispatcherTimer != null) time += dispatcherTimer.Interval.Seconds;
             if (wcfServiceClientConfiguration == null) return;
             if (time % wcfServiceClientConfiguration.TimeIntervalInSeconds != 0) return;
+            _workerCompleted.WaitOne();
             if (!HostingIsOnline) return;
-            communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
+            HostingIsOnline = communicationWithService.SendInformationToService(managmentMonitoring.PcUser);
         }
-
+        
         private void BackgroundWorkerServiceIsAliveOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
         {
             HostingIsOnline = communicationWithService.HostingIsAlive();
+            _workerCompleted.Set();
         }
 
         public void FinishApp()
