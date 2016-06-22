@@ -26,7 +26,7 @@ namespace ClientBigBrother.Model.Monitoring
         {
             WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
             string[] text = windowsIdentity.Name.Split('\\');
-            user.PCName = text[0];
+            user.PCName = Environment.MachineName;
             user.UserName = text[1];
         }
 

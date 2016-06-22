@@ -50,7 +50,6 @@ namespace ClientBigBrother.Model.WcfService
             }
             catch (Exception e)
             {
-                MessageBox.Show("Server disconnect.","Disconnect", MessageBoxButton.OK, MessageBoxImage.Error);
                 proxy.Abort();
                 proxy = null; 
                 return false;
